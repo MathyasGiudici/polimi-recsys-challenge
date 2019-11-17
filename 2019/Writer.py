@@ -4,7 +4,7 @@ import csv
 class Writer(object):
     DATA_FILE_PATH = "data/"
 
-    def write(self, sub_counter, user, rec_list):
+    def write(self, user, rec_list, sub_counter=0):
         file_name = self.DATA_FILE_PATH + 'subm' + str(sub_counter) + '.csv'
         with open(file_name, mode='a') as csv_file2:
             writer = csv.writer(csv_file2, delimiter=',', quoting=csv.QUOTE_MINIMAL)
@@ -16,7 +16,7 @@ class Writer(object):
 
             writer.writerow([str(user), rec_string])
 
-    def write_header(self, sub_counter, field_names):
+    def write_header(self, sub_counter=0, field_names=['user_id', 'item_list']):
         file_name = self.DATA_FILE_PATH + 'subm' + str(sub_counter) + '.csv'
         with open(file_name, mode='w+') as csv_file2:
             writer = csv.writer(csv_file2, delimiter=',', quoting=csv.QUOTE_MINIMAL)
