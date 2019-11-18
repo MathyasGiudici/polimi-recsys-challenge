@@ -10,13 +10,13 @@ if __name__ == '__main__':
     URM_all = extractor.get_interaction_matrix_all(extractor)
 
     writer = Writer
-    writer.write_header(writer, sub_counter=1)
+    writer.write_header(writer)
 
     recommender = ItemCFKNNRecommender(URM_all)
-    recommender.fit(shrink=50.0, topK=10)
+    recommender.fit(shrink=10.0, topK=10)
 
     for user_id in users:
         recs = recommender.recommend(user_id, at=10)
-        writer.write(writer, user_id, recs, sub_counter=1)
+        writer.write(writer, user_id, recs)
 
     print("Submission file written")

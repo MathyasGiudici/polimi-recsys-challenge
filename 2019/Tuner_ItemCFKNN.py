@@ -1,3 +1,12 @@
+import matplotlib.pyplot as pyplot
+from Extractor import Extractor
+from Notebooks_utils.evaluation_function import evaluate_algorithm
+from ItemCFKNNRecommender import ItemCFKNNRecommender
+from Notebooks_utils.data_splitter import train_test_holdout
+import numpy as np
+from Splitter import Splitter
+
+
 def some_statistics(extractor):
     userList = list(extractor.get_interaction_users(extractor))
     itemList = list(extractor.get_interaction_items(extractor))
@@ -14,7 +23,7 @@ def list_ID_stats(ID_list, label):
     print("{} data, ID: min {}, max {}, unique {}, missig {:.2f} %".format(label, min_val, max_val, unique_val,
                                                                            missing_val * 100))
 
-def classic_tuner():
+def classic_tuner(typeSplit='percentage_split'):
     #It's the classic parameter tuning method seen in class
     extractor = Extractor
 
@@ -22,21 +31,32 @@ def classic_tuner():
 
     URM_all = extractor.get_interaction_matrix_all(extractor)
 
-    # Cold items have no impact in the evaluation, since they have no interactions
-    # Moreover, considering how item-item and user-user CF are defined, they are not relevant.
-    warm_items_mask = np.ediff1d(URM_all.tocsc().indptr) > 0
-    warm_items = np.arange(URM_all.shape[1])[warm_items_mask]
+    URM_train = None
+    URM_test = None
 
-    URM_all = URM_all[:, warm_items]
+    if typeSplit == 'percentage_split':
+        # Cold items have no impact in the evaluation, since they have no interactions
+        # Moreover, considering how item-item and user-user CF are defined, they are not relevant.
+        warm_items_mask = np.ediff1d(URM_all.tocsc().indptr) > 0
+        warm_items = np.arange(URM_all.shape[1])[warm_items_mask]
 
-    # The same holds for users
-    warm_users_mask = np.ediff1d(URM_all.tocsr().indptr) > 0
-    warm_users = np.arange(URM_all.shape[0])[warm_users_mask]
+        URM_all = URM_all[:, warm_items]
 
-    URM_all = URM_all[warm_users, :]
+        # The same holds for users
+        warm_users_mask = np.ediff1d(URM_all.tocsr().indptr) > 0
+        warm_users = np.arange(URM_all.shape[0])[warm_users_mask]
 
-    #Split training and test
-    URM_train, URM_test = train_test_holdout(URM_all, train_perc=0.8)
+        URM_all = URM_all[warm_users, :]
+
+        #Split training and test
+        URM_train, URM_test = train_test_holdout(URM_all, train_perc=0.8)
+
+    elif typeSplit == 'leave_one_out_split':
+        splitter = Splitter
+        matricies = splitter.leave_one_out_split(splitter,extractor)
+
+        URM_train = matricies[0]
+        URM_test = matricies[1]
 
     x_tick = [10, 50, 100, 200, 500]
     MAP_per_k = []
@@ -44,6 +64,8 @@ def classic_tuner():
     for topK in x_tick:
         recommender = ItemCFKNNRecommender(URM_train)
         recommender.fit(shrink=0.0, topK=topK)
+
+        print("topK: ", str(topK)," shrink: ", str(0.0))
 
         result_dict = evaluate_algorithm(URM_test, recommender)
         MAP_per_k.append(result_dict["MAP"])
@@ -59,6 +81,8 @@ def classic_tuner():
     for shrink in x_tick:
         recommender = ItemCFKNNRecommender(URM_train)
         recommender.fit(shrink=shrink, topK=100)
+
+        print("topK: ", str(100), " shrink: ", str(shrink))
 
         result_dict = evaluate_algorithm(URM_test, recommender)
         MAP_per_shrinkage.append(result_dict["MAP"])
@@ -120,14 +144,30 @@ def combinate_tuner():
     pyplot.xlabel('Shrinkage')
     pyplot.show()
 
+def test_after_tuning(topK,shrink):
+    # It's the classic parameter tuning method seen in class
+    extractor = Extractor
+
+    some_statistics(extractor)
+
+    URM_all = extractor.get_interaction_matrix_all(extractor)
+
+    splitter = Splitter
+    matricies = splitter.leave_one_out_split(splitter, extractor)
+
+    URM_train = matricies[0]
+    URM_test = matricies[1]
+
+    recommender = ItemCFKNNRecommender(URM_train)
+    recommender.fit(shrink=shrink, topK=topK)
+
+    print("topK: ", str(topK), " shrink: ", str(shrink))
+
+    result_dict = evaluate_algorithm(URM_test, recommender)
+
+
 if __name__ == '__main__':
+    #classic_tuner('leave_one_out_split')
+    #combinate_tuner()
 
-    import matplotlib.pyplot as pyplot
-    from Extractor import Extractor
-    from Notebooks_utils.evaluation_function import evaluate_algorithm
-    from ItemCFKNNRecommender import ItemCFKNNRecommender
-    from Notebooks_utils.data_splitter import train_test_holdout
-    import numpy as np
-
-    #classic_tuner()
-    combinate_tuner()
+    test_after_tuning(10,10)
