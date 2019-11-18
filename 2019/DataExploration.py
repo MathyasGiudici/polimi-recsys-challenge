@@ -1,3 +1,4 @@
+# Return how many users are not in train set, but must be recommended as well
 if __name__ == '__main__':
 
     from Extractor import Extractor

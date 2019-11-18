@@ -4,8 +4,8 @@ import scipy.sparse as sps
 
 
 class Extractor(object):
-    TRAIN_TEST_SPLIT = 0.80
     DATA_FILE_PATH = "data/"
+
 
     def get_target_users_of_recs(self):
         # Composing the name
@@ -22,7 +22,7 @@ class Extractor(object):
                 line_count += 1
 
             print(f'Processed {line_count} users to make recommendations.')
-            return list(set(users))
+            return users
 
     def get_interaction_users(self):
         # Composing the name
@@ -66,7 +66,7 @@ class Extractor(object):
 
             return items
 
-    def get_interaction_number(self):
+    def get_interaction_rating(self):
         # Composing the name
         file_name = self.DATA_FILE_PATH + "data_train.csv"
 
@@ -100,25 +100,6 @@ class Extractor(object):
             ones_matrix = np.ones(line_count - 1)
 
             return sps.coo_matrix((ones_matrix, (users, items))).tocsr()
-
-    # Interaction matrix split in test and training
-    def get_interaction_matrix_split(self):
-
-        train_mask = np.random.choice([True, False], self.get_interaction_number(self),
-                                      p=[self.TRAIN_TEST_SPLIT, 1 - self.TRAIN_TEST_SPLIT])
-
-        user_list = np.array(self.get_interaction_users(self))
-        item_list = np.array(self.get_interaction_items(self))
-        rating_list = np.ones(self.get_interaction_number(self))
-
-        urm_train = sps.coo_matrix((rating_list[train_mask], (user_list[train_mask], item_list[train_mask])))
-        urm_train = urm_train.tocsr()
-
-        test_mask = np.logical_not(train_mask)
-        urm_test = sps.coo_matrix((rating_list[test_mask], (user_list[test_mask], item_list[test_mask])))
-        urm_test = urm_test.tocsr()
-
-        return [urm_train, urm_test]
 
     def get_users(self):
         users = self.get_interaction_users(self)
