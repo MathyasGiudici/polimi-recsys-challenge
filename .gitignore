@@ -1,6 +1,9 @@
 # Folder for local test
 test/
 
+# Project environment
+.idea/
+
 # General for Apple files
 .DS_Store
 
