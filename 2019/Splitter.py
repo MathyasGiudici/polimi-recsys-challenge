@@ -1,6 +1,5 @@
 import numpy as np
 import scipy.sparse as sps
-from sklearn.model_selection import LeaveOneOut
 
 class Splitter(object):
     TRAIN_TEST_SPLIT = 0.80
@@ -41,9 +40,7 @@ class Splitter(object):
             true_matrix = np.ones(numItems, dtype="bool")
             if numItems > 1:
                 true_matrix[np.random.randint(0, numItems)] = False
-            train_mask.append(true_matrix)
-
-        print(train_mask)
+            train_mask.extend(true_matrix)
 
         train_mask = np.array(train_mask)
         urm_train = sps.coo_matrix((rating_list[train_mask], (user_list[train_mask], item_list[train_mask])))
