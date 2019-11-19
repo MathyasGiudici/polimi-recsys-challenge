@@ -5,7 +5,6 @@ from ItemCFKNNRecommender import ItemCFKNNRecommender
 from Notebooks_utils.data_splitter import train_test_holdout
 import Data_manager.Split_functions.split_train_validation_leave_k_out as loo
 import numpy as np
-from Splitter import Splitter
 
 
 def some_statistics(extractor):
@@ -56,9 +55,8 @@ def classic_tuner(typeSplit='percentage_split'):
         URM_train, URM_test = train_test_holdout(URM_all, train_perc=0.8)
 
     elif typeSplit == 'leave_one_out_split':
-        validation_set_needed = True
-        matrices = loo.split_train_leave_k_out_user_wise(extractor.get_interaction_matrix_all(), 1,
-                                                         validation_set_needed, True)
+        validation_set_needed = False
+        matrices = loo.split_train_leave_k_out_user_wise(URM_all, 1, validation_set_needed, True)
 
         if validation_set_needed:  # NON FUNZIONA ANCORA!!
             URM_train = matrices[0]
@@ -68,7 +66,7 @@ def classic_tuner(typeSplit='percentage_split'):
             URM_train = matrices[0]
             URM_test = matrices[1]
 
-    x_tick = [10, 50, 100, 200, 500]
+    x_tick = [10]#, 50, 100, 200, 500]
     MAP_per_k = []
 
     for topK in x_tick:
@@ -90,9 +88,9 @@ def classic_tuner(typeSplit='percentage_split'):
 
     for shrink in x_tick:
         recommender = ItemCFKNNRecommender(URM_train)
-        recommender.fit(shrink=shrink, topK=100)
+        recommender.fit(shrink=shrink, topK=10)
 
-        print("topK: ", str(100), " shrink: ", str(shrink))
+        print("topK: ", str(10), " shrink: ", str(shrink))
 
         result_dict = evaluate_algorithm(URM_test, recommender)
         MAP_per_shrinkage.append(result_dict["MAP"])
@@ -163,9 +161,8 @@ def test_after_tuning(topK, shrink):
 
     URM_all = extractor.get_interaction_matrix_all(extractor)
 
-    validation_set_needed = True
-    matrices = loo.split_train_leave_k_out_user_wise(extractor.get_interaction_matrix_all(), 1,
-                                                     validation_set_needed, True)
+    validation_set_needed = False
+    matrices = loo.split_train_leave_k_out_user_wise(URM_all, 1, validation_set_needed, True)
 
     if validation_set_needed:  # NON FUNZIONA ANCORA!!
         URM_train = matrices[0]
