@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.sparse as sps
 
+
 class Splitter(object):
     TRAIN_TEST_SPLIT = 0.80
     RANDOM = "Random"
@@ -55,6 +56,7 @@ class Splitter(object):
                 counter = counter + len(values)
             train_mask.extend(true_matrix)
 
+        print(train_mask)
         train_mask = np.array(train_mask)
         urm_train = sps.coo_matrix((rating_list[train_mask], (user_list[train_mask], item_list[train_mask])))
         urm_train = urm_train.tocsr()
@@ -63,11 +65,10 @@ class Splitter(object):
         urm_test = sps.coo_matrix((rating_list[test_mask], (user_list[test_mask], item_list[test_mask])))
         urm_test = urm_test.tocsr()
 
-        print("20% of ratings are ",str(ex.get_interaction_rating(ex)*0.2))
+        print("20% of ratings are ", str(ex.get_interaction_rating(ex) * 0.2))
         print("in our test matrix we have put: " + str(counter))
 
         return [urm_train, urm_test, None]
-
 
     # Choose the wanted method to split data
     def choose_split_type(self, ex, type_of_split):

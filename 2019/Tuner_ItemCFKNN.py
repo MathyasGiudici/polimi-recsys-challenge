@@ -3,6 +3,7 @@ from Extractor import Extractor
 from Notebooks_utils.evaluation_function import evaluate_algorithm
 from ItemCFKNNRecommender import ItemCFKNNRecommender
 from Notebooks_utils.data_splitter import train_test_holdout
+import Data_manager.Split_functions.split_train_validation_leave_k_out as loo
 import numpy as np
 from Splitter import Splitter
 
@@ -14,6 +15,7 @@ def some_statistics(extractor):
     list_ID_stats(userList, "User")
     list_ID_stats(itemList, "Item")
 
+
 def list_ID_stats(ID_list, label):
     min_val = min(ID_list)
     max_val = max(ID_list)
@@ -23,8 +25,9 @@ def list_ID_stats(ID_list, label):
     print("{} data, ID: min {}, max {}, unique {}, missig {:.2f} %".format(label, min_val, max_val, unique_val,
                                                                            missing_val * 100))
 
+
 def classic_tuner(typeSplit='percentage_split'):
-    #It's the classic parameter tuning method seen in class
+    # It's the classic parameter tuning method seen in class
     extractor = Extractor
 
     some_statistics(extractor)
@@ -33,6 +36,7 @@ def classic_tuner(typeSplit='percentage_split'):
 
     URM_train = None
     URM_test = None
+    URM_validation = None
 
     if typeSplit == 'percentage_split':
         # Cold items have no impact in the evaluation, since they have no interactions
@@ -48,15 +52,21 @@ def classic_tuner(typeSplit='percentage_split'):
 
         URM_all = URM_all[warm_users, :]
 
-        #Split training and test
+        # Split training and test
         URM_train, URM_test = train_test_holdout(URM_all, train_perc=0.8)
 
     elif typeSplit == 'leave_one_out_split':
-        splitter = Splitter
-        matricies = splitter.leave_one_out_split(splitter,extractor)
+        validation_set_needed = True
+        matrices = loo.split_train_leave_k_out_user_wise(extractor.get_interaction_matrix_all(), 1,
+                                                         validation_set_needed, True)
 
-        URM_train = matricies[0]
-        URM_test = matricies[1]
+        if validation_set_needed:  # NON FUNZIONA ANCORA!!
+            URM_train = matrices[0]
+            URM_test = matrices[1]
+            URM_validation = matrices[2]
+        else:
+            URM_train = matrices[0]
+            URM_test = matrices[1]
 
     x_tick = [10, 50, 100, 200, 500]
     MAP_per_k = []
@@ -65,7 +75,7 @@ def classic_tuner(typeSplit='percentage_split'):
         recommender = ItemCFKNNRecommender(URM_train)
         recommender.fit(shrink=0.0, topK=topK)
 
-        print("topK: ", str(topK)," shrink: ", str(0.0))
+        print("topK: ", str(topK), " shrink: ", str(0.0))
 
         result_dict = evaluate_algorithm(URM_test, recommender)
         MAP_per_k.append(result_dict["MAP"])
@@ -94,7 +104,7 @@ def classic_tuner(typeSplit='percentage_split'):
 
 
 def combinate_tuner():
-    #It's the classic parameter tuning method seen in class
+    # It's the classic parameter tuning method seen in class
     extractor = Extractor
 
     some_statistics(extractor)
@@ -114,7 +124,7 @@ def combinate_tuner():
 
     URM_all = URM_all[warm_users, :]
 
-    #Split training and test
+    # Split training and test
     URM_train, URM_test = train_test_holdout(URM_all, train_perc=0.8)
 
     x_tick_per_k = [10, 50, 100, 200, 500, 1000]
@@ -130,7 +140,7 @@ def combinate_tuner():
             recommender = ItemCFKNNRecommender(URM_train)
             recommender.fit(shrink=shrink, topK=topK)
 
-            #Evaluation
+            # Evaluation
             result_dict = evaluate_algorithm(URM_test, recommender)
             MAP_per_k.append(result_dict["MAP"])
 
@@ -144,7 +154,8 @@ def combinate_tuner():
     pyplot.xlabel('Shrinkage')
     pyplot.show()
 
-def test_after_tuning(topK,shrink):
+
+def test_after_tuning(topK, shrink):
     # It's the classic parameter tuning method seen in class
     extractor = Extractor
 
@@ -152,11 +163,17 @@ def test_after_tuning(topK,shrink):
 
     URM_all = extractor.get_interaction_matrix_all(extractor)
 
-    splitter = Splitter
-    matricies = splitter.leave_one_out_split(splitter, extractor)
+    validation_set_needed = True
+    matrices = loo.split_train_leave_k_out_user_wise(extractor.get_interaction_matrix_all(), 1,
+                                                     validation_set_needed, True)
 
-    URM_train = matricies[0]
-    URM_test = matricies[1]
+    if validation_set_needed:  # NON FUNZIONA ANCORA!!
+        URM_train = matrices[0]
+        URM_test = matrices[1]
+        URM_validation = matrices[2]
+    else:
+        URM_train = matrices[0]
+        URM_test = matrices[1]
 
     recommender = ItemCFKNNRecommender(URM_train)
     recommender.fit(shrink=shrink, topK=topK)
@@ -167,7 +184,7 @@ def test_after_tuning(topK,shrink):
 
 
 if __name__ == '__main__':
-    #classic_tuner('leave_one_out_split')
-    #combinate_tuner()
+    # classic_tuner('leave_one_out_split')
+    # combinate_tuner()
 
-    test_after_tuning(10,10)
+    test_after_tuning(10, 10)

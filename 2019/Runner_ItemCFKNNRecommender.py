@@ -5,9 +5,9 @@ from Writer import Writer
 
 if __name__ == '__main__':
     # Function to launch all the others
-    extractor = Extractor
-    users = extractor.get_target_users_of_recs(extractor)
-    URM_all = extractor.get_interaction_matrix_all(extractor)
+    extractor = Extractor()
+    users = extractor.get_target_users_of_recs()
+    URM_all = extractor.get_interaction_matrix_all()
 
     writer = Writer
     writer.write_header(writer)
