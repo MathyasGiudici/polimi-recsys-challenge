@@ -13,7 +13,7 @@ if __name__ == '__main__':
     writer.write_header(writer)
 
     recommender = ItemCFKNNRecommender(URM_all)
-    recommender.fit(shrink=10.0, topK=10)
+    recommender.fit(shrink=50.0, topK=10, similarity="dice")
 
     for user_id in users:
         recs = recommender.recommend(user_id, at=10)
