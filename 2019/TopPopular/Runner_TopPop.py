@@ -1,7 +1,7 @@
 from TopPopRecommender import TopPopRecommender
-from Writer import Writer
-import Extractor as ex
-import Evaluator as ev
+from OwnUtils.Writer import Writer
+import OwnUtils.Extractor as ex
+import OwnUtils.Evaluator as ev
 import Data_manager.Split_functions.split_train_validation_leave_k_out as loo
 
 if __name__ == '__main__':

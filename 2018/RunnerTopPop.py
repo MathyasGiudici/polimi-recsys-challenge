@@ -1,7 +1,7 @@
-from Extractor import Extractor
+from OwnUtils.Extractor import Extractor
 from TopPopRecommender import TopPopRecommender
-from Writer import Writer
-import Evaluator as ev
+from OwnUtils.Writer import Writer
+import OwnUtils.Evaluator as ev
 import numpy as np
 
 if __name__ == '__main__':

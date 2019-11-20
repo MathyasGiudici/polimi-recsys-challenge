@@ -3,8 +3,8 @@ from Notebooks_utils.data_splitter import train_test_holdout
 from Notebooks_utils.evaluation_function import evaluate_algorithm
 from Base.Similarity.Compute_Similarity_Python import Compute_Similarity_Python
 import scipy.sparse as sps
-from Extractor import Extractor
-from Writer import Writer
+from OwnUtils.Extractor import Extractor
+from OwnUtils.Writer import Writer
 
 
 class UserCFKNNRecommender(object):

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as pyplot
-from Extractor import Extractor
+from OwnUtils.Extractor import Extractor
 
 
 def data_visualization():

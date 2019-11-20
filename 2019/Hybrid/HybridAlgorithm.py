@@ -1,4 +1,4 @@
-from Extractor import Extractor
+from OwnUtils.Extractor import Extractor
 from Base.Evaluation.Evaluator import EvaluatorHoldout
 from Notebooks_utils.data_splitter import train_test_holdout
 from KNN.ItemCFKNNRecommender import ItemCFKNNRecommender
@@ -55,11 +55,8 @@ class HybridAlgorithm(object):
                                                  output_root_path, metric_to_optimize)
         print(best_parameters)
 
-
-
-
-if __name__ == '__main__':
-    extractor = Extractor()
-    URM_all = extractor.get_all_interation_matrix()
-    tuner = HybridAlgorithm(URM_all, 0.9, 0.9)
-    tuner.tuning()
+    def recommender_runner(self):
+        extractor = Extractor()
+        URM_all = extractor.get_all_interation_matrix()
+        tuner = HybridAlgorithm(URM_all, 0.9, 0.9)
+        tuner.tuning()

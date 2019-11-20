@@ -1,6 +1,6 @@
-from Extractor import Extractor
+from OwnUtils.Extractor import Extractor
 from ItemCFKNNRecommender import ItemCFKNNRecommender
-from Writer import Writer
+from OwnUtils.Writer import Writer
 
 
 if __name__ == '__main__':
