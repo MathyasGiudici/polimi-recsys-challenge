@@ -1,12 +1,11 @@
 import matplotlib.pyplot as pyplot
-from Extractor import Extractor
+from . import Extractor
 from Notebooks_utils.evaluation_function import evaluate_algorithm
 from ItemCFKNNRecommender import ItemCFKNNRecommender
 from Notebooks_utils.data_splitter import train_test_holdout
 import Data_manager.Split_functions.split_train_validation_leave_k_out as loo
 from Data_manager.DataReader_utils import remove_empty_rows_and_cols
 import numpy as np
-from Splitter import Splitter
 
 
 def some_statistics(extractor):
