@@ -4,7 +4,7 @@ import scipy.sparse as sps
 
 
 class Extractor(object):
-    DATA_FILE_PATH = "../data/"
+    DATA_FILE_PATH = "data/"
 
 
     def get_target_users_of_recs(self):
