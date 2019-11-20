@@ -66,7 +66,7 @@ def classic_tuner(typeSplit='percentage_split'):
             URM_train = matrices[0]
             URM_test = matrices[1]
 
-    x_tick = [10]#, 50, 100, 200, 500]
+    x_tick = [5]#, 50, 100, 200, 500]
     MAP_per_k = []
 
     for topK in x_tick:
@@ -83,14 +83,14 @@ def classic_tuner(typeSplit='percentage_split'):
     pyplot.xlabel('TopK')
     pyplot.show()
 
-    x_tick = [0, 10, 50, 100, 200, 500]
+    x_tick = [0, 10, 50, 100, 200] #, 500]
     MAP_per_shrinkage = []
 
     for shrink in x_tick:
         recommender = ItemCFKNNRecommender(URM_train)
-        recommender.fit(shrink=shrink, topK=10)
+        recommender.fit(shrink=shrink, topK=5)
 
-        print("topK: ", str(10), " shrink: ", str(shrink))
+        print("topK: ", str(5), " shrink: ", str(shrink))
 
         result_dict = evaluate_algorithm(URM_test, recommender)
         MAP_per_shrinkage.append(result_dict["MAP"])
@@ -181,7 +181,7 @@ def test_after_tuning(topK, shrink):
 
 
 if __name__ == '__main__':
-    # classic_tuner('leave_one_out_split')
+    classic_tuner('leave_one_out_split')
     # combinate_tuner()
 
-    test_after_tuning(10, 10)
+    # test_after_tuning(10, 10)
