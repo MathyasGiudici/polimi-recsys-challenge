@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import scipy.sparse as sps
+from sklearn import preprocessing
 
 
 class Extractor(object):
@@ -117,15 +118,20 @@ class Extractor(object):
 
             items = []
             assets = []
-            values = []
             for line in csv_reader:
                 if line_count != 0:
                     items.append(int(line[0]))
-                    assets.append(int(line[1]))
-                    values.append(float(line[2]))
+                    assets.append(float(line[2]))
                 line_count += 1
 
             print(f'Processed {line_count} items.')
+
+            le = preprocessing.LabelEncoder()
+            le.fit(assets)
+
+            assets = le.transform(assets)
+
+            values = np.ones(line_count - 1)
 
             return sps.coo_matrix((values, (items, assets))).tocsr()
 
@@ -138,18 +144,23 @@ class Extractor(object):
             line_count = 0
 
             items = []
-            assets = []
             prices = []
             for line in csv_reader:
                 if line_count != 0:
                     items.append(int(line[0]))
-                    assets.append(int(line[1]))
                     prices.append(float(line[2]))
                 line_count += 1
 
             print(f'Processed {line_count} items.')
 
-            return sps.coo_matrix((prices, (items, assets))).tocsr()
+            le = preprocessing.LabelEncoder()
+            le.fit(prices)
+
+            prices = le.transform(prices)
+
+            values = np.ones(line_count - 1)
+
+            return sps.coo_matrix((values, (items, prices))).tocsr()
 
     def get_icm_subclass(self):
         # Composing the name
@@ -171,7 +182,20 @@ class Extractor(object):
 
             ones_matrix = np.ones(line_count - 1)
 
+            le = preprocessing.LabelEncoder()
+            le.fit(assets)
+
+            ones_matrix = le.transform(assets)
+
             return sps.coo_matrix((ones_matrix, (items, assets))).tocsr()
+
+    def get_icm_all(self):
+        asset = self.get_icm_asset(self)
+        price = self.get_icm_price(self)
+        sub = self.get_icm_subclass(self)
+
+        return sps.hstack([asset, price, sub], 'csr')
+
 
     def get_ucm_age(self):
         # Composing the name
@@ -216,3 +240,9 @@ class Extractor(object):
             ones_matrix = np.ones(line_count - 1)
 
             return sps.coo_matrix((ones_matrix, (users, regions))).tocsr()
+
+    def get_ucm_all(self):
+        age = self.get_ucm_age(self)
+        reg = self.get_ucm_region(self)
+
+        return sps.hstack([age,reg], 'csr')
