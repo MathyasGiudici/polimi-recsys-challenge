@@ -1,9 +1,10 @@
-from OwnUtils.Extractor import Extractor
-from Base.Evaluation.Evaluator import EvaluatorHoldout
-from Notebooks_utils.data_splitter import train_test_holdout
-from KNN.ItemCFKNNRecommender import ItemCFKNNRecommender
-from ParameterTuning.SearchBayesianSkopt import SearchBayesianSkopt
-from ParameterTuning.SearchAbstractClass import SearchInputRecommenderArgs
+## TODO: Must be rewritten according to new foldering
+# from OwnUtils.Extractor import Extractor
+# from Base.Evaluation.Evaluator import EvaluatorHoldout
+# from Notebooks_utils.data_splitter import train_test_holdout
+# from KNN.ItemCFKNNRecommender import ItemCFKNNRecommender
+# from ParameterTuning.SearchBayesianSkopt import SearchBayesianSkopt
+# from ParameterTuning.SearchAbstractClass import SearchInputRecommenderArgs
 
 
 class HybridAlgorithm(object):
@@ -31,11 +32,11 @@ class HybridAlgorithm(object):
         hyperparameters_range_dictionary["normalize"] = [True, False]
 
         recommenderDictionary = SearchInputRecommenderArgs()
-        SearchInputRecommenderArgs.CONSTRUCTOR_POSITIONAL_ARGS: [URM_train]
-        SearchInputRecommenderArgs.CONSTRUCTOR_KEYWORD_ARGS: {}
-        SearchInputRecommenderArgs.FIT_POSITIONAL_ARGS: dict()
-        SearchInputRecommenderArgs.FIT_KEYWORD_ARGS: dict()
-        SearchInputRecommenderArgs.FIT_RANGE_KEYWORD_ARGS: hyperparameters_range_dictionary
+        SearchInputRecommenderArgs.CONSTRUCTOR_POSITIONAL_ARG = [URM_train]
+        SearchInputRecommenderArgs.CONSTRUCTOR_KEYWORD_ARGS = {}
+        SearchInputRecommenderArgs.FIT_POSITIONAL_ARGS = dict()
+        SearchInputRecommenderArgs.FIT_KEYWORD_ARGS = dict()
+        SearchInputRecommenderArgs.FIT_RANGE_KEYWORD_ARGS = hyperparameters_range_dictionary
         # recommenderDictionary = {SearchInputRecommenderArgs.CONSTRUCTOR_POSITIONAL_ARGS: [URM_train],
         #                          SearchInputRecommenderArgs.CONSTRUCTOR_KEYWORD_ARGS: {},
         #                          SearchInputRecommenderArgs.FIT_POSITIONAL_ARGS: dict(),
@@ -51,12 +52,14 @@ class HybridAlgorithm(object):
         n_cases = 2
         metric_to_optimize = 'MAP'
 
-        best_parameters = parameterSearch.search(recommenderDictionary, n_cases,
-                                                 output_root_path, metric_to_optimize)
+        parameter_search_space = {"topK":"Integer","shrink":"Integer","similarity":"Categorical","normalize":"Categorical"}
+
+        best_parameters = parameterSearch.search(recommenderDictionary, parameter_search_space, n_cases=n_cases, output_folder_path=output_root_path, metric_to_optimize= metric_to_optimize)
+
         print(best_parameters)
 
     def recommender_runner(self):
         extractor = Extractor()
-        URM_all = extractor.get_all_interation_matrix()
+        URM_all = extractor.get_interaction_matrix_all()
         tuner = HybridAlgorithm(URM_all, 0.9, 0.9)
         tuner.tuning()
