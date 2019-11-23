@@ -128,7 +128,6 @@ class Extractor(object):
 
             le = preprocessing.LabelEncoder()
             le.fit(assets)
-
             assets = le.transform(assets)
 
             values = np.ones(line_count - 1)
@@ -155,7 +154,6 @@ class Extractor(object):
 
             le = preprocessing.LabelEncoder()
             le.fit(prices)
-
             prices = le.transform(prices)
 
             values = np.ones(line_count - 1)
@@ -181,11 +179,6 @@ class Extractor(object):
             print(f'Processed {line_count} items.')
 
             ones_matrix = np.ones(line_count - 1)
-
-            le = preprocessing.LabelEncoder()
-            le.fit(assets)
-
-            ones_matrix = le.transform(assets)
 
             return sps.coo_matrix((ones_matrix, (items, assets))).tocsr()
 

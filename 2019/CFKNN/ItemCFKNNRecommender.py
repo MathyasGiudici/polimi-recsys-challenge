@@ -14,6 +14,7 @@ class ItemCFKNNRecommender(object):
                                                       similarity=similarity)
 
         self.W_sparse = similarity_object.compute_similarity()
+        self.recs = self.URM.dot(self.W_sparse)
 
     def recommend(self, user_id, at=None, exclude_seen=True):
         # compute the scores using the dot product
@@ -27,6 +28,10 @@ class ItemCFKNNRecommender(object):
         ranking = scores.argsort()[::-1]
 
         return ranking[:at]
+
+    def get_expected_ratings(self, user_id):
+        expected_ratings = self.recs[user_id].todense()
+        return np.squeeze(np.asarray(expected_ratings))
 
     def filter_seen(self, user_id, scores):
         start_pos = self.URM.indptr[user_id]
