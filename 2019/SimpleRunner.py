@@ -24,10 +24,10 @@ if __name__ == '__main__':
     # }
 
     p_cbfknn = {"topK": 10, "shrink": 200}
-    p_slimbpr = {"epochs": 200, }
+    p_slimbpr = {"epochs": 500, }
 
 
-    isTest = True
+    isTest = False
 
     if isTest:
         extractor = Extractor
@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
         # Retriving correct weight
         results.sort()
-        weight = W[results.index(max(results))]
+        weight = W[int(results.index(max(results))/2)]
 
         # Retriving correct slim parameter
         if results.index(max(results))%2 == 0:
@@ -181,13 +181,13 @@ if __name__ == '__main__':
         ICM = extractor.get_icm_all(extractor)
 
         writer = Writer
-        writer.write_header(writer, sub_counter=2)
+        writer.write_header(writer, sub_counter=0)
 
         recommender = Hybrid(URM, ICM, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, weights)
         recommender.fit()
 
         for user_id in users:
             recs = recommender.recommend(user_id, at=10)
-            writer.write(writer, user_id, recs, sub_counter=2)
+            writer.write(writer, user_id, recs, sub_counter=0)
 
         print("Submission file written")
