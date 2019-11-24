@@ -1,0 +1,7 @@
+REPORT
+Fixed parameters
+{'topK': 10, 'shrink': 10}
+{'topK': 500, 'shrink': 10}
+{'topK': 10, 'shrink': 200}
+VALIDATION
+--------------------------------------
