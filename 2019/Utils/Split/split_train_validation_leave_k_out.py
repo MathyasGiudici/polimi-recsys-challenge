@@ -50,12 +50,12 @@ def split_train_leave_k_out_user_wise(URM, k_out = 1, use_validation_set = True,
 
 
         if leave_random_out:
-            indices_to_shuffle = np.arange(len(user_profile), dtype=np.int)
+            indices_to_suffle = np.arange(len(user_profile), dtype=np.int)
 
-            np.random.shuffle(indices_to_shuffle)
+            np.random.shuffle(indices_to_suffle)
 
-            user_interaction_items = user_profile[indices_to_shuffle]
-            user_interaction_data = URM.data[start_user_position:end_user_position][indices_to_shuffle]
+            user_interaction_items = user_profile[indices_to_suffle]
+            user_interaction_data = URM.data[start_user_position:end_user_position][indices_to_suffle]
 
         else:
 
@@ -81,8 +81,7 @@ def split_train_leave_k_out_user_wise(URM, k_out = 1, use_validation_set = True,
             user_interaction_items_validation = user_interaction_items[k_out:k_out*2]
             user_interaction_data_validation = user_interaction_data[k_out:k_out*2]
 
-            # TODO: MODIFIED HERE BY ME
-            URM_validation_builder.add_data_lists([user_id]*len(user_interaction_items_validation), user_interaction_items_validation, user_interaction_data_validation)
+            URM_validation_builder.add_data_lists([user_id]*k_out, user_interaction_items_validation, user_interaction_data_validation)
 
 
         #Train interactions

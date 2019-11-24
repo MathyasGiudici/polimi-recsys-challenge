@@ -47,10 +47,10 @@ class Tuner(object):
     def splitter(self):
         if self.splitType == "percentage":
             if self.needValidation:
-                self.urm_train, self.urm_test = split_train_in_two_percentage_global_sample(self.urm_all, train_perc=0.1)
-                self.urm_train, self.urm_validation = split_train_in_two_percentage_global_sample(self.urm_train, train_perc=0.1)
+                self.urm_train, self.urm_test = split_train_in_two_percentage_global_sample(self.urm_all, train_percentage=0.1)
+                self.urm_train, self.urm_validation = split_train_in_two_percentage_global_sample(self.urm_train, train_percentage=0.1)
             else:
-                self.urm_train, self.urm_test = split_train_in_two_percentage_global_sample(self.urm_all, train_perc=0.2)
+                self.urm_train, self.urm_test = split_train_in_two_percentage_global_sample(self.urm_all, train_percentage=0.2)
         elif self.splitType == "loo":
             matrices = loo.split_train_leave_k_out_user_wise(self.urm_all, 1, self.needValidation, True)
 

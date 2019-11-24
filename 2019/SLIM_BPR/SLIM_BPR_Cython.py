@@ -6,14 +6,15 @@ Created on 07/09/17
 @author: Maurizio Ferrari Dacrema
 """
 
-from Base.Recommender_utils import check_matrix
-from Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
-from Base.Recommender_utils import similarityMatrixTopK
-from Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
+from Utils.Base.Recommender_utils import check_matrix
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
+from Utils.Base.Recommender_utils import similarityMatrixTopK
+from Utils.Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
 
 
-from CythonCompiler.run_compile_subprocess import run_compile_subprocess
+from Utils.CythonCompiler.run_compile_subprocess import run_compile_subprocess
 import os, sys
+import numpy as np
 
 
 def estimate_required_MB(n_items, symmetric):
@@ -86,7 +87,7 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
 
 
         # Import compiled module
-        from SLIM_BPR.Cython.SLIM_BPR_Cython_Epoch import SLIM_BPR_Cython_Epoch
+        from SLIM_BPR.SLIM_BPR_Cython_Epoch import SLIM_BPR_Cython_Epoch
 
 
 
@@ -172,7 +173,7 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
 
         sys.stdout.flush()
 
-
+        self.recs = self.URM_train.dot(self.W_sparse)
 
 
     def _prepare_model_for_validation(self):
@@ -243,4 +244,31 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
 
         # Command to generate html report
         # cython -a SLIM_BPR_Cython_Epoch.pyx
+
+    def recommend(self, user_id, at=None, exclude_seen=True):
+        # compute the scores using the dot product
+        user_profile = self.URM_train[user_id]
+        scores = user_profile.dot(self.W_sparse).toarray().ravel()
+
+        if exclude_seen:
+            scores = self.filter_seen(user_id, scores)
+
+        # rank items
+        ranking = scores.argsort()[::-1]
+
+        return ranking[:at]
+
+    def get_expected_ratings(self, user_id):
+        expected_ratings = self.recs[user_id].todense()
+        return np.squeeze(np.asarray(expected_ratings))
+
+    def filter_seen(self, user_id, scores):
+        start_pos = self.URM_train.indptr[user_id]
+        end_pos = self.URM_train.indptr[user_id + 1]
+
+        user_profile = self.URM.indices[start_pos:end_pos]
+
+        scores[user_profile] = -np.inf
+
+        return scores
 
