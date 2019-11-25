@@ -1,7 +1,5 @@
 import numpy as np
 
-from OwnUtils.Extractor import Extractor
-
 from CFKNN.ItemCFKNNRecommender import ItemCFKNNRecommender
 from CFKNN.UserCFKNNRecommender import UserCFKNNRecommender
 from CBFKNN.ItemCBFKNNRecommender import ItemCBFKNNRecommender
@@ -10,6 +8,7 @@ from MF.ALS import AlternatingLeastSquare
 from MF.PureSVDRecommender import PureSVDRecommender
 
 from Utils.Base.IR_feature_weighting import okapi_BM_25
+
 
 class Hybrid(object):
 
@@ -40,7 +39,7 @@ class Hybrid(object):
         self.recommender_itemCBFKNN = ItemCBFKNNRecommender(self.urm.copy(), self.icm_bm25)
         self.recommender_slim_bpr = SLIM_BPR_Cython(self.urm.copy())
         self.recommender_puresvd = PureSVDRecommender(self.urm.copy())
-        self.recommender_als = AlternatingLeastSquare(self.urm.copy)
+        self.recommender_als = AlternatingLeastSquare(self.urm.copy())
 
         self.hybrid_ratings = None
 
@@ -48,11 +47,9 @@ class Hybrid(object):
         self.recommender_itemCFKNN.fit(topK=self.p_icfknn["topK"],shrink=self.p_icfknn["shrink"])
         self.recommender_userCFKNN.fit(topK=self.p_ucfknn["topK"],shrink=self.p_ucfknn["shrink"])
         self.recommender_itemCBFKNN.fit(topK=self.p_cbfknn["topK"],shrink=self.p_cbfknn["shrink"])
-        self.recommender_slim_bpr.fit(epochs=self.p_slimbpr["epochs"], lambda_i=self.p_slimbpr["lambda_i"],
-                                      lambda_j=self.p_slimbpr["lambda_j"])
+        self.recommender_slim_bpr.fit(epochs=self.p_slimbpr["epochs"], lambda_i=self.p_slimbpr["lambda_i"], lambda_j=self.p_slimbpr["lambda_j"])
         self.recommender_puresvd.fit(num_factors=self.p_puresvd["num_factors"])
-        self.recommender_als.fit(alpha_val=self.p_als["alpha_val"], n_factors=self.p_als["n_factors"],
-                                 regularization=self.p_als["regularization"], iterations=self.p_als["iterations"])
+        self.recommender_als.fit(alpha_val=self.p_als["alpha_val"], n_factors=self.p_als["n_factors"], regularization=self.p_als["regularization"], iterations=self.p_als["iterations"])
 
     def recommend(self, user, at=10):
 

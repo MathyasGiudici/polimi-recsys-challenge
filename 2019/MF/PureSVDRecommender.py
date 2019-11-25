@@ -40,7 +40,13 @@ class PureSVDRecommender(BaseMatrixFactorizationRecommender):
         print(self.RECOMMENDER_NAME + " Computing SVD decomposition... Done!")
 
     def get_expected_ratings(self, user_id):
-        user_id_array = np.atleast_1d(user_id)
-        return self._compute_item_score(self, user_id_array)
+        if np.isscalar(user_id):
+            user_id_array = np.atleast_1d(user_id)
+        else:
+            user_id_array = user_id
+
+        return np.squeeze(self._compute_item_score(user_id_array))
+
+
 
 

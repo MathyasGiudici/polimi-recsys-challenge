@@ -30,7 +30,7 @@ if __name__ == '__main__':
     }
 
 
-    isTest = False
+    isTest = True
 
     if isTest:
         extractor = Extractor
@@ -136,6 +136,15 @@ if __name__ == '__main__':
             "als": 1,
         }]
 
+        W2 = [{
+            "icfknn": 2.5,
+            "ucfknn": 0.2,
+            "cbfknn": 0.5,
+            "slimbpr": 1.5,
+            "puresvd": 2,
+            "als": 1,
+        }]
+
 
         # EVALUATION
         results = []
@@ -156,7 +165,7 @@ if __name__ == '__main__':
         writer.write_report(writer, "--------------------------------------", report_counter)
 
 
-        for weight in W:
+        for weight in W2:
             print("--------------------------------------")
             recommender = Hybrid(urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
             recommender.fit()
@@ -188,10 +197,12 @@ if __name__ == '__main__':
 
     else:
         weights = {
-            "icfknn": 1,
+            "icfknn": 2.5,
             "ucfknn": 0.2,
             "cbfknn": 0.5,
-            "slimbpr": 2.5
+            "slimbpr": 1.5,
+            "puresvd": 2,
+            "als": 1,
         }
 
         extractor = Extractor
