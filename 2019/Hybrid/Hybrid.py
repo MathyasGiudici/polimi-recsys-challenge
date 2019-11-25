@@ -35,6 +35,7 @@ class Hybrid(object):
         self.recommender_itemCBFKNN = ItemCBFKNNRecommender(self.urm.copy(), self.icm_bm25)
         self.recommender_slim_bpr = SLIM_BPR_Cython(self.urm.copy())
 
+        self.hybrid_ratings = None
 
     def fit(self):
         self.recommender_itemCFKNN.fit(topK=self.p_icfknn["topK"],shrink=self.p_icfknn["shrink"])
@@ -43,7 +44,6 @@ class Hybrid(object):
         self.recommender_slim_bpr.fit(epochs=self.p_slimbpr["epochs"])
 
     def recommend(self, user, at=10):
-        self.hybrid_ratings = None
 
         self.hybrid_ratings = self.recommender_itemCFKNN.get_expected_ratings(user) * self.weights["icfknn"]
         self.hybrid_ratings += self.recommender_userCFKNN.get_expected_ratings(user) * self.weights["ucfknn"]

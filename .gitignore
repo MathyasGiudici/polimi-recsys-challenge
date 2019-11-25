@@ -111,3 +111,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+/2019/SLIM_BPR/build/
+/2019/SLIM_BPR/SLIM_BPR_Cython_Epoch.c
+/2019/SLIM_BPR/SLIM_BPR_Cython_Epoch.cpython-37m-darwin.so
+/2019/SLIM_BPR/SLIM_BPR_Cython_Epoch.html

@@ -34,6 +34,7 @@ if __name__ == '__main__':
         urm = extractor.get_interaction_matrix_all(extractor)
         icm = extractor.get_icm_all(extractor)
 
+        # TODO: maybe not to remove to have also cold items and users
         matrices = remove_empty_rows_and_cols(urm, icm)
 
         urm = matrices[0]
