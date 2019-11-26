@@ -30,17 +30,12 @@ if __name__ == '__main__':
     }
 
 
-    isTest = True
+    isTest = False
 
     if isTest:
         extractor = Extractor
         urm = extractor.get_interaction_matrix_all(extractor)
         icm = extractor.get_icm_all(extractor)
-
-        # TODO: maybe not to remove to have also cold items and users
-        # matrices = remove_empty_rows_and_cols(urm, icm)
-        # urm = matrices[0]
-        # icm = matrices[1]
 
         # Splitting into validation & testing in case of parameter tuning
         matrices = loo.split_train_leave_k_out_user_wise(urm, 1, True, True)
@@ -134,17 +129,14 @@ if __name__ == '__main__':
             "slimbpr": 1.5,
             "puresvd": 2,
             "als": 1,
-        }]
-
-        W2 = [{
+        }, {
             "icfknn": 2.5,
             "ucfknn": 0.2,
             "cbfknn": 0.5,
             "slimbpr": 1.5,
-            "puresvd": 2,
-            "als": 1,
+            "puresvd": 2.3,
+            "als": 1.5,
         }]
-
 
         # EVALUATION
         results = []
@@ -185,6 +177,7 @@ if __name__ == '__main__':
         writer.write_report(writer, "--------------------------------------", report_counter)
 
         import scipy.sparse as sps
+        # TODO: CHECK IF IT IS CORRECT
         urm = sps.vstack([urm, urm_validation], 'csr')
 
         recommender = Hybrid(urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
@@ -196,28 +189,22 @@ if __name__ == '__main__':
 
 
     else:
-        weights = {
-            "icfknn": 2.5,
-            "ucfknn": 0.2,
-            "cbfknn": 0.5,
-            "slimbpr": 1.5,
-            "puresvd": 2,
-            "als": 1,
-        }
-
         extractor = Extractor
         users = extractor.get_target_users_of_recs(extractor)
         URM = extractor.get_interaction_matrix_all(extractor)
         ICM = extractor.get_icm_all(extractor)
 
         writer = Writer
-        writer.write_header(writer, sub_counter=0)
+        sub_counter = 1
+        writer.write_header(writer, sub_counter=sub_counter)
 
         recommender = Hybrid(URM, ICM, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weights)
         recommender.fit()
 
-        for user_id in users:
+        from tqdm import tqdm
+
+        for user_id in tqdm(users):
             recs = recommender.recommend(user_id, at=10)
-            writer.write(writer, user_id, recs, sub_counter=0)
+            writer.write(writer, user_id, recs, sub_counter=sub_counter)
 
         print("Submission file written")

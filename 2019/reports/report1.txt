@@ -1,0 +1,17 @@
+REPORT
+Fixed parameters
+{'topK': 10, 'shrink': 10}
+{'topK': 500, 'shrink': 10}
+{'topK': 100, 'shrink': 200}
+{'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}
+{'num_factors': 1000}
+{'alpha_val': 25, 'n_factors': 300, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1.5, 'puresvd': 2, 'als': 1}
+    {'precision': 0.012085855806273705, 'recall': 0.06042927903137039, 'MAP': 0.036910047086161836}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 0.5, 'ucfknn': 0.3, 'cbfknn': 0.2, 'slimbpr': 0.1, 'puresvd': 0.4, 'als': 0.2}
+{'precision': 0.01247237908175756, 'recall': 0.06236189540878959, 'MAP': 0.038560847859890536}
