@@ -45,21 +45,22 @@ if __name__ == '__main__':
         urm_validation = matrices[2]
 
         # Weights of test
+        # W = [{
+        #     "icfknn": 2,
+        #     "ucfknn": 0.7,
+        #     "cbfknn": 0.5,
+        #     "slimbpr": 1,
+        #     "puresvd": 2,
+        #     "als": 1,
+        # }, {
+        #     "icfknn": 2.5,
+        #     "ucfknn": 0.2,
+        #     "cbfknn": 0.5,
+        #     "slimbpr": 1.5,
+        #     "puresvd": 2,
+        #     "als": 1,
+        # }, {
         W = [{
-            "icfknn": 2,
-            "ucfknn": 0.7,
-            "cbfknn": 0.5,
-            "slimbpr": 1,
-            "puresvd": 2,
-            "als": 1,
-        }, {
-            "icfknn": 2.5,
-            "ucfknn": 0.2,
-            "cbfknn": 0.5,
-            "slimbpr": 1.5,
-            "puresvd": 2,
-            "als": 1,
-        }, {
             "icfknn": 2.5,
             "ucfknn": 0.2,
             "cbfknn": 0.5,
@@ -75,7 +76,7 @@ if __name__ == '__main__':
         import random
 
         writer = Writer
-        report_counter = 2
+        report_counter = 3
 
         writer.write_report(writer, "REPORT",report_counter)
         writer.write_report(writer, "Fixed parameters", report_counter)
@@ -112,7 +113,7 @@ if __name__ == '__main__':
 
         # Retriving correct weight
         results.sort()
-        weight = W[int(results.index(max(results)))]
+        weight = generated_weights[int(results.index(max(results)))]
 
         writer.write_report(writer, "--------------------------------------", report_counter)
         writer.write_report(writer, "TESTING", report_counter)
