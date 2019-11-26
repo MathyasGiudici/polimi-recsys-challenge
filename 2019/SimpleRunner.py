@@ -93,12 +93,12 @@ if __name__ == '__main__':
 
         for weight in W:
             for _ in range(0,10):
-                weight["icfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
-                weight["ucfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
-                weight["cbfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
-                weight["slimbpr"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
-                weight["puresvd"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
-                weight["als"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                weight["icfknn"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
+                weight["ucfknn"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
+                weight["cbfknn"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
+                weight["slimbpr"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
+                weight["puresvd"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
+                weight["als"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
 
                 generated_weights.append(weight.copy())
                 print("--------------------------------------")
