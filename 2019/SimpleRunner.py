@@ -5,7 +5,7 @@ if __name__ == '__main__':
 
 
     import Utils.Split.split_train_validation_leave_k_out as loo
-    from Utils.Split.DataReader_utils import remove_empty_rows_and_cols
+    #   from Utils.Split.DataReader_utils import remove_empty_rows_and_cols
 
 
     p_icfknn = {"topK": 10, "shrink": 10}
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     }
 
 
-    isTest = False
+    isTest = True
 
     if isTest:
         extractor = Extractor
@@ -46,81 +46,11 @@ if __name__ == '__main__':
 
         # Weights of test
         W = [{
-            "icfknn": 0.5,
-            "ucfknn": 0.3,
-            "cbfknn": 0.2,
-            "slimbpr": 0.1,
-            "puresvd": 0.4,
-            "als": 0.2,
-        }, {
-            "icfknn": 0.4,
-            "ucfknn": 0.4,
-            "cbfknn": 0.3,
-            "slimbpr": 0.2,
-            "puresvd": 0.3,
-            "als": 0.4,
-        }, {
-            "icfknn": 0.7,
-            "ucfknn": 0.5,
-            "cbfknn": 0.5,
-            "slimbpr": 0.5,
-            "puresvd": 0.5,
-            "als": 0.7,
-        }, {
-            "icfknn": 0.5,
-            "ucfknn": 0.2,
-            "cbfknn": 0.1,
-            "slimbpr": 0.5,
-            "puresvd": 1,
-            "als": 1,
-        }, {
-            "icfknn": 0.3,
-            "ucfknn": 0.5,
-            "cbfknn": 0.5,
-            "slimbpr": 0.3,
-            "puresvd": 2,
-            "als": 1,
-        }, {
-            "icfknn": 1,
-            "ucfknn": 0.7,
-            "cbfknn": 0.5,
-            "slimbpr": 2,
-            "puresvd": 1,
-            "als": 2,
-        }, {
             "icfknn": 2,
             "ucfknn": 0.7,
             "cbfknn": 0.5,
             "slimbpr": 1,
             "puresvd": 2,
-            "als": 1,
-        }, {
-            "icfknn": 1.5,
-            "ucfknn": 0.7,
-            "cbfknn": 0.5,
-            "slimbpr": 1.5,
-            "puresvd": 2,
-            "als": 1,
-        }, {
-            "icfknn": 5,
-            "ucfknn": 3,
-            "cbfknn": 2,
-            "slimbpr": 2.5,
-            "puresvd": 4,
-            "als": 3,
-        }, {
-            "icfknn": 0.5,
-            "ucfknn": 0.2,
-            "cbfknn": 0.7,
-            "slimbpr": 1,
-            "puresvd": 2,
-            "als": 1.5,
-        }, {
-            "icfknn": 1,
-            "ucfknn": 0.2,
-            "cbfknn": 0.5,
-            "slimbpr": 2,
-            "puresvd": 2.5,
             "als": 1,
         }, {
             "icfknn": 2.5,
@@ -142,8 +72,10 @@ if __name__ == '__main__':
         results = []
 
         from Utils.evaluation_function import evaluate_algorithm
+        import random
+
         writer = Writer
-        report_counter = 1
+        report_counter = 2
 
         writer.write_report(writer, "REPORT",report_counter)
         writer.write_report(writer, "Fixed parameters", report_counter)
@@ -156,16 +88,26 @@ if __name__ == '__main__':
         writer.write_report(writer, "VALIDATION", report_counter)
         writer.write_report(writer, "--------------------------------------", report_counter)
 
+        generated_weights = []
 
-        for weight in W2:
-            print("--------------------------------------")
-            recommender = Hybrid(urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
-            recommender.fit()
-            result_dict = evaluate_algorithm(urm_validation, recommender)
-            results.append(float(result_dict["MAP"]))
+        for weight in W:
+            for _ in range(0,10):
+                weight["icfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                weight["ucfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                weight["cbfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                weight["slimbpr"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                weight["puresvd"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                weight["als"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
 
-            writer.write_report(writer, str(weight), report_counter)
-            writer.write_report(writer, str(result_dict), report_counter)
+                generated_weights.append(weight.copy())
+                print("--------------------------------------")
+                recommender = Hybrid(urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
+                recommender.fit()
+                result_dict = evaluate_algorithm(urm_validation, recommender)
+                results.append(float(result_dict["MAP"]))
+
+                writer.write_report(writer, str(weight), report_counter)
+                writer.write_report(writer, str(result_dict), report_counter)
 
 
         # Retriving correct weight
