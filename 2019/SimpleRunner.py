@@ -38,29 +38,32 @@ if __name__ == '__main__':
         icm = extractor.get_icm_all(extractor)
 
         # Splitting into validation & testing in case of parameter tuning
-        matrices = loo.split_train_leave_k_out_user_wise(urm, 1, True, True)
+        matrices = loo.split_train_leave_k_out_user_wise(urm, 1, False, True)
 
-        urm = matrices[0]
+        urm_post_validation = matrices[0]
         urm_test = matrices[1]
-        urm_validation = matrices[2]
+
+        matrices = loo.split_train_leave_k_out_user_wise(urm_post_validation.copy(), 1, False, True)
+
+        urm_train = matrices[0]
+        urm_validation = matrices[1]
 
         # Weights of test
-        # W = [{
-        #     "icfknn": 2,
-        #     "ucfknn": 0.7,
-        #     "cbfknn": 0.5,
-        #     "slimbpr": 1,
-        #     "puresvd": 2,
-        #     "als": 1,
-        # }, {
-        #     "icfknn": 2.5,
-        #     "ucfknn": 0.2,
-        #     "cbfknn": 0.5,
-        #     "slimbpr": 1.5,
-        #     "puresvd": 2,
-        #     "als": 1,
-        # }, {
         W = [{
+            "icfknn": 2,
+            "ucfknn": 0.7,
+            "cbfknn": 0.5,
+            "slimbpr": 1,
+            "puresvd": 2,
+            "als": 1,
+        }, {
+            "icfknn": 2.5,
+            "ucfknn": 0.2,
+            "cbfknn": 0.5,
+            "slimbpr": 1.5,
+            "puresvd": 2,
+            "als": 1,
+        }, {
             "icfknn": 2.5,
             "ucfknn": 0.2,
             "cbfknn": 0.5,
@@ -103,7 +106,7 @@ if __name__ == '__main__':
 
                 generated_weights.append(weight.copy())
                 print("--------------------------------------")
-                recommender = Hybrid(urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
+                recommender = Hybrid(urm_train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
                 recommender.fit()
                 result_dict = evaluate_algorithm(urm_validation, recommender)
                 results.append(float(result_dict["MAP"]))
@@ -120,11 +123,7 @@ if __name__ == '__main__':
         writer.write_report(writer, "TESTING", report_counter)
         writer.write_report(writer, "--------------------------------------", report_counter)
 
-        import scipy.sparse as sps
-        # TODO: CHECK IF IT IS CORRECT
-        urm = sps.vstack([urm, urm_validation], 'csr')
-
-        recommender = Hybrid(urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
+        recommender = Hybrid(urm_post_validation, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, weight)
         recommender.fit()
         result_dict = evaluate_algorithm(urm_test, recommender)
 
