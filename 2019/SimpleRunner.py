@@ -92,13 +92,14 @@ if __name__ == '__main__':
         generated_weights = []
 
         for weight in W:
-            for _ in range(0,10):
-                weight["icfknn"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
-                weight["ucfknn"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
-                weight["cbfknn"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
-                weight["slimbpr"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
-                weight["puresvd"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
-                weight["als"] += round(random.uniform(- max(0.5, weight["icfknn"]), 0.5), 2)
+            for i in range(0, 12):
+                if i != 11:
+                    weight["icfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                    weight["ucfknn"] += round(random.uniform(- min(0.5, weight["ucfknn"]), 0.5), 2)
+                    weight["cbfknn"] += round(random.uniform(- min(0.5, weight["cbfknn"]), 0.5), 2)
+                    weight["slimbpr"] += round(random.uniform(- min(0.5, weight["slimbpr"]), 0.5), 2)
+                    weight["puresvd"] += round(random.uniform(- min(0.5, weight["puresvd"]), 0.5), 2)
+                    weight["als"] += round(random.uniform(- min(0.5, weight["als"]), 0.5), 2)
 
                 generated_weights.append(weight.copy())
                 print("--------------------------------------")

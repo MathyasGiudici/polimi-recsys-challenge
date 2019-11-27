@@ -7,7 +7,6 @@ from sklearn import preprocessing
 class Extractor(object):
     DATA_FILE_PATH = "data/"
 
-
     def get_target_users_of_recs(self):
         # Composing the name
         file_name = self.DATA_FILE_PATH + "alg_sample_submission.csv"
@@ -132,7 +131,7 @@ class Extractor(object):
 
             values = np.ones(line_count - 1)
 
-            return sps.coo_matrix((values, (items, assets))).tocsr()
+            return sps.coo_matrix((values, (items, assets)))
 
     def get_icm_price(self):
         # Composing the name
@@ -158,7 +157,7 @@ class Extractor(object):
 
             values = np.ones(line_count - 1)
 
-            return sps.coo_matrix((values, (items, prices))).tocsr()
+            return sps.coo_matrix((values, (items, prices)))
 
     def get_icm_subclass(self):
         # Composing the name
@@ -180,15 +179,38 @@ class Extractor(object):
 
             ones_matrix = np.ones(line_count - 1)
 
-            return sps.coo_matrix((ones_matrix, (items, assets))).tocsr()
+            return sps.coo_matrix((ones_matrix, (items, assets)))
 
     def get_icm_all(self):
-        asset = self.get_icm_asset(self)
-        price = self.get_icm_price(self)
-        sub = self.get_icm_subclass(self)
+        asset_matrix = self.get_icm_asset(self)
+        sub_matrix = self.get_icm_subclass(self)
+        price_matrix = self.get_icm_price(self)
 
-        return sps.hstack([asset, price, sub], 'csr')
+        values = []
+        rows = []
+        cols = []
 
+        _, asset_cols = asset_matrix.shape
+        _, sub_cols = sub_matrix.shape
+
+        for i, j, v in zip(asset_matrix.row, asset_matrix.col, asset_matrix.data):
+            values.append(v)
+            rows.append(i)
+            cols.append(j)
+
+        for i, j, v in zip(sub_matrix.row, sub_matrix.col, sub_matrix.data):
+            values.append(v)
+            rows.append(i)
+            new_j = j + asset_cols
+            cols.append(new_j)
+
+        for i, j, v in zip(price_matrix.row, price_matrix.col, price_matrix.data):
+            values.append(v)
+            rows.append(i)
+            new_j = j + asset_cols + sub_cols
+            cols.append(new_j)
+
+        return sps.coo_matrix((values, (rows, cols))).tocsc()
 
     def get_ucm_age(self):
         # Composing the name
@@ -210,7 +232,7 @@ class Extractor(object):
 
             ones_matrix = np.ones(line_count - 1)
 
-            return sps.coo_matrix((ones_matrix, (users, age_category))).tocsr()
+            return sps.coo_matrix((ones_matrix, (users, age_category)))
 
     def get_ucm_region(self):
         # Composing the name
@@ -232,10 +254,27 @@ class Extractor(object):
 
             ones_matrix = np.ones(line_count - 1)
 
-            return sps.coo_matrix((ones_matrix, (users, regions))).tocsr()
+            return sps.coo_matrix((ones_matrix, (users, regions)))
 
     def get_ucm_all(self):
-        age = self.get_ucm_age(self)
-        reg = self.get_ucm_region(self)
+        age_matrix = self.get_ucm_age(self)
+        reg_matrix = self.get_ucm_region(self)
 
-        return sps.hstack([age,reg], 'csr')
+        values = []
+        rows = []
+        cols = []
+
+        _, age_cols = age_matrix.shape
+
+        for i, j, v in zip(age_matrix.row, age_matrix.col, age_matrix.data):
+            values.append(v)
+            rows.append(i)
+            cols.append(j)
+
+        for i, j, v in zip(reg_matrix.row, reg_matrix.col, reg_matrix.data):
+            values.append(v)
+            rows.append(i)
+            new_j = j + age_cols
+            cols.append(new_j)
+
+        return sps.coo_matrix((values, (rows, cols))).tocsc()
