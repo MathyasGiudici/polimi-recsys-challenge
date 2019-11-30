@@ -14,7 +14,7 @@ class Tuner(object):
     def __init__(self, splitType="loo", needValidation=True):
         extractor = Extractor
 
-        self.urm_all = extractor.get_interaction_matrix_all(extractor)
+        self.urm_all = extractor.get_urm_all(extractor)
         self.urm_all = remove_empty_rows_and_cols(self.urm_all)[0]
 
         self.urm_train = None

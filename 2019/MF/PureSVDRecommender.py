@@ -47,6 +47,3 @@ class PureSVDRecommender(BaseMatrixFactorizationRecommender):
 
         return np.squeeze(self._compute_item_score(user_id_array))
 
-
-
-

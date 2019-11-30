@@ -5,7 +5,7 @@ def runner():
     # Getting extractor and urm matrix
     extractor = Extractor()
     users = extractor.get_target_users_of_recs()
-    URM_all = extractor.get_interaction_matrix_all()
+    URM_all = extractor.get_urm_all()
 
     # Getting writer
     writer = Writer

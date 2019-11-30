@@ -60,6 +60,6 @@ class HybridAlgorithm(object):
 
     def recommender_runner(self):
         extractor = Extractor()
-        URM_all = extractor.get_interaction_matrix_all()
+        URM_all = extractor.get_urm_all()
         tuner = HybridAlgorithm(URM_all, 0.9, 0.9)
         tuner.tuning()

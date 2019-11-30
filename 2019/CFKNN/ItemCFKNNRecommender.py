@@ -4,9 +4,8 @@ import numpy as np
 
 class ItemCFKNNRecommender(object):
 
-    def __init__(self, URM, ICM):
+    def __init__(self, URM):
         self.URM = URM
-        self.ICM = ICM
 
     def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine"):
         similarity_object = Compute_Similarity_Python(self.URM, shrink=shrink,

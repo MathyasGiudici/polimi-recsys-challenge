@@ -1,0 +1,22 @@
+REPORTFixed parameters{'topK': 10, 'shrink': 10}{'topK': 500, 'shrink': 10}{'topK': 100, 'shrink': 200}{'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}{'num_factors': 1000}{'alpha_val': 25, 'n_factors': 300, 'regularization': 0.5, 'iterations': 50}VALIDATION--------------------------------------{'icfknn': 0.36, 'ucfknn': 0.45, 'cbfknn': 0.19, 'slimbpr': 0.28, 'puresvd': 0.96, 'als': 0.4}{'precision': 0.009112305164527594, 'recall': 0.045561525822638664, 'MAP': 0.027452373551223434}--------------------------------------TESTING--------------------------------------{'icfknn': 0.36, 'ucfknn': 0.45, 'cbfknn': 0.19, 'slimbpr': 0.28, 'puresvd': 0.96, 'als': 0.4}{'precision': 0.01100715465052253, 'recall': 0.0550357732526142, 'MAP': 0.03425976884975254}REPORTFixed parameters{'topK': 10, 'shrink': 10}{'topK': 500, 'shrink': 10}{'topK': 100, 'shrink': 200}{'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}{'num_factors': 1000}{'alpha_val': 25, 'n_factors': 300, 'regularization': 0.5, 'iterations': 50}VALIDATION--------------------------------------{'icfknn': 2.85, 'ucfknn': 0.07, 'cbfknn': 0.15000000000000002, 'slimbpr': 0.53, 'puresvd': 2.78, 'als': 1.85}{'precision': 0.009609662951285415, 'recall': 0.04804831475642791, 'MAP': 0.02907914797874392}--------------------------------------TESTING--------------------------------------{'icfknn': 2.85, 'ucfknn': 0.07, 'cbfknn': 0.15000000000000002, 'slimbpr': 0.53, 'puresvd': 2.78, 'als': 1.85}{'precision': 0.011858374610162913, 'recall': 0.05929187305081637, 'MAP': 0.0359713813979089}--------------------------------------REPORT 2019-11-30 15:31:03.014694Fixed parameters{'topK': 10, 'shrink': 10}{'topK': 500, 'shrink': 10}{'topK': 100, 'shrink': 200}{'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}{'num_factors': 1000}{'alpha_val': 25, 'n_factors': 300, 'regularization': 0.5, 'iterations': 50}VALIDATION--------------------------------------{'icfknn': 2.94, 'ucfknn': 0.43000000000000005, 'cbfknn': 0.12, 'slimbpr': 0.81, 'puresvd': 2.7, 'als': 1.06}{'precision': 0.009822816288467338, 'recall': 0.04911408144233758, 'MAP': 0.029808161996536298}--------------------------------------TESTING--------------------------------------{'icfknn': 2.94, 'ucfknn': 0.43000000000000005, 'cbfknn': 0.12, 'slimbpr': 0.81, 'puresvd': 2.7, 'als': 1.06}{'precision': 0.011403412217941328, 'recall': 0.05701706108970831, 'MAP': 0.034913471534275244}--------------------------------------
+--------------------------------------
+
+REPORT 2019-11-30 16:05:11.760278
+
+Fixed parameters
+{'topK': 10, 'shrink': 10}
+{'topK': 500, 'shrink': 10}
+{'topK': 100, 'shrink': 200}
+{'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}
+{'num_factors': 1000}
+{'alpha_val': 25, 'n_factors': 300, 'regularization': 0.5, 'iterations': 50}
+
+VALIDATION
+--------------------------------------
+{'icfknn': 2.46, 'ucfknn': 0.5700000000000001, 'cbfknn': 0.64, 'slimbpr': 1.75, 'puresvd': 1.82, 'als': 1.01}
+{'precision': 0.010071495181846248, 'recall': 0.0503574759092322, 'MAP': 0.03039063309501612}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.46, 'ucfknn': 0.5700000000000001, 'cbfknn': 0.64, 'slimbpr': 1.75, 'puresvd': 1.82, 'als': 1.01}
+{'precision': 0.011227297743532974, 'recall': 0.05613648871766648, 'MAP': 0.03586253286858696}

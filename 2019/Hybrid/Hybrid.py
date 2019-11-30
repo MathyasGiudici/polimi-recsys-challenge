@@ -34,7 +34,7 @@ class Hybrid(object):
         self.icm_bm25 = self.icm_bm25.tocsr()
 
         # Creating recommenders
-        self.recommender_itemCFKNN = ItemCFKNNRecommender(self.urm.copy(), self.icm.copy())
+        self.recommender_itemCFKNN = ItemCFKNNRecommender(self.urm.copy())
         self.recommender_userCFKNN = UserCFKNNRecommender(self.urm.copy())
         self.recommender_itemCBFKNN = ItemCBFKNNRecommender(self.urm.copy(), self.icm_bm25)
         self.recommender_slim_bpr = SLIM_BPR_Cython(self.urm.copy())

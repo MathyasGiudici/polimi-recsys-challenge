@@ -1,7 +1,7 @@
 import csv
 import numpy as np
 import scipy.sparse as sps
-from sklearn import preprocessing
+from sklearn import preprocessing, feature_extraction
 
 
 class Extractor(object):
@@ -79,7 +79,7 @@ class Extractor(object):
 
             return line_count - 1
 
-    def get_interaction_matrix_all(self):
+    def get_urm_all(self):
         # Composing the name
         file_name = self.DATA_FILE_PATH + "data_train.csv"
 
@@ -181,11 +181,11 @@ class Extractor(object):
 
             return sps.coo_matrix((ones_matrix, (items, assets)))
 
+    # ICM obtained merging horizontally all the different ICMs
     def get_icm_all(self):
         asset_matrix = self.get_icm_asset(self)
         sub_matrix = self.get_icm_subclass(self)
         price_matrix = self.get_icm_price(self)
-
         values = []
         rows = []
         cols = []
@@ -210,7 +210,12 @@ class Extractor(object):
             new_j = j + asset_cols + sub_cols
             cols.append(new_j)
 
-        return sps.coo_matrix((values, (rows, cols))).tocsc()
+        icm_all = sps.coo_matrix((values, (rows, cols))).tocsr()
+        icm_tfidf = feature_extraction.text.TfidfTransformer().fit_transform(icm_all)
+        icm_tfidf = preprocessing.normalize(icm_tfidf, axis=0, norm='l2')
+
+        return icm_tfidf
+
 
     def get_ucm_age(self):
         # Composing the name
@@ -256,6 +261,7 @@ class Extractor(object):
 
             return sps.coo_matrix((ones_matrix, (users, regions)))
 
+    # UCM obtained merging horizontally all the different UCMs
     def get_ucm_all(self):
         age_matrix = self.get_ucm_age(self)
         reg_matrix = self.get_ucm_region(self)
@@ -277,4 +283,8 @@ class Extractor(object):
             new_j = j + age_cols
             cols.append(new_j)
 
-        return sps.coo_matrix((values, (rows, cols))).tocsc()
+        ucm_all = sps.coo_matrix((values, (rows, cols))).tocsr()
+        ucm_tfidf = feature_extraction.text.TfidfTransformer.fit_transform(ucm_all)
+        ucm_tfidf = preprocessing.normalize(ucm_tfidf, axis=0, norm='l2')
+
+        return ucm_tfidf
