@@ -8,13 +8,13 @@ Created on 14/12/18
 
 import time, os, traceback
 import numpy as np
-from Base.DataIO import DataIO
+from Utils.Base.DataIO import DataIO
 
 from skopt import gp_minimize
 from skopt.space import Real, Integer, Categorical
 
 from ParameterTuning.SearchAbstractClass import SearchAbstractClass, writeLog, get_result_string_evaluate_on_validation
-from Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
+from Utils.Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
 
 
 

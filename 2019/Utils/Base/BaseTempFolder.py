@@ -6,7 +6,7 @@ Created on 19/06/2019
 @author: Maurizio Ferrari Dacrema
 """
 
-from Base.Recommender_utils import get_unique_temp_folder
+from Utils.Base.Recommender_utils import get_unique_temp_folder
 import os, shutil
 
 

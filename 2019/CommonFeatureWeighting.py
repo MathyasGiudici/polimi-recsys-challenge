@@ -6,9 +6,9 @@ Created on 08/09/17
 """
 
 
-from Base.Similarity.Compute_Similarity import Compute_Similarity
-from Base.BaseSimilarityMatrixRecommender import BaseItemSimilarityMatrixRecommender
-from Base.Recommender_utils import check_matrix
+from Utils.Base.Similarity.Compute_Similarity import Compute_Similarity
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseItemSimilarityMatrixRecommender
+from Utils.Base.Recommender_utils import check_matrix
 
 
 from scipy.sparse import linalg

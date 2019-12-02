@@ -6,10 +6,10 @@ Created on 07/09/17
 @author: Maurizio Ferrari Dacrema
 """
 
-from Base.Recommender_utils import check_matrix
-from Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
-from Base.Recommender_utils import similarityMatrixTopK
-from Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
+from Utils.Base.Recommender_utils import check_matrix
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
+from Utils.Base.Recommender_utils import similarityMatrixTopK
+from Utils.Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
 
 
 from CythonCompiler.run_compile_subprocess import run_compile_subprocess

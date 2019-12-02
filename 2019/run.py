@@ -4,7 +4,7 @@ if __name__ == '__main__':
 
     algorithms_choice = {
         "icfknn": False,
-        "ucfknn": False,
+        "ucfknn": True,
         "cbfknn": False,
         "slim_bpr": False,
         "pure_svd": True,

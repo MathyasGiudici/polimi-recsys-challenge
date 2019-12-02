@@ -7,7 +7,7 @@ Created on 14/12/18
 """
 
 import os
-from Base.DataIO import DataIO
+from Utils.Base.DataIO import DataIO
 from ParameterTuning.SearchAbstractClass import writeLog
 from ParameterTuning.SearchBayesianSkopt import SearchBayesianSkopt
 

@@ -7,9 +7,9 @@ Created on 07/09/17
 """
 
 
-from Base.BaseMatrixFactorizationRecommender import BaseMatrixFactorizationRecommender
-from Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
-from Base.Recommender_utils import check_matrix
+from Utils.Base.BaseMatrixFactorizationRecommender import BaseMatrixFactorizationRecommender
+from Utils.Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
+from Utils.Base.Recommender_utils import check_matrix
 
 from CythonCompiler.run_compile_subprocess import run_compile_subprocess
 import os, sys

@@ -48,7 +48,9 @@ class Hybrid(object):
         if self.p_als is not None:
             self.recommender_als = AlternatingLeastSquare(self.urm.copy())
 
-        self.hybrid_ratings = np.zeros(shape=(18495, 10))
+        n_user, n_items = urm.shape
+
+        self.hybrid_ratings = np.zeros(n_items)
 
     def fit(self):
         """

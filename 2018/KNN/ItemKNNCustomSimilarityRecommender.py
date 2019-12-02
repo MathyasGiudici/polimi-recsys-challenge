@@ -8,8 +8,8 @@ Created on 23/10/17
 
 
 import numpy as np
-from Base.Recommender_utils import check_matrix, similarityMatrixTopK
-from Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
+from Utils.Base.Recommender_utils import check_matrix, similarityMatrixTopK
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
 
 
 class ItemKNNCustomSimilarityRecommender(BaseSimilarityMatrixRecommender):

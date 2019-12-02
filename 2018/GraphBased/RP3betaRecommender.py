@@ -8,9 +8,9 @@ import numpy as np
 import scipy.sparse as sps
 
 from sklearn.preprocessing import normalize
-from Base.Recommender_utils import check_matrix, similarityMatrixTopK
+from Utils.Base.Recommender_utils import check_matrix, similarityMatrixTopK
 
-from Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
 import time, sys
 
 class RP3betaRecommender(BaseSimilarityMatrixRecommender):

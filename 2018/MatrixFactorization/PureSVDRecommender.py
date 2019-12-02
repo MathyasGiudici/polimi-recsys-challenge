@@ -6,8 +6,8 @@ Created on 14/06/18
 @author: Maurizio Ferrari Dacrema
 """
 
-from Base.BaseMatrixFactorizationRecommender import BaseMatrixFactorizationRecommender
-from Base.Recommender_utils import check_matrix
+from Utils.Base.BaseMatrixFactorizationRecommender import BaseMatrixFactorizationRecommender
+from Utils.Base.Recommender_utils import check_matrix
 
 from sklearn.utils.extmath import randomized_svd
 import scipy.sparse as sps

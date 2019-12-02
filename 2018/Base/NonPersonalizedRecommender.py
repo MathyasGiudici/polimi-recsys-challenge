@@ -6,9 +6,9 @@
 """
 
 import numpy as np
-from Base.BaseRecommender import BaseRecommender
-from Base.Recommender_utils import check_matrix
-from Base.DataIO import DataIO
+from Utils.Base.BaseRecommender import BaseRecommender
+from Utils.Base.Recommender_utils import check_matrix
+from Utils.Base.DataIO import DataIO
 
 
 class TopPop(BaseRecommender):

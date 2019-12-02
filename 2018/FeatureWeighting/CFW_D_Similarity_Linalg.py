@@ -7,11 +7,11 @@ Created on 08/09/17
 """
 
 
-from Base.Similarity.Compute_Similarity import Compute_Similarity
+from Utils.Base.Similarity.Compute_Similarity import Compute_Similarity
 
-from Base.SimilarityMatrixRecommender import SimilarityMatrixRecommender
-from Base.Recommender import Recommender
-from Base.Recommender_utils import check_matrix
+from Utils.Base.SimilarityMatrixRecommender import SimilarityMatrixRecommender
+from Utils.Base.Recommender import Recommender
+from Utils.Base.Recommender_utils import check_matrix
 
 
 from scipy.sparse import linalg

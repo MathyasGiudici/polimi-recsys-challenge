@@ -158,28 +158,18 @@ class GenericRunner(object):
         generated_weights = []
         results = []
 
-        for weight in WeightConstants.IS_TEST_WEIGHTS:
-            for i in range(0, 1):
-                if i != 1:
-                    weight["icfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
-                    weight["ucfknn"] += round(random.uniform(- min(0.5, weight["ucfknn"]), 0.5), 2)
-                    weight["cbfknn"] += round(random.uniform(- min(0.5, weight["cbfknn"]), 0.5), 2)
-                    weight["slimbpr"] += round(random.uniform(- min(0.5, weight["slimbpr"]), 0.5), 2)
-                    weight["puresvd"] += round(random.uniform(- min(0.5, weight["puresvd"]), 0.5), 2)
-                    weight["als"] += round(random.uniform(- min(0.5, weight["als"]), 0.5), 2)
-                    weight["cfw"] += round(random.uniform(- min(0.5, weight["cfw"]), 0.5), 2)
+        for weight in self.get_test_weights(False):
+            generated_weights.append(weight)
+            print("--------------------------------------")
 
-                generated_weights.append(weight.copy())
-                print("--------------------------------------")
-
-                recommender = Hybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+            recommender = Hybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                      self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, weight)
-                recommender.fit()
-                result_dict = evaluate_algorithm(self.urm_validation, recommender)
-                results.append(float(result_dict["MAP"]))
+            recommender.fit()
+            result_dict = evaluate_algorithm(self.urm_validation, recommender)
+            results.append(float(result_dict["MAP"]))
 
-                self.writer.write_report(self.writer, str(weight), report_counter)
-                self.writer.write_report(self.writer, str(result_dict), report_counter)
+            self.writer.write_report(self.writer, str(weight), report_counter)
+            self.writer.write_report(self.writer, str(result_dict), report_counter)
 
         # Retriving correct weight
         results.sort()
@@ -196,4 +186,25 @@ class GenericRunner(object):
 
         self.writer.write_report(self.writer, str(weight), report_counter)
         self.writer.write_report(self.writer, str(result_dict), report_counter)
+
+    def get_test_weights(self, addRandom):
+        if not addRandom:
+            return WeightConstants.IS_TEST_WEIGHTS
+        else:
+            new_weights = []
+            for weight in WeightConstants.IS_TEST_WEIGHTS:
+                new_weights.append(weight)
+                for i in range(0, 5):
+                    new_obj = weight.copy()
+                    new_obj["icfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
+                    new_obj["ucfknn"] += round(random.uniform(- min(0.5, weight["ucfknn"]), 0.5), 2)
+                    new_obj["cbfknn"] += round(random.uniform(- min(0.5, weight["cbfknn"]), 0.5), 2)
+                    new_obj["slimbpr"] += round(random.uniform(- min(0.5, weight["slimbpr"]), 0.5), 2)
+                    new_obj["puresvd"] += round(random.uniform(- min(0.5, weight["puresvd"]), 0.5), 2)
+                    new_obj["als"] += round(random.uniform(- min(0.5, weight["als"]), 0.5), 2)
+                    new_obj["cfw"] += round(random.uniform(- min(0.5, weight["cfw"]), 0.5), 2)
+                    new_weights.append(new_obj)
+
+            return new_weights
+
 

@@ -7,8 +7,8 @@ Created on 06/07/2018
 """
 
 
-from Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
-from Base.Recommender import Recommender
+from Utils.Base.Incremental_Training_Early_Stopping import Incremental_Training_Early_Stopping
+from Utils.Base.Recommender import Recommender
 import os, sys
 import numpy as np, pickle
 
@@ -73,7 +73,7 @@ class MF_MSE_PyTorch(Recommender, Incremental_Training_Early_Stopping):
 
 
         if evaluator_object is None and self.URM_validation is not None:
-            from Base.Evaluation.Evaluator import SequentialEvaluator
+            from Utils.Base.Evaluation.Evaluator import SequentialEvaluator
 
             evaluator_object = SequentialEvaluator(self.URM_validation, [10])
 

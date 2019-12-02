@@ -13,7 +13,7 @@ Created on 22/11/17
 ##########                  PURE COLLABORATIVE              ##########
 ##########                                                  ##########
 ######################################################################
-from Base.NonPersonalizedRecommender import TopPop, Random, GlobalEffects
+from Utils.Base.NonPersonalizedRecommender import TopPop, Random, GlobalEffects
 from KNN.UserKNNCFRecommender import UserKNNCFRecommender
 from KNN.ItemKNNCFRecommender import ItemKNNCFRecommender
 from SLIM_BPR.Cython.SLIM_BPR_Cython import SLIM_BPR_Cython
@@ -603,7 +603,7 @@ def read_data_split_and_search():
 
 
 
-    from Base.Evaluation.Evaluator import EvaluatorHoldout
+    from Utils.Base.Evaluation.Evaluator import EvaluatorHoldout
 
     evaluator_validation = EvaluatorHoldout(URM_validation, cutoff_list=[5])
     evaluator_test = EvaluatorHoldout(URM_test, cutoff_list=[5, 10])

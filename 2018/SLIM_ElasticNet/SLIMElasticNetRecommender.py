@@ -7,10 +7,10 @@
 
 import numpy as np
 import scipy.sparse as sps
-from Base.Recommender_utils import check_matrix
+from Utils.Base.Recommender_utils import check_matrix
 from sklearn.linear_model import ElasticNet
 
-from Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseSimilarityMatrixRecommender
 import time, sys
 
 

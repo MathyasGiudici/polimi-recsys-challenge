@@ -8,7 +8,7 @@ Created on 06/07/2018
 
 import time, sys
 import numpy as np
-from Base.BaseTempFolder import BaseTempFolder
+from Utils.Base.BaseTempFolder import BaseTempFolder
 from Utils.Base.seconds_to_biggest_unit import seconds_to_biggest_unit
 
 
