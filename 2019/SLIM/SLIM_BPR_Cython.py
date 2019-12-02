@@ -256,6 +256,7 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
         # rank items
         ranking = scores.argsort()[::-1]
 
+        print(ranking)
         return ranking[:at]
 
     def get_expected_ratings(self, user_id):

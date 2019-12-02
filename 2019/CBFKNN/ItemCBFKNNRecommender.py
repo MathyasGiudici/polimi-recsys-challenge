@@ -1,17 +1,19 @@
 from Utils.Base.Similarity.Compute_Similarity_Python import Compute_Similarity_Python
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseItemSimilarityMatrixRecommender
 import numpy as np
 
-class ItemCBFKNNRecommender(object):
+class ItemCBFKNNRecommender(BaseItemSimilarityMatrixRecommender):
 
     def __init__(self, URM, ICM):
+        super(BaseItemSimilarityMatrixRecommender, self).__init__(URM)
         self.URM = URM
         self.ICM = ICM
 
     def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine"):
+
         similarity_object = Compute_Similarity_Python(self.ICM.T, shrink=shrink,
                                                       topK=topK, normalize=normalize,
                                                       similarity=similarity)
-
         self.W_sparse = similarity_object.compute_similarity()
         self.recs = self.URM.dot(self.W_sparse)
 

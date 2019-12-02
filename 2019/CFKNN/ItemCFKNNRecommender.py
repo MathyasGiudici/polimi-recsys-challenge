@@ -1,11 +1,15 @@
 from Utils.Base.Similarity.Compute_Similarity_Python import Compute_Similarity_Python
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseItemSimilarityMatrixRecommender
 import numpy as np
 
-
-class ItemCFKNNRecommender(object):
+class ItemCFKNNRecommender():
 
     def __init__(self, URM):
+        #super(ItemCFKNNRecommender, self).__init__(URM)
         self.URM = URM
+
+    def get_W_sparse(self):
+        return self.W_sparse
 
     def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine"):
         similarity_object = Compute_Similarity_Python(self.URM, shrink=shrink,
@@ -25,7 +29,6 @@ class ItemCFKNNRecommender(object):
 
         # rank items
         ranking = scores.argsort()[::-1]
-
         return ranking[:at]
 
     def get_expected_ratings(self, user_id):

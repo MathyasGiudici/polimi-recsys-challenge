@@ -216,7 +216,6 @@ class Extractor(object):
 
         return icm_tfidf
 
-
     def get_ucm_age(self):
         # Composing the name
         file_name = self.DATA_FILE_PATH + "data_UCM_age.csv"
