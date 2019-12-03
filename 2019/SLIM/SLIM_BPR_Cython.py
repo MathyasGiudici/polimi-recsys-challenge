@@ -245,31 +245,18 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
         # Command to generate html report
         # cython -a SLIM_BPR_Cython_Epoch.pyx
 
-    def recommend(self, user_id, at=None, exclude_seen=True):
-        # compute the scores using the dot product
-        user_profile = self.URM_train[user_id]
-        scores = user_profile.dot(self.W_sparse).toarray().ravel()
-
-        if exclude_seen:
-            scores = self.filter_seen(user_id, scores)
-
-        # rank items
-        ranking = scores.argsort()[::-1]
-
-        print(ranking)
-        return ranking[:at]
-
     def get_expected_ratings(self, user_id):
         expected_ratings = self.recs[user_id].todense()
         return np.squeeze(np.asarray(expected_ratings))
 
-    def filter_seen(self, user_id, scores):
-        start_pos = self.URM_train.indptr[user_id]
-        end_pos = self.URM_train.indptr[user_id + 1]
+    def recommend(self, user_id, at=10):
+        expected_ratings = self.get_expected_ratings(user_id)
 
-        user_profile = self.URM.indices[start_pos:end_pos]
+        recommended_items = np.flip(np.argsort(expected_ratings), 0)
 
-        scores[user_profile] = -np.inf
+        unseen_items_mask = np.in1d(recommended_items, self.URM_train[user_id].indices,
+                                    assume_unique=True, invert=True)
+        recommended_items = recommended_items[unseen_items_mask]
+        return recommended_items[0:at]
 
-        return scores
 

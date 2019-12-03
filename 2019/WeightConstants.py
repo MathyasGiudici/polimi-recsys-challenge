@@ -16,7 +16,7 @@ SUBM_WEIGHTS = {
         "icfknn": 2.5,
         "ucfknn": 0.2,
         "cbfknn": 0.5,
-        "slimbpr": 0.1,
+        "slimbpr": 1.5,
         "puresvd": 2,
         "als": 1,
         "cfw": 3,
@@ -29,7 +29,7 @@ IS_TEST_WEIGHTS = [{
     "icfknn": 2.5,
     "ucfknn": 0.2,
     "cbfknn": 0.5,
-    "slimbpr": 0.1,
+    "slimbpr": 1.5,
     "puresvd": 2,
     "als": 1,
     "cfw": 3,
@@ -48,3 +48,10 @@ IS_TEST_WEIGHTS = [{
 #     "puresvd": 3,
 #     "als": 1.5,
 }]
+
+SUB_TEST_ROUNDROBIN = [[0, 1, 2, 3, 4, 5],
+                       [0, 4, 3, 5, 2, 1],
+                       [4, 0, 3, 5, 2, 1],
+                       [0, 3, 4, 5, 2, 1],
+                       [4, 3, 0, 5, 2, 1],
+                       [5, 4, 3, 2, 1, 0]]

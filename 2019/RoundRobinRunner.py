@@ -1,4 +1,4 @@
-from Hybrid.WeightedHybrid import WeightedHybrid
+from Hybrid.RoundRobinHybrid import RoundRobinHybrid
 from OwnUtils.Extractor import Extractor
 from OwnUtils.Writer import Writer
 from datetime import datetime
@@ -11,11 +11,11 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 """
 Specify the report and the submission in which we will write the results
 """
-report_counter = 2
-submission_counter = 2
+report_counter = 0
+submission_counter = 0
 
 
-class GenericRunner(object):
+class RoundRobinRunner(object):
 
     def __init__(self, cbfknn=True, icfknn=True, ucfknn=True, slim_bpr=True, pure_svd=True, als=True, cfw=True):
         """
@@ -138,7 +138,7 @@ class GenericRunner(object):
         """
         self.writer.write_header(self.writer, sub_counter=submission_counter)
 
-        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn, self.p_slimbpr,
+        recommender = RoundRobinHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn, self.p_slimbpr,
                              self.p_puresvd, self.p_als, self.p_cfw, WeightConstants.SUBM_WEIGHTS)
         recommender.fit()
 
@@ -155,56 +155,37 @@ class GenericRunner(object):
         """
         Method used for the validation and the calculation of the weights
         """
-        generated_weights = []
         results = []
+        orders = []
 
-        for weight in self.get_test_weights():
-            generated_weights.append(weight)
+        for order in WeightConstants.SUB_TEST_ROUNDROBIN:
             print("--------------------------------------")
+            orders.append(order.copy())
 
-            recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, weight)
+            recommender = RoundRobinHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, order)
             recommender.fit()
             result_dict = evaluate_algorithm(self.urm_validation, recommender)
             results.append(float(result_dict["MAP"]))
 
-            self.writer.write_report(self.writer, str(weight), report_counter)
+            self.writer.write_report(self.writer, str(order), report_counter)
             self.writer.write_report(self.writer, str(result_dict), report_counter)
 
         # Retriving correct weight
         results.sort()
-        weight = generated_weights[int(results.index(max(results)))]
+        order = orders[int(results.index(max(results)))]
 
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
         self.writer.write_report(self.writer, "TESTING", report_counter)
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
-        recommender = WeightedHybrid(self.urm_post_validation, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                             self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, weight)
+        recommender = RoundRobinHybrid(self.urm_post_validation, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+                             self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, order)
         recommender.fit()
         result_dict = evaluate_algorithm(self.urm_test, recommender)
 
-        self.writer.write_report(self.writer, str(weight), report_counter)
+        self.writer.write_report(self.writer, str(order), report_counter)
         self.writer.write_report(self.writer, str(result_dict), report_counter)
 
-    def get_test_weights(self, addRandom=False):
-        if not addRandom:
-            return WeightConstants.IS_TEST_WEIGHTS
-        else:
-            new_weights = []
-            for weight in WeightConstants.IS_TEST_WEIGHTS:
-                new_weights.append(weight)
-                for i in range(0, 5):
-                    new_obj = weight.copy()
-                    new_obj["icfknn"] += round(random.uniform(- min(0.5, weight["icfknn"]), 0.5), 2)
-                    new_obj["ucfknn"] += round(random.uniform(- min(0.5, weight["ucfknn"]), 0.5), 2)
-                    new_obj["cbfknn"] += round(random.uniform(- min(0.5, weight["cbfknn"]), 0.5), 2)
-                    new_obj["slimbpr"] += round(random.uniform(- min(0.5, weight["slimbpr"]), 0.5), 2)
-                    new_obj["puresvd"] += round(random.uniform(- min(0.5, weight["puresvd"]), 0.5), 2)
-                    new_obj["als"] += round(random.uniform(- min(0.5, weight["als"]), 0.5), 2)
-                    new_obj["cfw"] += round(random.uniform(- min(0.5, weight["cfw"]), 0.5), 2)
-                    new_weights.append(new_obj)
-
-            return new_weights
 
 

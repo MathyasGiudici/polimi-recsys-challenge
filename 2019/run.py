@@ -1,20 +1,22 @@
 from GenericRunner import GenericRunner
+from RoundRobinRunner import RoundRobinRunner
 
 if __name__ == '__main__':
 
     algorithms_choice = {
-        "icfknn": False,
+        "icfknn": True,
         "ucfknn": True,
-        "cbfknn": False,
-        "slim_bpr": False,
+        "cbfknn": True,
+        "slim_bpr": True,
         "pure_svd": True,
-        "als": False,
+        "als": True,
         "cfw": False,
     }
 
     is_test = True
 
-    runner = GenericRunner(**algorithms_choice)
+    #runner = GenericRunner(**algorithms_choice)
+    runner = RoundRobinRunner(**algorithms_choice)
     runner.run(is_test)
 
 

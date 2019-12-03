@@ -50,13 +50,12 @@ class AlternatingLeastSquare:
 
         return np.squeeze(scores)
 
-    def recommend(self, playlist_id, at=10):
-        playlist_id = int(playlist_id)
-        expected_ratings = self.get_expected_ratings(playlist_id)
+    def recommend(self, user_id, at=10):
+        expected_ratings = self.get_expected_ratings(user_id)
 
         recommended_items = np.flip(np.argsort(expected_ratings), 0)
 
-        unseen_items_mask = np.in1d(recommended_items, self.URM[playlist_id].indices,
+        unseen_items_mask = np.in1d(recommended_items, self.URM[user_id].indices,
                                     assume_unique=True, invert=True)
         recommended_items = recommended_items[unseen_items_mask]
         return recommended_items[0:at]

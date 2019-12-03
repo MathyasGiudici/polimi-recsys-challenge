@@ -47,3 +47,13 @@ class PureSVDRecommender(BaseMatrixFactorizationRecommender):
 
         return np.squeeze(self._compute_item_score(user_id_array))
 
+    def recommend(self, user_id, at=10):
+        expected_ratings = self.get_expected_ratings(user_id)
+
+        recommended_items = np.flip(np.argsort(expected_ratings), 0)
+
+        unseen_items_mask = np.in1d(recommended_items, self.URM_train[user_id].indices,
+                                    assume_unique=True, invert=True)
+        recommended_items = recommended_items[unseen_items_mask]
+        return recommended_items[0:at]
+
