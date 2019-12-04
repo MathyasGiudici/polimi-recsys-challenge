@@ -283,7 +283,7 @@ class Extractor(object):
             cols.append(new_j)
 
         ucm_all = sps.coo_matrix((values, (rows, cols))).tocsr()
-        ucm_tfidf = feature_extraction.text.TfidfTransformer.fit_transform(ucm_all)
+        ucm_tfidf = feature_extraction.text.TfidfTransformer().fit_transform(ucm_all)
         ucm_tfidf = preprocessing.normalize(ucm_tfidf, axis=0, norm='l2')
 
         return ucm_tfidf

@@ -140,7 +140,7 @@ class RoundRobinRunner(object):
         self.writer.write_header(self.writer, sub_counter=submission_counter)
 
         recommender = RoundRobinHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn, self.p_slimbpr,
-                             self.p_puresvd, self.p_als, self.p_cfw, WeightConstants.SUBM_WEIGHTS, variated_version)
+                             self.p_puresvd, self.p_als, self.p_cfw, WeightConstants.SUBM_ROUNDROBIN, variated_version)
         recommender.fit()
 
         from tqdm import tqdm
