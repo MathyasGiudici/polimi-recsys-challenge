@@ -14,6 +14,7 @@ Specify the report and the submission in which we will write the results
 report_counter = 0
 submission_counter = 0
 
+variated_version = False
 
 class RoundRobinRunner(object):
 
@@ -139,7 +140,7 @@ class RoundRobinRunner(object):
         self.writer.write_header(self.writer, sub_counter=submission_counter)
 
         recommender = RoundRobinHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn, self.p_slimbpr,
-                             self.p_puresvd, self.p_als, self.p_cfw, WeightConstants.SUBM_WEIGHTS)
+                             self.p_puresvd, self.p_als, self.p_cfw, WeightConstants.SUBM_WEIGHTS, variated_version)
         recommender.fit()
 
         from tqdm import tqdm
@@ -163,7 +164,7 @@ class RoundRobinRunner(object):
             orders.append(order.copy())
 
             recommender = RoundRobinHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, order)
+                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, order, variated_version)
             recommender.fit()
             result_dict = evaluate_algorithm(self.urm_validation, recommender)
             results.append(float(result_dict["MAP"]))
@@ -180,7 +181,7 @@ class RoundRobinRunner(object):
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
         recommender = RoundRobinHybrid(self.urm_post_validation, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                             self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, order)
+                             self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, order, variated_version)
         recommender.fit()
         result_dict = evaluate_algorithm(self.urm_test, recommender)
 
