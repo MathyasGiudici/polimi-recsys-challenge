@@ -27,9 +27,13 @@ class Writer(object):
 
         print("Submission file header written")
 
-    def write_report(self, toWrite, rep_counter=0):
+    def write_report(self, to_write, rep_counter=0):
         file_name = self.REPORT_FILE_PATH + "report" + str(rep_counter) + ".txt"
         f = open(file_name, "a+")
-        f.write(toWrite + "\n")
+        f.write(to_write + "\n")
         f.close()
 
+    def write_generic(self, file_path, to_write):
+        f = open(file_path,"a+")
+        f.write(to_write)
+        f.close()

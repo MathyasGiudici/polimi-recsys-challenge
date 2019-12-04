@@ -182,7 +182,7 @@ class Extractor(object):
             return sps.coo_matrix((ones_matrix, (items, assets)))
 
     # ICM obtained merging horizontally all the different ICMs
-    def get_icm_all(self):
+    def get_icm_all(self, no_tfidf=False):
         asset_matrix = self.get_icm_asset(self)
         sub_matrix = self.get_icm_subclass(self)
         price_matrix = self.get_icm_price(self)
@@ -211,6 +211,10 @@ class Extractor(object):
             cols.append(new_j)
 
         icm_all = sps.coo_matrix((values, (rows, cols))).tocsr()
+
+        if no_tfidf:
+            return icm_all
+
         icm_tfidf = feature_extraction.text.TfidfTransformer().fit_transform(icm_all)
         icm_tfidf = preprocessing.normalize(icm_tfidf, axis=0, norm='l2')
 
@@ -261,7 +265,7 @@ class Extractor(object):
             return sps.coo_matrix((ones_matrix, (users, regions)))
 
     # UCM obtained merging horizontally all the different UCMs
-    def get_ucm_all(self):
+    def get_ucm_all(self, no_tfidf=False):
         age_matrix = self.get_ucm_age(self)
         reg_matrix = self.get_ucm_region(self)
 
@@ -283,6 +287,10 @@ class Extractor(object):
             cols.append(new_j)
 
         ucm_all = sps.coo_matrix((values, (rows, cols))).tocsr()
+
+        if no_tfidf:
+            return ucm_all
+
         ucm_tfidf = feature_extraction.text.TfidfTransformer().fit_transform(ucm_all)
         ucm_tfidf = preprocessing.normalize(ucm_tfidf, axis=0, norm='l2')
 
