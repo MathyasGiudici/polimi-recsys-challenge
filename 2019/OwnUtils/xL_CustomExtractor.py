@@ -34,7 +34,7 @@ class CustomExtractor:
         urm_post_validation = matrices[0]
         self.my_path = self.extractor.DATA_FILE_PATH + "xL_data/post_validation.txt"
         self.urm = urm_post_validation
-        self.create_general_file(write_userf,write_itemf)
+        self.create_general_file(write_userf, write_itemf)
 
         urm_test = matrices[1]
         self.my_path = self.extractor.DATA_FILE_PATH + "xL_data/test.txt"

@@ -5,6 +5,7 @@ import scipy.sparse as sps
 
 
 class Builder(object):
+    DATA_FILE_PATH = "data/"
 
     def __init__(self):
 
@@ -116,7 +117,7 @@ class Builder(object):
         """
         Retrieve all the possible typologies of region and a list of sets of users which belong to the same region
         """
-        ucm_region_pd = pd.read_csv('C:/Users/david/Documents/PyCharmProjects/RecSys 2019/recsys-challenge/2019/data/data_UCM_region.csv')
+        ucm_region_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_UCM_region.csv')
         ucm_region = pd.DataFrame(ucm_region_pd)
         self.regions = set(ucm_region.loc[:, "col"])
 
@@ -128,7 +129,7 @@ class Builder(object):
         """
         Retrieve all the possible typologies of age and a list of sets of users which have the same age
         """
-        ucm_age_pd = pd.read_csv('C:/Users/david/Documents/PyCharmProjects/RecSys 2019/recsys-challenge/2019/data/data_UCM_age.csv')
+        ucm_age_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_UCM_age.csv')
         ucm_age = pd.DataFrame(ucm_age_pd)
         self.ages = set(ucm_age.loc[:, "col"])
 
