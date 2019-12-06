@@ -10,7 +10,6 @@ class RoundRobinHybrid(GeneralHybrid):
         self.rr_order = rr_order
         self.withVariation = withVariation
 
-
     def recommend(self, user, at=10):
         if self.withVariation:
             return self.recommend_variated(user, at)
@@ -18,7 +17,6 @@ class RoundRobinHybrid(GeneralHybrid):
             return self.recommend_basic(user, at)
 
     def recommend_basic(self, user, at=10):
-
         self.hybrid_ratings.clear()
 
         if self.p_icfknn is not None:
@@ -48,7 +46,6 @@ class RoundRobinHybrid(GeneralHybrid):
         return recommended_items[0:at]
 
     def recommend_variated(self, user, at=10):
-
         self.hybrid_ratings.clear()
 
         if self.p_icfknn is not None:

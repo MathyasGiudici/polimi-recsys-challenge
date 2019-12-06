@@ -21,7 +21,6 @@ class CFW_D_Similarity_Linalg(BaseItemSimilarityMatrixRecommender):
 
     RECOMMENDER_NAME = "CFW_D_Similarity_Linalg"
 
-
     def __init__(self, URM_train, ICM, S_matrix_target):
 
         super(CFW_D_Similarity_Linalg, self).__init__(URM_train)

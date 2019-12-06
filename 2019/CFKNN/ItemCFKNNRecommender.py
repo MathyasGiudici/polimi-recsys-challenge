@@ -5,7 +5,6 @@ import numpy as np
 class ItemCFKNNRecommender():
 
     def __init__(self, URM):
-        #super(ItemCFKNNRecommender, self).__init__(URM)
         self.URM = URM
 
     def get_W_sparse(self):

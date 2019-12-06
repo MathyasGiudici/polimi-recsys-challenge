@@ -5,7 +5,7 @@ from Hybrid.GeneralHybrid import GeneralHybrid
 class WeightedHybrid(GeneralHybrid):
 
     def __init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, weights):
-        GeneralHybrid.__init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, weights)
+        GeneralHybrid.__init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw)
 
         self.weights = weights
 
@@ -15,18 +15,35 @@ class WeightedHybrid(GeneralHybrid):
 
     def recommend(self, user, at=10):
 
+        # if self.p_icfknn is not None:
+        #     self.hybrid_ratings = self.recommender_itemCFKNN.get_expected_ratings(user) * self.weights["icfknn"]
+        # if self.p_ucfknn is not None:
+        #     self.hybrid_ratings += self.recommender_userCFKNN.get_expected_ratings(user) * self.weights["ucfknn"]
+        # if self.p_cbfknn is not None:
+        #     self.hybrid_ratings += self.recommender_itemCBFKNN.get_expected_ratings(user) * self.weights["cbfknn"]
+        # if self.p_slimbpr is not None:
+        #     self.hybrid_ratings += self.recommender_slim_bpr.get_expected_ratings(user) * self.weights["slimbpr"]
+        # if self.p_puresvd is not None:
+        #     self.hybrid_ratings += self.recommender_puresvd.get_expected_ratings(user) * self.weights["puresvd"]
+        # if self.p_als is not None:
+        #     self.hybrid_ratings += self.recommender_als.get_expected_ratings(user) * self.weights["als"]
+        #
+        # if self.p_cfw is not None:
+        #     self.hybrid_ratings += self.recommender_cfw.get_expected_ratings(user) * self.weights["cfw"]
+
         if self.p_icfknn is not None:
             self.hybrid_ratings = self.recommender_itemCFKNN.get_expected_ratings(user) * self.weights["icfknn"]
-        if self.p_ucfknn is not None:
-            self.hybrid_ratings += self.recommender_userCFKNN.get_expected_ratings(user) * self.weights["ucfknn"]
-        if self.p_cbfknn is not None:
-            self.hybrid_ratings += self.recommender_itemCBFKNN.get_expected_ratings(user) * self.weights["cbfknn"]
         if self.p_slimbpr is not None:
             self.hybrid_ratings += self.recommender_slim_bpr.get_expected_ratings(user) * self.weights["slimbpr"]
+        if self.p_ucfknn is not None:
+            self.hybrid_ratings += self.recommender_userCFKNN.get_expected_ratings(user) * self.weights["ucfknn"]
         if self.p_puresvd is not None:
             self.hybrid_ratings += self.recommender_puresvd.get_expected_ratings(user) * self.weights["puresvd"]
         if self.p_als is not None:
             self.hybrid_ratings += self.recommender_als.get_expected_ratings(user) * self.weights["als"]
+        if self.p_cbfknn is not None:
+            self.hybrid_ratings += self.recommender_itemCBFKNN.get_expected_ratings(user) * self.weights["cbfknn"]
+
 
         if self.p_cfw is not None:
             self.hybrid_ratings += self.recommender_cfw.get_expected_ratings(user) * self.weights["cfw"]
