@@ -102,9 +102,8 @@ class Extractor(object):
             return sps.coo_matrix((ones_matrix, (users, items))).tocsr()
 
     def get_users(self):
-        users = self.get_interaction_users(self)
-        users.append(self.get_target_users_of_recs(self))
-
+        users = self.get_interaction_users()
+        users.append(self.get_target_users_of_recs())
         return list(set(users))
 
     def get_icm_asset(self):
@@ -183,9 +182,9 @@ class Extractor(object):
 
     # ICM obtained merging horizontally all the different ICMs
     def get_icm_all(self, no_tfidf=False):
-        asset_matrix = self.get_icm_asset(self)
-        sub_matrix = self.get_icm_subclass(self)
-        price_matrix = self.get_icm_price(self)
+        asset_matrix = self.get_icm_asset()
+        sub_matrix = self.get_icm_subclass()
+        price_matrix = self.get_icm_price()
         values = []
         rows = []
         cols = []
@@ -266,8 +265,8 @@ class Extractor(object):
 
     # UCM obtained merging horizontally all the different UCMs
     def get_ucm_all(self, no_tfidf=False):
-        age_matrix = self.get_ucm_age(self)
-        reg_matrix = self.get_ucm_region(self)
+        age_matrix = self.get_ucm_age()
+        reg_matrix = self.get_ucm_region()
 
         values = []
         rows = []

@@ -71,9 +71,9 @@ class GenericRunner(object):
         self.is_test = is_test
 
         if self.is_test:
-            extractor = Extractor
-            urm = extractor.get_urm_all(extractor)
-            self.icm = extractor.get_icm_all(extractor)
+            extractor = Extractor()
+            urm = extractor.get_urm_all()
+            self.icm = extractor.get_icm_all()
 
             # Splitting into post-validation & testing in case of parameter tuning
             matrices = loo.split_train_leave_k_out_user_wise(urm, 1, False, True)
@@ -91,10 +91,10 @@ class GenericRunner(object):
             self.evaluate()
 
         else:
-            extractor = Extractor
-            users = extractor.get_target_users_of_recs(extractor)
-            self.urm_train = extractor.get_urm_all(extractor)
-            self.icm = extractor.get_icm_all(extractor)
+            extractor = Extractor()
+            users = extractor.get_target_users_of_recs()
+            self.urm_train = extractor.get_urm_all()
+            self.icm = extractor.get_icm_all()
 
             self.write_submission(users)
 
@@ -126,7 +126,6 @@ class GenericRunner(object):
         if self.cfw:
             self.writer.write_report(self.writer, "CFW: " + str(self.p_cfw), report_counter)
 
-        self.writer.write_report(self.writer, "\n", report_counter)
         self.writer.write_report(self.writer, "VALIDATION", report_counter)
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
@@ -159,6 +158,7 @@ class GenericRunner(object):
         results = []
 
         for weight in self.get_test_weights():
+
             generated_weights.append(weight)
             print("--------------------------------------")
 
@@ -187,8 +187,9 @@ class GenericRunner(object):
         self.writer.write_report(self.writer, str(weight), report_counter)
         self.writer.write_report(self.writer, str(result_dict), report_counter)
 
-    def get_test_weights(self, addRandom=False):
-        if not addRandom:
+
+    def get_test_weights(self, add_random=False):
+        if not add_random:
             return WeightConstants.IS_TEST_WEIGHTS
         else:
             new_weights = []

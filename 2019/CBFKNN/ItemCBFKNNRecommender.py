@@ -2,10 +2,10 @@ from Utils.Base.Similarity.Compute_Similarity_Python import Compute_Similarity_P
 from Utils.Base.BaseSimilarityMatrixRecommender import BaseItemSimilarityMatrixRecommender
 import numpy as np
 
-class ItemCBFKNNRecommender(BaseItemSimilarityMatrixRecommender):
+class ItemCBFKNNRecommender():
 
     def __init__(self, URM, ICM):
-        super(BaseItemSimilarityMatrixRecommender, self).__init__(URM)
+        #super(BaseItemSimilarityMatrixRecommender, self).__init__(URM)
         self.URM = URM
         self.ICM = ICM
 

@@ -44,7 +44,7 @@ def MAP(is_relevant, relevant_items):
 
 
 
-def evaluate_algorithm(URM_test, recommender_object, at=5):
+def evaluate_algorithm(URM_test, recommender_object, at=10):
 
     cumulative_precision = 0.0
     cumulative_recall = 0.0
@@ -55,7 +55,6 @@ def evaluate_algorithm(URM_test, recommender_object, at=5):
     URM_test = sps.csr_matrix(URM_test)
 
     n_users = URM_test.shape[0]
-
 
     for user_id in range(n_users):
 
@@ -77,7 +76,6 @@ def evaluate_algorithm(URM_test, recommender_object, at=5):
             cumulative_precision += precision(is_relevant, relevant_items)
             cumulative_recall += recall(is_relevant, relevant_items)
             cumulative_MAP += MAP(is_relevant, relevant_items)
-
 
     cumulative_precision /= num_eval
     cumulative_recall /= num_eval

@@ -7,6 +7,7 @@ if __name__ == '__main__':
     ex = Extractor
     # urm_all = ex.get_interaction_matrix_all(ex)
     icm_all = ex.get_icm_all(ex)
+    ucm_all = ex.get_ucm_all(ex)
     #print(icm_all.shape)
     # matrices = []
     # matrices = loo.split_train_leave_k_out_user_wise(urm_all, 1, True, True)

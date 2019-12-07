@@ -1,8 +1,9 @@
 from Utils.Base.Similarity.Compute_Similarity_Python import Compute_Similarity_Python
+from Utils.Base.BaseSimilarityMatrixRecommender import BaseItemSimilarityMatrixRecommender
 import numpy as np
 
 
-class UserCFKNNRecommender(object):
+class UserCFKNNRecommender():
 
     def __init__(self, URM):
         self.URM = URM
