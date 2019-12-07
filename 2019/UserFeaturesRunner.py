@@ -6,6 +6,7 @@ from OwnUtils.Writer import Writer
 from datetime import datetime
 from Utils.evaluation_function import evaluate_algorithm
 import WeightConstants
+import scipy.sparse as sps
 
 import random
 import Utils.Split.split_train_validation_leave_k_out as loo
@@ -100,21 +101,49 @@ class UserFeaturesRunner(object):
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
 
+    def write_submission(self, users):
+        """
+        This method is used to write the submission, selecting only chosen algorithms
+        :return:
+        """
+        self.writer.write_header(self.writer, sub_counter=submission_counter)
+
+        recommender = RecommenderByUserFeature(self.urm_post_validation, self.icm, self.urm_per_region_list,
+                                               self.urm_per_age_list)
+        recommender.fit()
+
+        from tqdm import tqdm
+
+        for user_id in tqdm(users):
+            recs = recommender.recommend(user_id, at=10)
+            self.writer.write(self.writer, user_id, recs, sub_counter=submission_counter)
+
+        print("Submission file written")
+
+
     def evaluate(self):
         """
         Method used for the validation and the calculation of the weights
         """
         results = []
-        print("--------------------------------------")
+        generated_weights = []
 
-        recommender = RecommenderByUserFeature(self.urm_train, self.icm, self.urm_per_region_list,
-                                                           self.urm_per_age_list)
-        recommender.fit()
+        for weight in WeightConstants.IS_TEST_WEIGHTS:
+            print("--------------------------------------")
+            generated_weights.append(weight)
 
-        result_dict = evaluate_algorithm(self.urm_validation, recommender)
-        results.append(float(result_dict["MAP"]))
+            recommender = RecommenderByUserFeature(self.urm_train, self.icm, self.urm_per_region_list,
+                                                               self.urm_per_age_list, weight)
+            recommender.fit()
 
-        self.writer.write_report(self.writer, str(result_dict), report_counter)
+            result_dict = evaluate_algorithm(self.urm_validation, recommender)
+            results.append(float(result_dict["MAP"]))
+
+            self.writer.write_report(self.writer, str(result_dict), report_counter)
+
+        # Retriving correct weight
+        results.sort()
+        weight = generated_weights[int(results.index(max(results)))]
 
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
         self.writer.write_report(self.writer, "TESTING", report_counter)

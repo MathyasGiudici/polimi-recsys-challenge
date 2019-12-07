@@ -56,7 +56,6 @@ def evaluate_algorithm(URM_test, recommender_object, at=10):
 
     n_users = URM_test.shape[0]
 
-
     for user_id in range(n_users):
 
         if user_id % 10000 == 0:
@@ -77,7 +76,6 @@ def evaluate_algorithm(URM_test, recommender_object, at=10):
             cumulative_precision += precision(is_relevant, relevant_items)
             cumulative_recall += recall(is_relevant, relevant_items)
             cumulative_MAP += MAP(is_relevant, relevant_items)
-
 
     cumulative_precision /= num_eval
     cumulative_recall /= num_eval

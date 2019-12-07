@@ -26,9 +26,9 @@ SUBM_WEIGHTS = {
 Weights used for the local testing
 """
 IS_TEST_WEIGHTS = [{
-    "icfknn": 1,
-    "ucfknn": 1,
-    "cbfknn": 1,
+    "icfknn": 2.5,
+    "ucfknn": 0.2,
+    "cbfknn": 0.5,
     "slimbpr": 1,
     "puresvd": 1,
     "als": 1,

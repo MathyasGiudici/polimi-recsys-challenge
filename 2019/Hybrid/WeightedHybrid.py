@@ -10,10 +10,12 @@ class WeightedHybrid(GeneralHybrid):
         self.weights = weights
 
         n_user, n_items = urm.shape
+        self.n_items = n_items
 
-        self.hybrid_ratings = np.zeros(n_items)
+        self.hybrid_ratings = None
 
     def recommend(self, user, at=10):
+        self.hybrid_ratings = np.zeros(self.n_items)
 
         # if self.p_icfknn is not None:
         #     self.hybrid_ratings = self.recommender_itemCFKNN.get_expected_ratings(user) * self.weights["icfknn"]
@@ -32,7 +34,7 @@ class WeightedHybrid(GeneralHybrid):
         #     self.hybrid_ratings += self.recommender_cfw.get_expected_ratings(user) * self.weights["cfw"]
 
         if self.p_icfknn is not None:
-            self.hybrid_ratings = self.recommender_itemCFKNN.get_expected_ratings(user) * self.weights["icfknn"]
+            self.hybrid_ratings += self.recommender_itemCFKNN.get_expected_ratings(user) * self.weights["icfknn"]
         if self.p_slimbpr is not None:
             self.hybrid_ratings += self.recommender_slim_bpr.get_expected_ratings(user) * self.weights["slimbpr"]
         if self.p_ucfknn is not None:

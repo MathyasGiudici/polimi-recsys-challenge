@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     #runner = GenericRunner(**algorithms_choice)
     #runner = RoundRobinRunner(**algorithms_choice)
-    runner = UserFeaturesRunner(False, False)
+    runner = UserFeaturesRunner(False, True)
     runner.run(is_test)
 
 

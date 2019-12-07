@@ -11,11 +11,13 @@ from Utils.Base.IR_feature_weighting import okapi_BM_25
 
 class RecommenderByUserFeature(object):
 
-    def __init__(self, urm_train, icm, urm_per_region_list, urm_per_age_list):
+    def __init__(self, urm_train, icm, urm_per_region_list, urm_per_age_list, weights):
         self.urm_train = urm_train
         self.urm_per_region_list = urm_per_region_list
         self.urm_per_age_list = urm_per_age_list
         self.icm = icm
+
+        self.weights = weights
 
         self.icfknn_list = []
         self.ucfknn_list = []
@@ -25,7 +27,7 @@ class RecommenderByUserFeature(object):
         self.icm_bm25 = okapi_BM_25(self.icm_bm25)
         self.icm_bm25 = self.icm_bm25.tocsr()
 
-        self.ratings = np.zeros(self.icm.shape[0])
+        self.ratings = None
 
         self.extractor = Extractor()
 
@@ -67,12 +69,14 @@ class RecommenderByUserFeature(object):
 
 
     def recommend(self, user, at=10):
+        self.ratings = np.zeros(self.icm.shape[0])
+
         for alg in self.icfknn_list:
-            self.ratings += alg.get_expected_ratings(user)
+            self.ratings += alg.get_expected_ratings(user) * self.weights["icfknn"]
         for alg in self.ucfknn_list:
-            self.ratings += alg.get_expected_ratings(user)
+            self.ratings += alg.get_expected_ratings(user) * self.weights["ucfknn"]
         for alg in self.icbfknn_list:
-            self.ratings += alg.get_expected_ratings(user)
+            self.ratings += alg.get_expected_ratings(user) * self.weights["cbfknn"]
 
         recommended_items = np.flip(np.argsort(self.ratings), 0)
 
