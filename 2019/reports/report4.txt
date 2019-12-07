@@ -74,3 +74,19 @@ UCFKNN: {'topK': 500, 'shrink': 10}
 Used USER_PER_AGE TRAINING PROCEDURE
 VALIDATION
 --------------------------------------
+{'precision': 0.0061903281673252085, 'recall': 0.0619032816732537, 'MAP': 0.030438018125082393}
+--------------------------------------
+TESTING
+--------------------------------------
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 14:38:18.976247
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+Used USER_PER_AGE TRAINING PROCEDURE
+VALIDATION
+--------------------------------------

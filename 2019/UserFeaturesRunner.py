@@ -109,7 +109,7 @@ class UserFeaturesRunner(object):
         self.writer.write_header(self.writer, sub_counter=submission_counter)
 
         recommender = RecommenderByUserFeature(self.urm_post_validation, self.icm, self.urm_per_region_list,
-                                               self.urm_per_age_list)
+                                               self.urm_per_age_list, WeightConstants.SUBM_WEIGHTS)
         recommender.fit()
 
         from tqdm import tqdm
@@ -150,7 +150,7 @@ class UserFeaturesRunner(object):
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
         recommender = RecommenderByUserFeature(self.urm_post_validation, self.icm, self.urm_per_region_list,
-                                               self.urm_per_age_list)
+                                               self.urm_per_age_list, weight)
         recommender.fit()
         result_dict = evaluate_algorithm(self.urm_test, recommender)
 
