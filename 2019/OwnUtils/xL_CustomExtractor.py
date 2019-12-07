@@ -43,7 +43,7 @@ class CustomExtractor:
 
         # Splitting the post-validation matrix in train & validation
         # (Problem of merging train and validation again at the end => loo twice)
-        matrices_for_validation = loo.split_train_leave_k_out_user_wise(self.urm_post_validation, 1, False, True)
+        matrices_for_validation = loo.split_train_leave_k_out_user_wise(urm_post_validation, 1, False, True)
 
         urm_train = matrices_for_validation[0]
         self.my_path = self.extractor.DATA_FILE_PATH + "xL_data/train.txt"
