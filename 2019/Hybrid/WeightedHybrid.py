@@ -4,8 +4,8 @@ from Hybrid.GeneralHybrid import GeneralHybrid
 
 class WeightedHybrid(GeneralHybrid):
 
-    def __init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, weights):
-        GeneralHybrid.__init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw)
+    def __init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b, weights):
+        GeneralHybrid.__init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b)
 
         self.weights = weights
 
@@ -45,7 +45,10 @@ class WeightedHybrid(GeneralHybrid):
             self.hybrid_ratings += self.recommender_als.get_expected_ratings(user) * self.weights["als"]
         if self.p_cbfknn is not None:
             self.hybrid_ratings += self.recommender_itemCBFKNN.get_expected_ratings(user) * self.weights["cbfknn"]
-
+        if self.p_p3a is not None:
+            self.hybrid_ratings += self.recommender_p3a.get_expected_ratings(user) * self.weights["p3a"]
+        if self.p_rp3b is not None:
+            self.hybrid_ratings += self.recommender_rp3b.get_expected_ratings(user) * self.weights["rp3b"]
 
         if self.p_cfw is not None:
             self.hybrid_ratings += self.recommender_cfw.get_expected_ratings(user) * self.weights["cfw"]
