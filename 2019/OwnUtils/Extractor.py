@@ -24,48 +24,6 @@ class Extractor(object):
             print(f'Processed {line_count} users to make recommendations.')
             return users
 
-    def get_interaction_users(self):
-        # Composing the name
-        file_name = self.DATA_FILE_PATH + "data_train.csv"
-
-        with open(file_name) as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            line_count = 0
-
-            users = []
-            for line in csv_reader:
-                if line_count != 0:
-                    users.append(int(line[0]))
-
-                    if int(float(line[2])) != 1:
-                        print("Some user has interaction data <= 1")
-                line_count += 1
-
-            print(f'Processed {line_count} users from train data.')
-
-            return users
-
-    def get_interaction_items(self):
-        # Composing the name
-        file_name = self.DATA_FILE_PATH + "data_train.csv"
-
-        with open(file_name) as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            line_count = 0
-
-            items = []
-            for line in csv_reader:
-                if line_count != 0:
-                    items.append(int(line[1]))
-
-                    if int(float(line[2])) != 1:
-                        print("Some user has interaction data <= 1")
-                line_count += 1
-
-            print(f'Processed {line_count} items from train data.')
-
-            return items
-
     def get_interaction_rating(self):
         # Composing the name
         file_name = self.DATA_FILE_PATH + "data_train.csv"
@@ -80,8 +38,34 @@ class Extractor(object):
             return line_count - 1
 
     def get_urm_all(self):
+        return self._urm_extractor_code("data_train.csv")
+
+    def get_single_urm(self, number):
+        name = "urm" + str(number) + ".csv"
+        return self._urm_extractor_code(name)
+
+    def get_others_urm(self, selected_one):
+        numbers = np.arange(1, 5)
+        numbers = np.delete(numbers, selected_one - 1)
+
+        array = []
+        for index in numbers:
+            array.append(self._urm_extractor_code(index))
+
+        return array
+
+    def get_others_urm_vstack(self, selected_one):
+        array = self.get_others_urm(selected_one)
+
+        array_coo = []
+        for matrix in array:
+            array_coo.append(matrix.tocoo())
+
+        return sps.vstack(array_coo)
+
+    def _urm_extractor_code(self, name):
         # Composing the name
-        file_name = self.DATA_FILE_PATH + "data_train.csv"
+        file_name = self.DATA_FILE_PATH + name
 
         with open(file_name) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -100,11 +84,6 @@ class Extractor(object):
             ones_matrix = np.ones(line_count - 1)
 
             return sps.coo_matrix((ones_matrix, (users, items))).tocsr()
-
-    def get_users(self):
-        users = self.get_interaction_users()
-        users.append(self.get_target_users_of_recs())
-        return list(set(users))
 
     def get_icm_asset(self):
         # Composing the name

@@ -10,10 +10,14 @@ class ItemCFKNNRecommender():
     def get_W_sparse(self):
         return self.W_sparse
 
-    def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine"):
+    def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine",  asymmetric_alpha=0.5,
+                    tversky_alpha=1.0, tversky_beta=1.0, row_weights=None):
+
         similarity_object = Compute_Similarity_Python(self.URM, shrink=shrink,
                                                       topK=topK, normalize=normalize,
-                                                      similarity=similarity)
+                                                      similarity=similarity, asymmetric_alpha=asymmetric_alpha,
+                                                      tversky_alpha=tversky_alpha, tversky_beta=tversky_beta,
+                                                      row_weights=row_weights)
 
         self.W_sparse = similarity_object.compute_similarity()
         self.recs = self.URM.dot(self.W_sparse)

@@ -11,7 +11,7 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 """
 Specify the report and the submission in which we will write the results
 """
-report_counter = 10
+report_counter = 7
 submission_counter = 0
 
 
@@ -169,7 +169,7 @@ class GenericRunner(object):
         generated_weights = []
         results = []
 
-        for weight in self.get_test_weights():
+        for weight in self.get_test_weights(add_random=True):
 
             generated_weights.append(weight)
             print("--------------------------------------")
@@ -221,60 +221,4 @@ class GenericRunner(object):
                     new_weights.append(new_obj)
 
             return new_weights
-
-    def evaluate_boost(self):
-        extractor = Extractor()
-        urm = extractor.get_urm_all()
-        self.icm = extractor.get_icm_all()
-
-        # Splitting into post-validation & testing in case of parameter tuning
-        matrices = loo.split_train_leave_k_out_user_wise(urm, 1, False, True)
-
-        self.urm_post_validation = matrices[0]
-        self.urm_test = matrices[1]
-
-        # Splitting the post-validation matrix in train & validation
-        # (Problem of merging train and validation again at the end => loo twice)
-        matrices_for_validation = loo.split_train_leave_k_out_user_wise(self.urm_post_validation, 1, False, True)
-        self.urm_train = matrices_for_validation[0]
-        self.urm_validation = matrices_for_validation[1]
-
-        results = []
-
-        weight = WeightConstants.SUBM_WEIGHTS
-
-        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, weight)
-        recommender.fit()
-        result_dict = evaluate_algorithm(self.urm_validation, recommender)
-        results.append(float(result_dict["MAP"]))
-
-        self.writer.write_report(self.writer, str(weight), report_counter)
-        self.writer.write_report(self.writer, str(result_dict), report_counter)
-
-        self.urm_train = extractor.get_urm_boosted(self.urm_train)
-        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, weight)
-        recommender.fit()
-        result_dict = evaluate_algorithm(self.urm_validation, recommender)
-        results.append(float(result_dict["MAP"]))
-        self.writer.write_report(self.writer, str(weight), report_counter)
-        self.writer.write_report(self.writer, str(result_dict), report_counter)
-
-
-        # Retriving correct weight
-        self.writer.write_report(self.writer, "--------------------------------------", report_counter)
-        self.writer.write_report(self.writer, "TESTING", report_counter)
-        self.writer.write_report(self.writer, "--------------------------------------", report_counter)
-
-        if results[1] > results[0]:
-            self.urm_post_validation = extractor.get_urm_boosted(self.urm_post_validation)
-
-        recommender = WeightedHybrid(self.urm_post_validation, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                             self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, weight)
-        recommender.fit()
-        result_dict = evaluate_algorithm(self.urm_test, recommender)
-
-        self.writer.write_report(self.writer, str(weight), report_counter)
-        self.writer.write_report(self.writer, str(result_dict), report_counter)
 
