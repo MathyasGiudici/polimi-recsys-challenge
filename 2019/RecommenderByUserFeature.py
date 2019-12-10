@@ -4,6 +4,8 @@ from OwnUtils.Extractor import Extractor
 from CFKNN.ItemCFKNNRecommender import ItemCFKNNRecommender
 from CFKNN.UserCFKNNRecommender import UserCFKNNRecommender
 from CBFKNN.ItemCBFKNNRecommender import ItemCBFKNNRecommender
+from MF.PureSVDRecommender import PureSVDRecommender
+from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
 import WeightConstants
 from tqdm import tqdm
 from Utils.Base.IR_feature_weighting import okapi_BM_25
@@ -11,11 +13,14 @@ from Utils.Base.IR_feature_weighting import okapi_BM_25
 
 class RecommenderByUserFeature(object):
 
-    def __init__(self, urm_train, icm, urm_per_region_list, urm_per_age_list, weights):
+    def __init__(self, urm_train, icm, urm_per_region_list, urm_per_age_list, weights, add_pure_svd=False, add_slim_bpr=False):
         self.urm_train = urm_train
         self.urm_per_region_list = urm_per_region_list
         self.urm_per_age_list = urm_per_age_list
         self.icm = icm
+
+        self.add_pure_svd = add_pure_svd
+        self.add_slim_bpr = add_slim_bpr
 
         self.weights = weights
 
@@ -46,9 +51,14 @@ class RecommenderByUserFeature(object):
                 self.ucfknn_list.append(UserCFKNNRecommender(urm.copy()))
                 self.icbfknn_list.append(ItemCBFKNNRecommender(urm.copy(), self.icm_bm25.copy()))
 
-        self.icfknn_list.append(ItemCFKNNRecommender(self.urm_train.copy()))
-        self.ucfknn_list.append(UserCFKNNRecommender(self.urm_train.copy()))
-        self.icbfknn_list.append(ItemCBFKNNRecommender(self.urm_train.copy(), self.icm_bm25.copy()))
+        # self.icfknn_list.append(ItemCFKNNRecommender(self.urm_train.copy()))
+        # self.ucfknn_list.append(UserCFKNNRecommender(self.urm_train.copy()))
+        # self.icbfknn_list.append(ItemCBFKNNRecommender(self.urm_train.copy(), self.icm_bm25.copy()))
+
+        if self.add_pure_svd:
+            self.pure_SVD = PureSVDRecommender(self.urm_train.copy())
+        if self.add_slim_bpr:
+            self.slim_bpr = SLIM_BPR_Cython(self.urm_train.copy())
 
 
     def fit(self):
@@ -67,6 +77,11 @@ class RecommenderByUserFeature(object):
             alg.fit(**WeightConstants.CBFKNN)
         print("Computation completed!")
 
+        if self.add_pure_svd:
+            self.pure_SVD.fit(**WeightConstants.PURE_SVD)
+        if self.add_slim_bpr:
+            self.slim_bpr.fit(**WeightConstants.SLIM_BPR)
+
 
     def recommend(self, user, at=10):
         self.ratings = np.zeros(self.icm.shape[0])
@@ -77,6 +92,11 @@ class RecommenderByUserFeature(object):
             self.ratings += alg.get_expected_ratings(user) * self.weights["ucfknn"]
         for alg in self.icbfknn_list:
             self.ratings += alg.get_expected_ratings(user) * self.weights["cbfknn"]
+
+        if self.add_pure_svd:
+            self.ratings += self.pure_SVD.get_expected_ratings(user) * self.weights["puresvd"]
+        if self.add_slim_bpr:
+            self.ratings += self.slim_bpr.get_expected_ratings(user) * self.weights["slimbpr"]
 
         recommended_items = np.flip(np.argsort(self.ratings), 0)
 

@@ -15,7 +15,7 @@ Definitive weights kept for the submission
 SUBM_WEIGHTS = {
         "icfknn": 2.5,
         "ucfknn": 0.2,
-        "cbfknn": 0.5,
+        "cbfknn": 1,
         "slimbpr": 1.5,
         "puresvd": 2,
         "als": 1,
@@ -30,7 +30,7 @@ IS_TEST_WEIGHTS = [{
     "ucfknn": 0.2,
     "cbfknn": 0.5,
     "slimbpr": 1,
-    "puresvd": 1,
+    "puresvd": 2,
     "als": 1,
     "cfw": 1,
 # }, {

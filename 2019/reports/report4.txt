@@ -90,3 +90,164 @@ UCFKNN: {'topK': 500, 'shrink': 10}
 Used USER_PER_AGE TRAINING PROCEDURE
 VALIDATION
 --------------------------------------
+{'precision': 0.006194768861849832, 'recall': 0.06194768861849993, 'MAP': 0.029622763000133265}
+--------------------------------------
+TESTING
+--------------------------------------
+{'precision': 0.007143643368189075, 'recall': 0.07143643368189323, 'MAP': 0.03689023129584502}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 17:56:34.048099
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+Used USER_PER_AGE TRAINING PROCEDURE
+VALIDATION
+--------------------------------------
+{'precision': 0.008730405435409982, 'recall': 0.04365202717705049, 'MAP': 0.026233402904214193}
+--------------------------------------
+TESTING
+--------------------------------------
+{'precision': 0.010603558980003381, 'recall': 0.053017794900018345, 'MAP': 0.03273772396502188}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 19:13:50.686653
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+Used USER_PER_REGION TRAINING PROCEDURE
+Used USER_PER_AGE TRAINING PROCEDURE
+VALIDATION
+--------------------------------------
+{'precision': 0.009254407389315543, 'recall': 0.04627203694657844, 'MAP': 0.028304986899951187}
+--------------------------------------
+TESTING
+--------------------------------------
+{'precision': 0.010992478444321833, 'recall': 0.054962392221610715, 'MAP': 0.03342750565645466}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 19:44:59.147987
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+PURE_SVD: {'num_factors': 1000}
+Used USER_PER_AGE TRAINING PROCEDURE
+
+Weights : "icfknn": 2.5, "ucfknn": 0.2, "cbfknn": 0.5, "puresvd": 2
+
+VALIDATION
+--------------------------------------
+{'precision': 0.009520849060792947, 'recall': 0.047604245303965544, 'MAP': 0.028893378924463815}
+--------------------------------------
+TESTING
+--------------------------------------
+{'precision': 0.011586864795450033, 'recall': 0.05793432397725188, 'MAP': 0.03631566073503356}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 20:12:05.129724
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+PURE_SVD: {'num_factors': 1000}
+Used USER_PER_REGION TRAINING PROCEDURE
+Used USER_PER_AGE TRAINING PROCEDURE
+VALIDATION
+--------------------------------------
+{'precision': 0.009245526000266296, 'recall': 0.04622763000133221, 'MAP': 0.027168169101647516}
+--------------------------------------
+TESTING
+--------------------------------------
+{'precision': 0.010919097413318351, 'recall': 0.054595487066593285, 'MAP': 0.033826820766831925}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 20:58:35.988261
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+PURE_SVD: {'num_factors': 1000}
+SLIM_BPR: {'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}
+Used USER_PER_AGE TRAINING PROCEDURE
+
+"icfknn": 2.5, "ucfknn": 0.2, "cbfknn": 0.5, "slimbpr": 1, "puresvd": 2
+VALIDATION
+--------------------------------------
+{'precision': 0.009254407389315543, 'recall': 0.04627203694657844, 'MAP': 0.0280666696271297}
+--------------------------------------
+TESTING
+--------------------------------------
+{'precision': 0.011043845166024269, 'recall': 0.05521922583012291, 'MAP': 0.03488167308750709}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 21:34:16.233433
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+PURE_SVD: {'num_factors': 1000}
+SLIM_BPR: {'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}
+Used USER_PER_REGION TRAINING PROCEDURE
+Used USER_PER_AGE TRAINING PROCEDURE
+VALIDATION
+--------------------------------------
+{'precision': 0.009476442115546713, 'recall': 0.047382210577734354, 'MAP': 0.028111076572375954}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 2, 'als': 1, 'cfw': 1}
+{'precision': 0.011190607228031233, 'recall': 0.05595303614015777, 'MAP': 0.03533052039381169}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 23:16:00.283849
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+PURE_SVD: {'num_factors': 1000}
+Used USER_PER_AGE TRAINING PROCEDURE
+VALIDATION
+--------------------------------------
+{'precision': 0.009769527954171858, 'recall': 0.048847639770860166, 'MAP': 0.030454283049869062}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 2, 'als': 1, 'cfw': 1}
+{'precision': 0.011344707393138543, 'recall': 0.05672353696569437, 'MAP': 0.03507124075093276}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-07 23:49:41.443479
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+PURE_SVD: {'num_factors': 1000}
+Used USER_PER_AGE TRAINING PROCEDURE
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 2, 'als': 1, 'cfw': 1}
+{'precision': 0.00889915182734567, 'recall': 0.044495759136728985, 'MAP': 0.028261320070459017}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 2, 'als': 1, 'cfw': 1}
+{'precision': 0.011263988259034715, 'recall': 0.056319941295175195, 'MAP': 0.034660918485904926}

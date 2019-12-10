@@ -2,6 +2,7 @@ from OwnUtils.Extractor import Extractor
 import pandas as pd
 import numpy as np
 import scipy.sparse as sps
+from sklearn.model_selection import train_test_split
 
 
 class Builder(object):
@@ -136,6 +137,37 @@ class Builder(object):
         for age in self.ages:
             self.users_per_age_list.append(ucm_age.loc[ucm_age['col'] == age])
 
+    """
+    Used to slit the urm, don't use it!
+    """
+    def split_4_urm(self):
+
+        urm = pd.DataFrame(pd.read_csv(self.DATA_FILE_PATH + 'data_train.csv'))
+
+        df1 = []
+        for user_id in range(322099, 398636):
+            df1.append(urm.iloc[user_id])
+
+        temp_df = pd.DataFrame(df1).astype(np.int)
+        temp_df.to_csv(self.DATA_FILE_PATH + 'urm4.csv', index=False)
+
+
+
+        #
+        # firstHalf, secondHalf = train_test_split(urm, test_size=0.5, train_size=0.5, random_state=None)
+        #
+        # urm1, urm2 = train_test_split(firstHalf, test_size=0.5, train_size=0.5, random_state=None)
+        # urm3, urm4 = train_test_split(secondHalf, test_size=0.5, train_size=0.5, random_state=None)
+        #
+        # # urm1 = sps.csr_matrix(urm1)
+        # # urm2 = sps.csr_matrix(urm2)
+        # # urm3 = sps.csr_matrix(urm3)
+        # # urm4 = sps.csr_matrix(urm4)
+        # print(urm1)
+        # print(urm2)
+        # print(urm3)
+        # print(urm4)
+
 
 
 # if __name__ == '__main__':
@@ -143,5 +175,4 @@ class Builder(object):
 #     ex = Extractor()
 #     urm_train = ex.get_urm_all()
 #
-#     urm_per_age = builder.build_per_region_urm_train(urm_train)
-#     print(urm_per_age[0])
+#     builder.split_4_urm(urm_train)

@@ -11,18 +11,21 @@ import scipy.sparse as sps
 import random
 import Utils.Split.split_train_validation_leave_k_out as loo
 
-report_counter = 4
-submission_counter = 4
+report_counter = 3
+submission_counter = 3
 
 class UserFeaturesRunner(object):
 
-    def __init__(self, users_per_region=True, users_per_age=True):
+    def __init__(self, users_per_region=True, users_per_age=True, pure_svd_addition=False, slim_bpr_addition=False):
         """
         Users_per_region and users_per_age are two boolean values which specify the type of training
         that we want to perform.
         """
         self.users_per_region = users_per_region
         self.users_per_age = users_per_age
+
+        self.pure_svd_addition = pure_svd_addition
+        self.slim_bpr_addition = slim_bpr_addition
 
         self.is_test = None
         self.writer = Writer
@@ -68,12 +71,20 @@ class UserFeaturesRunner(object):
             self.evaluate()
 
         else:
-            extractor = Extractor
-            users = extractor.get_target_users_of_recs(extractor)
-            self.urm_train = extractor.get_urm_all(extractor)
-            self.icm = extractor.get_icm_all(extractor)
+            extractor = Extractor()
+            builder = Builder()
 
-            #self.write_submission(users)
+            users = extractor.get_target_users_of_recs()
+            self.urm_train = extractor.get_urm_all()
+            self.icm = extractor.get_icm_all()
+
+            # Building the urm_per_feature lists
+            if self.users_per_region:
+                self.urm_per_region_list = builder.build_per_region_urm_train(self.urm_train)
+            if self.users_per_age:
+                self.urm_per_age_list = builder.build_per_age_urm_train(self.urm_train)
+
+            self.write_submission(users)
 
 
     def write_report(self):
@@ -92,6 +103,11 @@ class UserFeaturesRunner(object):
         self.writer.write_report(self.writer, "ICFKNN: " + str(WeightConstants.ICFKNN), report_counter)
         self.writer.write_report(self.writer, "UCFKNN: " + str(WeightConstants.UCFKNN), report_counter)
 
+        if self.pure_svd_addition:
+            self.writer.write_report(self.writer, "PURE_SVD: " + str(WeightConstants.PURE_SVD), report_counter)
+        if self.slim_bpr_addition:
+            self.writer.write_report(self.writer, "SLIM_BPR: " + str(WeightConstants.SLIM_BPR), report_counter)
+
         if self.users_per_region:
             self.writer.write_report(self.writer, "Used USER_PER_REGION TRAINING PROCEDURE", report_counter)
         if self.users_per_age:
@@ -108,8 +124,9 @@ class UserFeaturesRunner(object):
         """
         self.writer.write_header(self.writer, sub_counter=submission_counter)
 
-        recommender = RecommenderByUserFeature(self.urm_post_validation, self.icm, self.urm_per_region_list,
-                                               self.urm_per_age_list, WeightConstants.SUBM_WEIGHTS)
+        recommender = RecommenderByUserFeature(self.urm_train, self.icm, self.urm_per_region_list,
+                                               self.urm_per_age_list, WeightConstants.SUBM_WEIGHTS,
+                                               self.pure_svd_addition, self.slim_bpr_addition)
         recommender.fit()
 
         from tqdm import tqdm
@@ -133,12 +150,14 @@ class UserFeaturesRunner(object):
             generated_weights.append(weight)
 
             recommender = RecommenderByUserFeature(self.urm_train, self.icm, self.urm_per_region_list,
-                                                               self.urm_per_age_list, weight)
+                                                   self.urm_per_age_list, weight, self.pure_svd_addition,
+                                                   self.slim_bpr_addition)
             recommender.fit()
 
             result_dict = evaluate_algorithm(self.urm_validation, recommender)
             results.append(float(result_dict["MAP"]))
 
+            self.writer.write_report(self.writer, str(weight), report_counter)
             self.writer.write_report(self.writer, str(result_dict), report_counter)
 
         # Retriving correct weight
@@ -150,8 +169,10 @@ class UserFeaturesRunner(object):
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
         recommender = RecommenderByUserFeature(self.urm_post_validation, self.icm, self.urm_per_region_list,
-                                               self.urm_per_age_list, weight)
+                                               self.urm_per_age_list, weight, self.pure_svd_addition,
+                                               self.slim_bpr_addition)
         recommender.fit()
         result_dict = evaluate_algorithm(self.urm_test, recommender)
 
+        self.writer.write_report(self.writer, str(weight), report_counter)
         self.writer.write_report(self.writer, str(result_dict), report_counter)
