@@ -8,11 +8,14 @@ SLIM_BPR = {"epochs": 200, "lambda_i": 0.01, "lambda_j": 0.01 }
 PURE_SVD = {"num_factors": 1000, }
 ALS = {"alpha_val": 20, "n_factors": 50, "regularization": 0.5, "iterations": 50}
 CFW = {"iteration_limit": 5000, "damp_coeff": 0.0, "topK": 100, "add_zeros_quota": 0.0}
+P3A = {"topK": 500, "alpha": .5}
+RP3B = {"alpha":.25, "beta":0.1, "min_rating":0, "topK":500}
 
 """
 Definitive weights kept for the submission
 """
-SUBM_WEIGHTS = {
+SUBM_WEIGHTS = {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3}
+_SUBM_WEIGHTS = {
         "icfknn": 2.5,
         "ucfknn": 0.2,
         "cbfknn": 1,
@@ -25,41 +28,28 @@ SUBM_WEIGHTS = {
 """
 Weights used for the local testing
 """
-IS_TEST_WEIGHTS = [{
-    "icfknn": 2.5,
-    "ucfknn": 0.2,
-    "cbfknn": 0.5,
-    "slimbpr": 1,
-    "puresvd": 2,
-    "als": 1,
-    "cfw": 1,
-# }, {
-#     "icfknn": 3,
-#     "ucfknn": 0.1,
-#     "cbfknn": 0.5,
-#     "slimbpr": 1.5,
-#     "puresvd": 2,
-#     "als": 0.8,
-# }, {
-#     "icfknn": 3,
-#     "ucfknn": 0.2,
-#     "cbfknn": 0.5,
-#     "slimbpr": 1,
-#     "puresvd": 3,
-#     "als": 1.5,
-}]
+IS_TEST_WEIGHTS = [
+    {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3},
+    {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3.5},
+    {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2.5, 'rp3b': 3.5},
+    {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1.5, 'rp3b': 2.5},
+    {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1.5, 'rp3b': 3},
+]
+
 
 
 SUBM_ROUNDROBIN = [5, 4, 3, 2, 1, 0]
 
-SUB_TEST_ROUNDROBIN_ORIGINAL = [[0, 1, 2, 3, 4, 5],
-                       [0, 4, 3, 5, 2, 1],
-                       [4, 0, 3, 5, 2, 1],
-                       [0, 3, 4, 5, 2, 1],
+SUB_TEST_ROUNDROBIN = [#[0, 1, 2, 3, 4, 5],
+                       #[0, 4, 3, 5, 2, 1],
+                       #[4, 0, 3, 5, 2, 1],
+                       #[0, 3, 4, 5, 2, 1],
                        [4, 3, 0, 5, 2, 1],
-                       [5, 4, 3, 2, 1, 0]]
+                       [5, 4, 3, 2, 1, 0],
+                                #]
 
-SUB_TEST_ROUNDROBIN = [[0, 3, 4, 5, 2, 1],
+#SUB_TEST_ROUNDROBIN = [
+                        [0, 3, 4, 5, 2, 1],
                         # [0, 1, 2, 3, 4, 5],
                         # [0, 4, 3, 5, 2, 1],
                         [0, 3, 1, 4, 5, 2],
