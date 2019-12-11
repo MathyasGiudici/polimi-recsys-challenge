@@ -29,8 +29,8 @@ class GeneralHybrid(object):
         self.p_rp3b = p_rp3b
 
         # Getting matrices
-        self.urm = urm
-        self.icm = icm
+        self.urm = urm.copy()
+        self.icm = icm.copy()
 
         self.icm_bm25 = self.icm.copy().astype(np.float32)
         self.icm_bm25 = okapi_BM_25(self.icm_bm25)

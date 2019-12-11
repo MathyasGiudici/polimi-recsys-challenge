@@ -20,7 +20,7 @@ class AlternatingLeastSquare:
     def __init__(self, URM_train):
         self.URM = URM_train
 
-    def fit(self, alpha_val = 25, n_factors=300, regularization=0.15, iterations=50):
+    def fit(self, alpha_val=25, n_factors=300, regularization=0.15, iterations=50):
         self.n_factors = n_factors
         self.regularization = regularization
         self.iterations = iterations
