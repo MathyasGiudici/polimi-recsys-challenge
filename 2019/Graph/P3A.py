@@ -21,7 +21,6 @@ class P3alphaRecommender(BaseSimilarityMatrixRecommender):
 
     def __init__(self, URM_train):
         super(P3alphaRecommender, self).__init__(URM_train)
-        print("P3A IS WORKING\n")
 
     def __str__(self):
         return "P3alpha(alpha={}, min_rating={}, topk={}, implicit={}, normalize_similarity={})".format(self.alpha,

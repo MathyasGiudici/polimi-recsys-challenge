@@ -3,6 +3,7 @@ from OwnUtils.Extractor import Extractor
 import Utils.Split.split_train_validation_leave_k_out as loo
 from Utils.evaluation_function import evaluate_algorithm
 from Hybrid.WeightedHybrid import WeightedHybrid
+from OwnUtils.Writer import Writer
 
 from skopt import gp_minimize
 from skopt.space import Real, Integer, Categorical
@@ -13,6 +14,9 @@ similarity_type = ['cosine', 'jaccard', "asymmetric", "dice", "tversky"]
 class Optimizer(object):
 
     def __init__(self):
+        self.report_counter = 101
+        self.writer = Writer()
+
         # Some parameters
         self.hyperparams = dict()
         self.hyperparams_names = list()
@@ -153,11 +157,8 @@ class Optimizer(object):
                           y0=None,
                           n_jobs=-1)
 
-        print(res)
-
-        from OwnUtils.Writer import Writer
-        writer = Writer()
-        writer.write_report(str(res), 101)
+        self.writer.write_report(str(res), self.report_counter)
+        self.create_parameters(res["x"])
 
     def iterator_to_create_dimension(self, to_iterate):
         skopt_types = [Real, Integer, Categorical]
@@ -174,6 +175,17 @@ class Optimizer(object):
             else:
                 raise ValueError("Unexpected parameter type: {} - {}".format(str(name), str(hyperparam)))
 
+    def create_parameters(self, hyp):
+        self.report_counter = self.report_counter + 1
+
+        self.writer.write_report("p_icfknn :" + str(self.rebuild_single_KNN(hyp[0:7]) ), self.report_counter)
+        self.writer.write_report("p_ucfknn :" + str(self.rebuild_single_KNN(hyp[7:14])), self.report_counter)
+        self.writer.write_report("p_cbfknn :" + str(self.rebuild_single_KNN(hyp[14:21])), self.report_counter)
+        self.writer.write_report("p_slimbpr :" + str(self.rebuild_slim(hyp[21:28])), self.report_counter)
+        self.writer.write_report("p_puresvd :" + str(self.rebuild_puresvd(hyp[28:29])), self.report_counter)
+        self.writer.write_report("p_p3a :" + str(self.rebuild_p3a(hyp[29:32])), self.report_counter)
+        self.writer.write_report("p_rp3b :" + str(self.rebuild_rp3beta(hyp[32:36])), self.report_counter)
+        self.writer.write_report("weight :" + str(self.rebuild_weights(hyp[36:])), self.report_counter)
 
 
 if __name__ == "__main__":

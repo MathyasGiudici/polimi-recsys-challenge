@@ -21,7 +21,6 @@ class RP3betaRecommender(BaseSimilarityMatrixRecommender):
 
     def __init__(self, URM_train):
         super(RP3betaRecommender, self).__init__(URM_train)
-        print("RP3betaRecommender is working")
 
     def __str__(self):
         return "RP3beta(alpha={}, beta={}, min_rating={}, topk={}, implicit={}, normalize_similarity={})".format(
