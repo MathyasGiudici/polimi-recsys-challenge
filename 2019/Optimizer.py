@@ -149,9 +149,9 @@ class Optimizer(object):
         self.writer.write_report("\n\n" + str(result), self.report_counter)
 
     def evaluate_single(self, hyp):
-        self.recommender = WeightedHybrid(self.urm_train, self.icm, None, None, self.rebuild_single_KNN(hyp[0:]),
-                                          None, None, None, None, None, None,
-                                          {"cbfknn":1})
+        self.recommender = WeightedHybrid(self.urm_train, self.icm, None, None, None,
+                                          self.rebuild_slim(hyp[0:]), None, None, None, None, None,
+                                          {"slimbpr":1})
         self.recommender.fit()
         result = evaluate_algorithm(self.urm_test, self.recommender, at=10)
 
@@ -193,7 +193,7 @@ class Optimizer(object):
 
 
     def run_single(self):
-        _, _, self.HYP["p_cbfknn"] = self.optimize_all_KNN()
+        self.HYP["p_slimbpr"] = self.optimize_slim()
 
         self.iterator_to_create_dimension(self.HYP)
 
