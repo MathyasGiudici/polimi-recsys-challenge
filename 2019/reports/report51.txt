@@ -1,0 +1,2 @@
+p_icfknn :{'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+p_ucfknn :{'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}

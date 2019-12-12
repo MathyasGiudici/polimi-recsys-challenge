@@ -1,26 +1,24 @@
 """
 Fixed parameters of each algorithm
 """
-ICFKNN = {"topK": 30, "shrink": 56, "similarity": "asymmetric", "normalize": True, "asymmetric_alpha": 0.6599609759159238,
-          "tversky_alpha": 0.8173624832240958, "tversky_beta":0.18694499695219727}
-UCFKNN = {"topK": 309, "shrink": 810, "similarity": "dice", "normalize": False, "asymmetric_alpha": 0.06296343185685262,
-          "tversky_alpha": 0.8912482067490604, "tversky_beta":0.1478657805022863}
-CBFKNN = {"topK": 158, "shrink": 816, "similarity": "asymmetric", "normalize": True, "asymmetric_alpha": 1.791766210561791,
-          "tversky_alpha": 0.17745394383013416, "tversky_beta":1.1794441251082355}
+ICFKNN = {'topK': 800, 'shrink': 130, 'similarity': 'dice', 'normalize': False, 'asymmetric_alpha': 2.0, 'tversky_alpha': 0.06645449914150482, 'tversky_beta': 0.0}
+UCFKNN = {'topK': 124, 'shrink': 1000, 'similarity': 'jaccard', 'normalize': False, 'asymmetric_alpha': 2.0, 'tversky_alpha': 1.4568982966977921, 'tversky_beta': 1.1915570273797769}
+CBFKNN = {'topK': 800, 'shrink': 1000, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 0.8403440634469317, 'tversky_alpha': 2.0, 'tversky_beta': 0.0}
 
-SLIM_BPR = {"topK": 433, "epochs": 1500, "symmetric": False, "sgd_mode": "adagrad", "lambda_i": 0.00014846788775948298, "lambda_j": 5.3658185438518884e-05, "learning_rate": 0.004296818192974266}
+SLIM_BPR = {'topK': 5, 'epochs': 20, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0016383008979062898}
 
-PURE_SVD = {"num_factors": 649, }
+PURE_SVD = {'num_factors': 481}
 
 ALS = {"alpha_val": 20, "n_factors": 50, "regularization": 0.5, "iterations": 50}
 CFW = {"iteration_limit": 5000, "damp_coeff": 0.0, "topK": 100, "add_zeros_quota": 0.0}
-P3A = {"topK": 500, "alpha": .5}
-RP3B = {"alpha":.25, "beta":0.1, "min_rating":0, "topK":500}
+
+P3A = {'topK': 800, 'alpha': 0.0, 'normalize_similarity': True}
+RP3B = {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True}
 
 """
 Definitive weights kept for the submission
 """
-SUBM_WEIGHTS = {'icfknn': 4.788149531158417, 'ucfknn': 0.5352507794267048, 'cbfknn': 4.9648185615891895, 'slimbpr': 2.181068924113327, 'puresvd': 4.7931831840382815, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3}
+SUBM_WEIGHTS = {'icfknn': 2.5802194484369156, 'ucfknn': 0.0, 'cbfknn': 5.0, 'slimbpr': 2.7268466077091325, 'puresvd': 0.6702145369478825, 'p3a': 1.9862766182019822, 'rp3b': 5.0}
 
 _SUBM_WEIGHTS = {
         "icfknn": 2.5,

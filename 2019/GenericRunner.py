@@ -12,7 +12,7 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 Specify the report and the submission in which we will write the results
 """
 report_counter = 7
-submission_counter = 0
+submission_counter = 1
 
 
 class GenericRunner(object):

@@ -105,7 +105,7 @@ class XGBoost(object):
         pass
 
     def evaluate(self):
-        weight = WeightConstants.SUBM_WEIGHTS
+        weight = {"icfknn": 1}
 
         recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, None, None,
                                         None, None, None, None, None, None, weight)
@@ -113,16 +113,16 @@ class XGBoost(object):
 
         # SELECTING BEST 20 RECOMMENDATION
         cutoff = 20
-        user_recommendations_items = []
         user_recommendations_user_id = []
+        user_recommendations_items = []
 
         for n_user in range(0, self.urm_test.shape[0]):
             recommendations = recommender.recommend(n_user, at=cutoff)
 
-            user_recommendations_items.extend(recommendations)
             user_recommendations_user_id.extend([n_user] * len(recommendations))
+            user_recommendations_items.extend(recommendations)
 
-        # BUILDING DATAFRAM
+        # BUILDING DATAFRAME
         import pandas as pd
         import numpy as np
 
@@ -164,6 +164,9 @@ class XGBoost(object):
                 feature_1_list.append(0)
 
         train_dataframe['item_feature_1'] = pd.Series(feature_1_list, index=train_dataframe.index)
+
+        print(train_dataframe[0:10])
+        return
 
         import xgboost as xgb
 

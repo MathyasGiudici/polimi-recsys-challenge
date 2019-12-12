@@ -16,7 +16,7 @@ if __name__ == '__main__':
         "rp3b": True,
     }
 
-    is_test = True
+    is_test = False
 
     runner = GenericRunner(**algorithms_choice)
     #runner = RoundRobinRunner(**algorithms_choice)

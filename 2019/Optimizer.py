@@ -31,8 +31,15 @@ class Optimizer(object):
 
         # Splitting into post-validation & testing in case of parameter tuning
         matrices = loo.split_train_leave_k_out_user_wise(urm, 1, False, True)
-        self.urm_train = matrices[0]
+
+        self.urm_post_validation = matrices[0]
         self.urm_test = matrices[1]
+
+        # Splitting the post-validation matrix in train & validation
+        # (Problem of merging train and validation again at the end => loo twice)
+        matrices_for_validation = loo.split_train_leave_k_out_user_wise(self.urm_post_validation, 1, False, True)
+        self.urm_train = matrices_for_validation[0]
+        self.urm_validation = matrices_for_validation[1]
 
     def optimeze_weights(self):
         # weights = {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3}
@@ -126,14 +133,25 @@ class Optimizer(object):
                                           None, None, self.rebuild_p3a(hyp[29:32]), self.rebuild_rp3beta(hyp[32:36]),
                                           self.rebuild_weights(hyp[36:]))
         self.recommender.fit()
-        result = evaluate_algorithm(self.urm_test, self.recommender, at=10)
+        result = evaluate_algorithm(self.urm_validation, self.recommender, at=10)
 
         return float(result["MAP"] * (-1))
 
+    def post_validation(self, hyp):
+
+        self.recommender = WeightedHybrid(self.urm_post_validation, self.icm, self.rebuild_single_KNN(hyp[0:7]),
+                                          self.rebuild_single_KNN(hyp[7:14]), self.rebuild_single_KNN(hyp[14:21]),
+                                          self.rebuild_slim(hyp[21:28]), self.rebuild_puresvd(hyp[28:29]),
+                                          None, None, self.rebuild_p3a(hyp[29:32]), self.rebuild_rp3beta(hyp[32:36]),
+                                          self.rebuild_weights(hyp[36:]))
+        self.recommender.fit()
+        result = evaluate_algorithm(self.urm_test, self.recommender, at=10)
+        self.writer.write_report("\n\n" + str(result), self.report_counter)
+
     def evaluate_single(self, hyp):
-        self.recommender = WeightedHybrid(self.urm_train, self.icm, self.rebuild_single_KNN(hyp[0:]),
-                                          None, None, None, None, None, None, None, None,
-                                          {"icfknn":1})
+        self.recommender = WeightedHybrid(self.urm_train, self.icm, None, None, self.rebuild_single_KNN(hyp[0:]),
+                                          None, None, None, None, None, None,
+                                          {"cbfknn":1})
         self.recommender.fit()
         result = evaluate_algorithm(self.urm_test, self.recommender, at=10)
 
@@ -171,9 +189,11 @@ class Optimizer(object):
 
         self.writer.write_report(str(res), self.report_counter)
         self.create_parameters(res["x"])
+        self.post_validation(res["x"])
+
 
     def run_single(self):
-        self.HYP["p_icfknn"], _, _ = self.optimize_all_KNN()
+        _, _, self.HYP["p_cbfknn"] = self.optimize_all_KNN()
 
         self.iterator_to_create_dimension(self.HYP)
 
@@ -215,9 +235,10 @@ class Optimizer(object):
     def create_parameters(self, hyp):
         self.report_counter = self.report_counter + 1
 
-        self.writer.write_report("p_icfknn :" + str(self.rebuild_single_KNN(hyp[0:7]) ), self.report_counter)
-        self.writer.write_report("p_ucfknn :" + str(self.rebuild_single_KNN(hyp[7:14])), self.report_counter)
-        self.writer.write_report("p_cbfknn :" + str(self.rebuild_single_KNN(hyp[14:21])), self.report_counter)
+        #self.writer.write_report("p_icfknn :" + str(self.rebuild_single_KNN(hyp[0:7]) ), self.report_counter)
+        #self.writer.write_report("p_ucfknn :" + str(self.rebuild_single_KNN(hyp[7:14])), self.report_counter)
+        #self.writer.write_report("p_cbfknn :" + str(self.rebuild_single_KNN(hyp[14:21])), self.report_counter)
+        self.writer.write_report("p_cbfknn :" + str(self.rebuild_single_KNN(hyp[0:7])), self.report_counter)
         self.writer.write_report("p_slimbpr :" + str(self.rebuild_slim(hyp[21:28])), self.report_counter)
         self.writer.write_report("p_puresvd :" + str(self.rebuild_puresvd(hyp[28:29])), self.report_counter)
         self.writer.write_report("p_p3a :" + str(self.rebuild_p3a(hyp[29:32])), self.report_counter)

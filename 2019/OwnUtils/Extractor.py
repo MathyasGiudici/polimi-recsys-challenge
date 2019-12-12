@@ -61,7 +61,17 @@ class Extractor(object):
         for matrix in array:
             array_coo.append(matrix.tocoo())
 
-        return sps.vstack(array_coo)
+        values = []
+        rows = []
+        cols = []
+
+        for matrix in array_coo:
+            for i, j, v in zip(matrix.row, matrix.col, matrix.data):
+                values.append(v)
+                rows.append(i)
+                cols.append(j)
+
+        return sps.coo_matrix((values, (rows, cols))).tocsr()
 
     def _urm_extractor_code(self, name):
         # Composing the name
