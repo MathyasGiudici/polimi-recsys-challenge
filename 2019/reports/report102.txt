@@ -1,0 +1,8 @@
+p_icfknn :{'topK': 800, 'shrink': 130, 'similarity': 'dice', 'normalize': False, 'asymmetric_alpha': 2.0, 'tversky_alpha': 0.06645449914150482, 'tversky_beta': 0.0}
+p_ucfknn :{'topK': 124, 'shrink': 1000, 'similarity': 'jaccard', 'normalize': False, 'asymmetric_alpha': 2.0, 'tversky_alpha': 1.4568982966977921, 'tversky_beta': 1.1915570273797769}
+p_cbfknn :{'topK': 800, 'shrink': 1000, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 0.8403440634469317, 'tversky_alpha': 2.0, 'tversky_beta': 0.0}
+p_slimbpr :{'topK': 5, 'epochs': 20, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0016383008979062898}
+p_puresvd :{'num_factors': 481}
+p_p3a :{'topK': 800, 'alpha': 0.0, 'normalize_similarity': True}
+p_rp3b :{'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True}
+weight :{'icfknn': 2.5802194484369156, 'ucfknn': 0.0, 'cbfknn': 5.0, 'slimbpr': 2.7268466077091325, 'puresvd': 0.6702145369478825, 'p3a': 1.9862766182019822, 'rp3b': 5.0}

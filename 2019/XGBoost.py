@@ -97,7 +97,7 @@ class XGBoost(object):
             extractor = Extractor()
             users = extractor.get_target_users_of_recs()
             self.urm_train = extractor.get_urm_all()
-            self.icm = extractor.get_icm_all()
+            #self.icm = extractor.get_icm_all()
 
             self.write_submission(users)
 
@@ -107,8 +107,8 @@ class XGBoost(object):
     def evaluate(self):
         weight = WeightConstants.SUBM_WEIGHTS
 
-        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                                         self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, weight)
+        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, None, None,
+                                        None, None, None, None, None, None, weight)
         recommender.fit()
 
         # SELECTING BEST 20 RECOMMENDATION
@@ -154,12 +154,12 @@ class XGBoost(object):
 
         for user_id, item_id in zip(user_recommendations_user_id, user_recommendations_items):
 
-            item_features = self.icm_dirty[item_id, :]
+            item_features = self.icm[item_id, :]
 
             #if target_feature in item_features.indices:
 
             if len(item_features.indices) != 0:
-                feature_1_list.append(self.icm_dirty[item_id,item_features.indices[0]])
+                feature_1_list.append(self.icm[item_id,item_features.indices[0]])
             else:
                 feature_1_list.append(0)
 

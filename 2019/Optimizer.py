@@ -14,7 +14,8 @@ similarity_type = ['cosine', 'jaccard', "asymmetric", "dice", "tversky"]
 class Optimizer(object):
 
     def __init__(self):
-        self.report_counter = 101
+        self.HYP = {}
+        self.report_counter = 50
         self.writer = Writer()
 
         # Some parameters
@@ -41,13 +42,15 @@ class Optimizer(object):
         weights["cbfknn"] = Real(low=0, high=5, prior='uniform')
         weights["slimbpr"] = Real(low=0, high=5, prior='uniform')
         weights["puresvd"] = Real(low=0, high=5, prior='uniform')
-        weights["als"] = Real(low=0, high=5, prior='uniform')
+        #weights["als"] = Real(low=0, high=5, prior='uniform')
+        weights["p3a"] = Real(low=0, high=5, prior='uniform')
+        weights["rp3b"] = Real(low=0, high=5, prior='uniform')
 
         return weights
 
     def rebuild_weights(self, array):
         return {"icfknn": array[0], "ucfknn": array[1], "cbfknn": array[2], "slimbpr": array[3],
-                "puresvd": array[4], "als": array[5]}
+                "puresvd": array[4], "p3a": array[5], "rp3b": array[6]}
 
     def optimize_single_KNN(self):
         parameters = {"topK": Integer(5, 800), "shrink": Integer(0, 1000), "similarity": Categorical(similarity_type),
@@ -127,6 +130,15 @@ class Optimizer(object):
 
         return float(result["MAP"] * (-1))
 
+    def evaluate_single(self, hyp):
+        self.recommender = WeightedHybrid(self.urm_train, self.icm, self.rebuild_single_KNN(hyp[0:]),
+                                          None, None, None, None, None, None, None, None,
+                                          {"icfknn":1})
+        self.recommender.fit()
+        result = evaluate_algorithm(self.urm_test, self.recommender, at=10)
+
+        return float(result["MAP"] * (-1))
+
     def run(self):
         self.HYP = {}
         self.HYP["p_icfknn"], self.HYP["p_ucfknn"], self.HYP["p_cbfknn"] = self.optimize_all_KNN()
@@ -141,6 +153,31 @@ class Optimizer(object):
         self.iterator_to_create_dimension(self.HYP)
 
         res = gp_minimize(self.evaluate, self.hyperparams_values,
+                          n_calls=70,
+                          n_random_starts=20,
+                          n_points=10000,
+                          # noise = 'gaussian',
+                          noise=1e-5,
+                          acq_func='gp_hedge',
+                          acq_optimizer='auto',
+                          random_state=None,
+                          verbose=True,
+                          n_restarts_optimizer=10,
+                          xi=0.01,
+                          kappa=1.96,
+                          x0=None,
+                          y0=None,
+                          n_jobs=-1)
+
+        self.writer.write_report(str(res), self.report_counter)
+        self.create_parameters(res["x"])
+
+    def run_single(self):
+        self.HYP["p_icfknn"], _, _ = self.optimize_all_KNN()
+
+        self.iterator_to_create_dimension(self.HYP)
+
+        res = gp_minimize(self.evaluate_single, self.hyperparams_values,
                           n_calls=70,
                           n_random_starts=20,
                           n_points=10000,
@@ -190,4 +227,4 @@ class Optimizer(object):
 
 if __name__ == "__main__":
     opt = Optimizer()
-    opt.run()
+    opt.run_single()
