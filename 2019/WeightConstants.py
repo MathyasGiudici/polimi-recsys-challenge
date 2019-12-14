@@ -1,9 +1,9 @@
 """
 Fixed parameters of each algorithm
 """
-ICFKNN = {'topK': 800, 'shrink': 130, 'similarity': 'dice', 'normalize': False, 'asymmetric_alpha': 2.0, 'tversky_alpha': 0.06645449914150482, 'tversky_beta': 0.0}
-UCFKNN = {'topK': 124, 'shrink': 1000, 'similarity': 'jaccard', 'normalize': False, 'asymmetric_alpha': 2.0, 'tversky_alpha': 1.4568982966977921, 'tversky_beta': 1.1915570273797769}
-CBFKNN = {'topK': 800, 'shrink': 1000, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 0.8403440634469317, 'tversky_alpha': 2.0, 'tversky_beta': 0.0}
+ICFKNN = {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN = {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+CBFKNN = {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
 
 SLIM_BPR = {'topK': 5, 'epochs': 20, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0016383008979062898}
 
@@ -21,9 +21,9 @@ Definitive weights kept for the submission
 SUBM_WEIGHTS = {'icfknn': 2.5802194484369156, 'ucfknn': 0.0, 'cbfknn': 5.0, 'slimbpr': 2.7268466077091325, 'puresvd': 0.6702145369478825, 'p3a': 1.9862766182019822, 'rp3b': 5.0}
 
 _SUBM_WEIGHTS = {
-        "icfknn": 2.5,
-        "ucfknn": 0.2,
-        "cbfknn": 1,
+        "icfknn": 3,
+        "ucfknn": 1,
+        "cbfknn": 0.2,
         "slimbpr": 1.5,
         "puresvd": 2,
         "als": 1,
@@ -33,7 +33,7 @@ _SUBM_WEIGHTS = {
 """
 Weights used for the local testing
 """
-IS_TEST_WEIGHTS = [ {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1} ]
+IS_TEST_WEIGHTS = [ {'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1} ]
 _IS_TEST_WEIGHTS = [
     {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3},
     {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3.5},

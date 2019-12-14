@@ -150,9 +150,6 @@ class Builder(object):
 
         temp_df = pd.DataFrame(df1).astype(np.int)
         temp_df.to_csv(self.DATA_FILE_PATH + 'urm4.csv', index=False)
-
-
-
         #
         # firstHalf, secondHalf = train_test_split(urm, test_size=0.5, train_size=0.5, random_state=None)
         #
@@ -168,7 +165,23 @@ class Builder(object):
         # print(urm3)
         # print(urm4)
 
+    def build_icm_asset_dataframe(self):
+        icm_asset_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_asset.csv')
+        icm_asset = pd.DataFrame(icm_asset_pd)
+        icm_asset = pd.DataFrame.drop(icm_asset, labels="col", axis=1)
+        return icm_asset
 
+    def build_icm_price_dataframe(self):
+        icm_price_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_price.csv')
+        icm_price = pd.DataFrame(icm_price_pd)
+        icm_price = pd.DataFrame.drop(icm_price, labels="col", axis=1)
+        return icm_price
+
+    def build_icm_subclass_dataframe(self):
+        icm_subclass_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_sub_class.csv')
+        icm_subclass = pd.DataFrame(icm_subclass_pd)
+        icm_subclass = pd.DataFrame.drop(icm_subclass, labels="data", axis=1)
+        return icm_subclass
 
 # if __name__ == '__main__':
 #     builder = Builder()

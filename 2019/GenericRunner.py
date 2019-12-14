@@ -12,7 +12,7 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 Specify the report and the submission in which we will write the results
 """
 report_counter = 7
-submission_counter = 1
+submission_counter = 2
 
 
 class GenericRunner(object):
@@ -162,6 +162,7 @@ class GenericRunner(object):
         print("Submission file written")
 
 
+
     def evaluate(self):
         """
         Method used for the validation and the calculation of the weights
@@ -169,13 +170,13 @@ class GenericRunner(object):
         generated_weights = []
         results = []
 
-        for weight in self.get_test_weights(add_random=True):
-
+        for weight in self.get_test_weights(add_random=False):
             generated_weights.append(weight)
             print("--------------------------------------")
 
             recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b, weight)
+                                         self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a,
+                                         self.p_rp3b, weight)
             recommender.fit()
             result_dict = evaluate_algorithm(self.urm_validation, recommender)
             results.append(float(result_dict["MAP"]))
@@ -192,13 +193,13 @@ class GenericRunner(object):
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
         recommender = WeightedHybrid(self.urm_post_validation, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                             self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b, weight)
+                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b,
+                                     weight)
         recommender.fit()
         result_dict = evaluate_algorithm(self.urm_test, recommender)
 
         self.writer.write_report(self.writer, str(weight), report_counter)
         self.writer.write_report(self.writer, str(result_dict), report_counter)
-
 
     def get_test_weights(self, add_random=False):
         if not add_random:

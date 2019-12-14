@@ -15,7 +15,7 @@ class Optimizer(object):
 
     def __init__(self):
         self.HYP = {}
-        self.report_counter = 50
+        self.report_counter = 60
         self.writer = Writer()
 
         # Some parameters
@@ -149,9 +149,9 @@ class Optimizer(object):
         self.writer.write_report("\n\n" + str(result), self.report_counter)
 
     def evaluate_single(self, hyp):
-        self.recommender = WeightedHybrid(self.urm_train, self.icm, None, None, None,
-                                          self.rebuild_slim(hyp[0:]), None, None, None, None, None,
-                                          {"slimbpr":1})
+        self.recommender = WeightedHybrid(self.urm_train, self.icm, p_icfknn=None, p_ucfknn=None, p_cbfknn=None,
+                                          p_slimbpr=None, p_puresvd=None, p_als=self.rebuild_als(hyp[0:]),
+                                          p_cfw=None, p_p3a=None, p_rp3b=None, weights={"als":1})
         self.recommender.fit()
         result = evaluate_algorithm(self.urm_test, self.recommender, at=10)
 
@@ -162,7 +162,7 @@ class Optimizer(object):
         self.HYP["p_icfknn"], self.HYP["p_ucfknn"], self.HYP["p_cbfknn"] = self.optimize_all_KNN()
         self.HYP["p_slimbpr"] = self.optimize_slim()
         self.HYP["p_puresvd"] = self.optimize_puresvd()
-        #self.HYP["p_als"] = self.optimize_als()
+        # self.HYP["p_als"] = self.optimize_als()
         self.HYP["p_p3a"] = self.optimize_p3a()
         self.HYP["p_rp3b"] = self.optimize_rp3beta()
 
@@ -193,7 +193,7 @@ class Optimizer(object):
 
 
     def run_single(self):
-        self.HYP["p_slimbpr"] = self.optimize_slim()
+        self.HYP["p_als"] = self.optimize_als()
 
         self.iterator_to_create_dimension(self.HYP)
 
@@ -238,13 +238,13 @@ class Optimizer(object):
         #self.writer.write_report("p_icfknn :" + str(self.rebuild_single_KNN(hyp[0:7]) ), self.report_counter)
         #self.writer.write_report("p_ucfknn :" + str(self.rebuild_single_KNN(hyp[7:14])), self.report_counter)
         #self.writer.write_report("p_cbfknn :" + str(self.rebuild_single_KNN(hyp[14:21])), self.report_counter)
-        self.writer.write_report("p_cbfknn :" + str(self.rebuild_single_KNN(hyp[0:7])), self.report_counter)
-        self.writer.write_report("p_slimbpr :" + str(self.rebuild_slim(hyp[21:28])), self.report_counter)
-        self.writer.write_report("p_puresvd :" + str(self.rebuild_puresvd(hyp[28:29])), self.report_counter)
-        self.writer.write_report("p_p3a :" + str(self.rebuild_p3a(hyp[29:32])), self.report_counter)
-        self.writer.write_report("p_rp3b :" + str(self.rebuild_rp3beta(hyp[32:36])), self.report_counter)
-        self.writer.write_report("weight :" + str(self.rebuild_weights(hyp[36:])), self.report_counter)
-
+        #self.writer.write_report("p_cbfknn :" + str(self.rebuild_single_KNN(hyp[0:7])), self.report_counter)
+        #self.writer.write_report("p_slimbpr :" + str(self.rebuild_slim(hyp[21:28])), self.report_counter)
+        #self.writer.write_report("p_puresvd :" + str(self.rebuild_puresvd(hyp[28:29])), self.report_counter)
+        #self.writer.write_report("p_p3a :" + str(self.rebuild_p3a(hyp[29:32])), self.report_counter)
+        #self.writer.write_report("p_rp3b :" + str(self.rebuild_rp3beta(hyp[32:36])), self.report_counter)
+        #self.writer.write_report("weight :" + str(self.rebuild_weights(hyp[36:])), self.report_counter)
+        self.writer.write_report("p_als :" + str(self.rebuild_als(hyp[0:])), self.report_counter)
 
 if __name__ == "__main__":
     opt = Optimizer()

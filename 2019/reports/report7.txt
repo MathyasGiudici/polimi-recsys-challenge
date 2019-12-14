@@ -35,3 +35,547 @@ VALIDATION
 --------------------------------------
 {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
 {'precision': 0.004320795772458757, 'recall': 0.043207957724588124, 'MAP': 0.017807960403102258}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:20:09.118611
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:21:35.583880
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005790665660109102, 'recall': 0.05790665660109241, 'MAP': 0.027933149220728596}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006578609429462268, 'recall': 0.06578609429462484, 'MAP': 0.03138834289907498}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:23:57.756601
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0058173098272568426, 'recall': 0.05817309827256983, 'MAP': 0.027055442423575972}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006648321408915575, 'recall': 0.06648321408915796, 'MAP': 0.03283741442519656}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:26:23.407612
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005590834406501049, 'recall': 0.055908344065011766, 'MAP': 0.026287625194104144}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006754723903870623, 'recall': 0.06754723903870849, 'MAP': 0.03336370492672096}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:28:49.831636
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005666326213419647, 'recall': 0.05666326213419779, 'MAP': 0.027467634033200884}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006662997615116271, 'recall': 0.06662997615116492, 'MAP': 0.03268806073153908}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:32:23.853836
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006083751498734247, 'recall': 0.06083751498734402, 'MAP': 0.028481645481734298}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.007029902770133678, 'recall': 0.07029902770133921, 'MAP': 0.033771333641999586}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:34:47.620864
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005741818020338245, 'recall': 0.05741818020338381, 'MAP': 0.02777215642240729}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006927169326728804, 'recall': 0.06927169326729041, 'MAP': 0.03416932381709497}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:37:17.988162
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005697411075092011, 'recall': 0.056974110750921445, 'MAP': 0.026878678110970815}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006864795450375845, 'recall': 0.06864795450376078, 'MAP': 0.03355876160774356}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:39:43.350247
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00564412274079653, 'recall': 0.05644122740796661, 'MAP': 0.02710180538902951}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 0.2, 'cbfknn': 0.3, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006868464501926019, 'recall': 0.06868464501926252, 'MAP': 0.03378817924772804}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:43:49.119176
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005724055242239751, 'recall': 0.057240552422398866, 'MAP': 0.02713835300983934}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006934507429829153, 'recall': 0.0693450742982939, 'MAP': 0.03461163380535978}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:46:18.466099
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00579954704915835, 'recall': 0.057995470491584884, 'MAP': 0.028417872174255676}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006967528893780719, 'recall': 0.06967528893780958, 'MAP': 0.035109096044704274}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:48:45.143091
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00564412274079653, 'recall': 0.05644122740796661, 'MAP': 0.02807255530955523}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006718033388368882, 'recall': 0.06718033388369106, 'MAP': 0.03374487861554464}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:51:10.090280
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005821750521781467, 'recall': 0.058217505217816067, 'MAP': 0.027809937569474006}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006402494955053912, 'recall': 0.06402494955054118, 'MAP': 0.03190339329029485}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-12 23:58:13.076793
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0047204582796748626, 'recall': 0.04720458279674941, 'MAP': 0.02332051875770513}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005624656026417009, 'recall': 0.05624656026417171, 'MAP': 0.028532990888522035}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:00:41.872595
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.004649407167280888, 'recall': 0.046494071672809625, 'MAP': 0.023631790297716813}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005576958356264746, 'recall': 0.05576958356264906, 'MAP': 0.028094568347732943}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:03:08.812346
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.004467338691771329, 'recall': 0.04467338691771393, 'MAP': 0.02237993736506103}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005444872500458479, 'recall': 0.054448725004586314, 'MAP': 0.027679659768267386}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:05:33.652320
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.004791509392068837, 'recall': 0.0479150939206892, 'MAP': 0.02370217178157139}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.7, 'ucfknn': 0.2, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005525591634562309, 'recall': 0.055255916345624656, 'MAP': 0.028265222924001195}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:09:45.496914
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0057284959367643745, 'recall': 0.0572849593676451, 'MAP': 0.02806813223683425}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006677673821316967, 'recall': 0.0667767382131719, 'MAP': 0.033975213518416744}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:12:12.887896
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005564190239353308, 'recall': 0.05564190239353435, 'MAP': 0.025843643850660184}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00692350027517863, 'recall': 0.06923500275178866, 'MAP': 0.03528595306525966}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:14:37.907674
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005692970380567388, 'recall': 0.056929703805675205, 'MAP': 0.02623037195398312}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00688680975967689, 'recall': 0.06886809759677123, 'MAP': 0.03455269602490309}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:17:06.709671
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005559749544828685, 'recall': 0.05559749544828811, 'MAP': 0.026205331370969292}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006674004769766794, 'recall': 0.06674004769767015, 'MAP': 0.03323020677726246}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:21:12.199478
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0057506994093874915, 'recall': 0.05750699409387628, 'MAP': 0.026634510399331256}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006651990460465749, 'recall': 0.0665199046046597, 'MAP': 0.03224917227944199}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:23:41.189517
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00564412274079653, 'recall': 0.05644122740796661, 'MAP': 0.027217228203062372}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0067217024399190565, 'recall': 0.0672170243991928, 'MAP': 0.0324003022599611}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:26:10.515852
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005701851769616634, 'recall': 0.057018517696167684, 'MAP': 0.0269954754256899}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006655659512015923, 'recall': 0.06655659512016143, 'MAP': 0.03217148156883992}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:28:37.448942
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005555308850304062, 'recall': 0.05555308850304187, 'MAP': 0.026733192499878426}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 2, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006640983305815227, 'recall': 0.06640983305815447, 'MAP': 0.03272048524662732}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:35:13.068496
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00585283538345383, 'recall': 0.05852835383453972, 'MAP': 0.027952321743120626}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006901485965877586, 'recall': 0.06901485965877821, 'MAP': 0.03409164766622123}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:37:38.436918
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005675207602468893, 'recall': 0.05675207602469026, 'MAP': 0.02743769458876704}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.007209686296092208, 'recall': 0.0720968629609246, 'MAP': 0.035023630439150646}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:39:56.045408
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005923886495847804, 'recall': 0.059238864958479506, 'MAP': 0.02757311814996435}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006901485965877586, 'recall': 0.06901485965877821, 'MAP': 0.034663597475925616}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 00:42:13.969878
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005941649273946298, 'recall': 0.05941649273946445, 'MAP': 0.02838927198690068}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006908824068977934, 'recall': 0.06908824068978169, 'MAP': 0.03451265677187531}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 23:10:05.854504
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-13 23:10:54.153087
+
+Fixed parameters
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+VALIDATION
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005741818020338245, 'recall': 0.05741818020338381, 'MAP': 0.027219554281146727}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00680609062557306, 'recall': 0.0680609062557329, 'MAP': 0.03429514898970055}

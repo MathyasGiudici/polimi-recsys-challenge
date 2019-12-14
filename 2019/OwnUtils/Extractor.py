@@ -40,21 +40,21 @@ class Extractor(object):
     def get_urm_all(self):
         return self._urm_extractor_code("data_train.csv")
 
-    def get_single_urm(self, number):
+    def get_single_urm(self, number: int):
         name = "urm" + str(number) + ".csv"
         return self._urm_extractor_code(name)
 
-    def get_others_urm(self, selected_one):
+    def get_others_urm(self, selected_one: int):
         numbers = np.arange(1, 5)
         numbers = np.delete(numbers, selected_one - 1)
 
         array = []
         for index in numbers:
-            array.append(self._urm_extractor_code(index))
+            array.append(self.get_single_urm(index))
 
         return array
 
-    def get_others_urm_vstack(self, selected_one):
+    def get_others_urm_vstack(self, selected_one: int):
         array = self.get_others_urm(selected_one)
 
         array_coo = []
@@ -71,9 +71,14 @@ class Extractor(object):
                 rows.append(i)
                 cols.append(j)
 
+        if selected_one == 4:
+            values.append(1.0)
+            rows.append(30910)
+            cols.append(126)
+
         return sps.coo_matrix((values, (rows, cols))).tocsr()
 
-    def _urm_extractor_code(self, name):
+    def _urm_extractor_code(self, name: str):
         # Composing the name
         file_name = self.DATA_FILE_PATH + name
 

@@ -2,6 +2,7 @@ from lightfm import LightFM
 from lightfm.evaluation import precision_at_k, auc_score
 from OwnUtils.Extractor import Extractor
 from OwnUtils.Builder import Builder
+import pandas as pd
 import Utils.Split.split_train_validation_leave_k_out as loo
 
 # if __name__ == '__main__':
@@ -32,6 +33,15 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 if __name__ == '__main__':
     builder = Builder()
     ex = Extractor()
-    urm_train = ex.get_urm_all()
+
+    list = []
+    icm_asset_df = builder.build_icm_asset_dataframe()
+
+
+    list.extend(icm_asset_df.loc[icm_asset_df["row"] == 18494]["data"].values)
+    list.extend(icm_asset_df.loc[icm_asset_df["row"] == 0]["data"].values)
+    list.extend(icm_asset_df.loc[icm_asset_df["row"] == 1]["data"].values)
+
+    print(list)
 
     #builder.split_4_urm()

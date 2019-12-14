@@ -1,0 +1,141 @@
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-14 11:54:18.511490
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+--------------------------------------
+
+VALIDATION 1
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00011737089201877933, 'recall': 0.0011737089201877935, 'MAP': 0.0003239925665101721}
+--------------------------------------
+The average MAP is: 0.0003239925665101721
+VALIDATION 2
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00018994739918176505, 'recall': 0.0018994739918176504, 'MAP': 0.00035919540229885057}
+--------------------------------------
+The average MAP is: 0.0003415939844045113
+VALIDATION 3
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0001309853005384951, 'recall': 0.0013098530053849513, 'MAP': 0.0002474166787949352}
+--------------------------------------
+The average MAP is: 0.0003102015492013193
+VALIDATION 4
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00023795359904818565, 'recall': 0.002379535990481856, 'MAP': 0.000375520523497918}
+--------------------------------------
+The average MAP is: 0.000326531292775469
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-14 11:55:51.530743
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+--------------------------------------
+
+VALIDATION 1
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00010269953051643192, 'recall': 0.0010269953051643193, 'MAP': 0.00031787949921752737}
+--------------------------------------
+The average MAP is: 0.00031787949921752737
+VALIDATION 2
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00026300409117475167, 'recall': 0.002630040911747516, 'MAP': 0.00048217416715371137}
+--------------------------------------
+The average MAP is: 0.0004000268331856194
+VALIDATION 3
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00020375491194877022, 'recall': 0.002037549119487702, 'MAP': 0.00032382477077572407}
+--------------------------------------
+The average MAP is: 0.00037462614571565425
+VALIDATION 4
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00011897679952409279, 'recall': 0.001189767995240928, 'MAP': 0.0002342355740630577}
+--------------------------------------
+The average MAP is: 0.0003395285028025051
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-14 12:07:23.375926
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN: {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
+--------------------------------------
+
+VALIDATION 1
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.002508802816901405, 'recall': 0.0014861021625220596, 'MAP': 0.0005327887463670908}
+--------------------------------------
+The average MAP is: 0.0005327887463670908
+VALIDATION 2
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0028930450029222695, 'recall': 0.0018488055567050293, 'MAP': 0.0006287446386438193}
+--------------------------------------
+The average MAP is: 0.000580766692505455
+VALIDATION 3
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0019356716635133126, 'recall': 0.0013258436153909614, 'MAP': 0.00041959670234302716}
+--------------------------------------
+The average MAP is: 0.0005270433624513124
+VALIDATION 4
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0016954193932183195, 'recall': 0.0012540681696750124, 'MAP': 0.0003841182103749026}
+--------------------------------------
+The average MAP is: 0.00049131207443221
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-14 12:42:01.821796
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+ALS: {'alpha_val': 20, 'n_factors': 50, 'regularization': 0.5, 'iterations': 50}
+--------------------------------------
+
+VALIDATION 1
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.002508802816901405, 'recall': 0.0014861021625220596, 'MAP': 0.0005327887463670908}
+--------------------------------------
+The average MAP is: 0.0005327887463670908
+VALIDATION 2
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0028930450029222695, 'recall': 0.0018488055567050293, 'MAP': 0.0006287446386438193}
+--------------------------------------
+The average MAP is: 0.000580766692505455
+VALIDATION 3
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0019356716635133126, 'recall': 0.0013258436153909614, 'MAP': 0.00041959670234302716}
+--------------------------------------
+The average MAP is: 0.0005270433624513124
+VALIDATION 4
+--------------------------------------
