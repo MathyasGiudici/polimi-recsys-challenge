@@ -1,5 +1,6 @@
 from Hybrid.WeightedHybrid import WeightedHybrid
 from OwnUtils.Extractor import Extractor
+from OwnUtils.Builder import Builder
 from OwnUtils.Writer import Writer
 from datetime import datetime
 from Utils.evaluation_function import evaluate_algorithm
@@ -8,6 +9,10 @@ from Utils.Base.NonPersonalizedRecommender import TopPop
 
 import random
 import Utils.Split.split_train_validation_leave_k_out as loo
+
+import xgboost as xgb
+import pandas as pd
+import numpy as np
 
 """
 Specify the report and the submission in which we will write the results
@@ -63,6 +68,13 @@ class XGBoost(object):
         if self.cfw:
             self.p_cfw = WeightConstants.CFW
 
+        self.user_recommendations_user_id = []
+        self.user_recommendations_items = []
+        self.cutoff = 20
+        self.train_dataframe = None
+
+        self.builder = Builder()
+
     def run(self, is_test):
         """
         From here we start each algorithm.
@@ -112,81 +124,167 @@ class XGBoost(object):
         recommender.fit()
 
         # SELECTING BEST 20 RECOMMENDATION
-        cutoff = 20
-        user_recommendations_user_id = []
-        user_recommendations_items = []
-
         for n_user in range(0, self.urm_test.shape[0]):
-            recommendations = recommender.recommend(n_user, at=cutoff)
+            recommendations = recommender.recommend(n_user, at=self.cutoff)
 
-            user_recommendations_user_id.extend([n_user] * len(recommendations))
-            user_recommendations_items.extend(recommendations)
+            self.user_recommendations_user_id.extend([n_user] * len(recommendations))
+            self.user_recommendations_items.extend(recommendations)
 
-        # BUILDING DATAFRAME
-        import pandas as pd
-        import numpy as np
+        # CREATING THE DATAFRAME FOR XGBOOST
+        self.train_dataframe = pd.DataFrame({"user_id": self.user_recommendations_user_id, "item_id": self.user_recommendations_items})
 
-        train_dataframe = pd.DataFrame({"user_id": user_recommendations_user_id, "item_id": user_recommendations_items})
+        ############################
+        ###### ADDING FEATURES #####
+        ############################
 
         # BUILDING POPULARITY ITEMS
-        topPop = TopPop(self.urm_train)
-        topPop.fit()
-
-        topPop_score_list = []
-
-        for user_id, item_id in zip(user_recommendations_user_id, user_recommendations_items):
-            topPop_score = topPop._compute_item_score([user_id])[0, item_id]
-            topPop_score_list.append(topPop_score)
-
-        train_dataframe['item_popularity'] = pd.Series(topPop_score_list, index=train_dataframe.index)
+        #self.add_top_pop_items()
 
         # BUILDING USER PROFILE LENGTH
-        user_profile_len = np.ediff1d(self.urm_train.indptr)
+        #self.add_user_profile_length()
 
-        user_profile_len_list = []
+        # BUILDING ITEM ASSETS
+        self.add_item_asset()
 
-        for user_id, item_id in zip(user_recommendations_user_id, user_recommendations_items):
-            user_profile_len_list.append(user_profile_len[user_id])
+        # BUILDING ITEM PRICE
+        self.add_item_price()
 
-        train_dataframe['user_profile_len'] = pd.Series(user_profile_len_list, index=train_dataframe.index)
+        # BUILDING ITEM SUBCLASS
+        self.add_item_subclass()
 
-        feature_1_list = []
 
-        for user_id, item_id in zip(user_recommendations_user_id, user_recommendations_items):
-
-            item_features = self.icm[item_id, :]
-
-            #if target_feature in item_features.indices:
-
-            if len(item_features.indices) != 0:
-                feature_1_list.append(self.icm[item_id,item_features.indices[0]])
-            else:
-                feature_1_list.append(0)
-
-        train_dataframe['item_feature_1'] = pd.Series(feature_1_list, index=train_dataframe.index)
-
-        print(train_dataframe[0:10])
-        return
-
-        import xgboost as xgb
+        print(self.train_dataframe.head())
+        #return
 
         params = {
             'max_depth': 3,  # the maximum depth of each tree
             'eta': 0.3,  # step for each iteration
             'silent': 1,  # keep it quiet
             'objective': 'multi:softprob',  # error evaluation for multiclass training
-            'num_class': 3,  # the number of classes
+            #'num_class': 3,  # the number of classes
             'eval_metric': 'merror'}  # evaluation metric
 
         num_round = 20  # the number of training iterations (number of trees)
 
-        model = xgb.train(params,
-                          train_dataframe,
-                          num_round)
+        msk = np.random.rand(len(self.train_dataframe)) < 0.8
+        dtrain = self.train_dataframe[msk]
+        dtest = self.train_dataframe[~msk]
+
+        dtrain = xgb.DMatrix(dtrain, missing=-999.0)
+        dtest = xgb.DMatrix(dtest, missing=-999.0)
+
+        evallist = [(dtest, 'eval'), (dtrain, 'train')]
+
+        model = xgb.train(params,dtrain,num_round,evallist)
 
         print(model.predict())
-        print("user array:" + str(len(user_recommendations_user_id)))
+        #print("user array:" + str(len()))
         print(" prediction array:" + str(len(model.predict())))
+
+
+    def add_top_pop_items(self):
+        # BUILDING POPULARITY ITEMS
+        print("Adding TopPop items feature...")
+
+        topPop = TopPop(self.urm_train)
+        topPop.fit()
+
+        topPop_score_list = []
+
+        for user_id, item_id in zip(self.user_recommendations_user_id, self.user_recommendations_items):
+            topPop_score = topPop._compute_item_score([user_id])[0, item_id]
+            topPop_score_list.append(topPop_score)
+
+        self.train_dataframe['item_popularity'] = pd.Series(topPop_score_list, index=self.train_dataframe.index)
+        print("Addition completed!")
+
+    def add_user_profile_length(self):
+        # BUILDING USER PROFILE LENGTH
+        print("Adding user profile length feature...")
+
+        # user_profile_len = np.ediff1d(self.urm_train.indptr)
+
+        user_profile_len_list = []
+
+        from tqdm import tqdm
+        for user_id, item_id in zip(self.user_recommendations_user_id, self.user_recommendations_items):
+            user_profile_len_list.append(len(self.urm_train[user_id].indices))
+
+        self.train_dataframe['user_profile_len'] = pd.Series(user_profile_len_list, index=self.train_dataframe.index)
+        print("Addition completed!")
+
+    def add_item_asset(self):
+        # BUILDING ITEM ASSET
+        print("Adding item asset feature...")
+
+        icm_asset_df = self.builder.build_icm_asset_dataframe()
+
+        assets = []
+
+        j = 0
+        for i in range(0, self.icm.shape[0]):
+            if icm_asset_df.iloc[j]['row'] == i:
+                assets.append(icm_asset_df.iloc[j]['data'])
+                j += 1
+            else:
+                assets.append(-1)
+
+        icm_asset_list = []
+
+        for item_id in self.user_recommendations_items:
+            icm_asset_list.append(assets[item_id])
+
+        self.train_dataframe['item_asset'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
+        print("Addition completed!")
+
+    def add_item_price(self):
+        # BUILDING ITEM PRICE
+        print("Adding item price feature...")
+
+        icm_price_df = self.builder.build_icm_price_dataframe()
+
+        prices = []
+
+        j = 0
+        for i in range(0, self.icm.shape[0]):
+            if icm_price_df.iloc[j]['row'] == i:
+                prices.append(icm_price_df.iloc[j]['data'])
+                j += 1
+            else:
+                prices.append(0)
+
+        icm_asset_list = []
+
+        for item_id in self.user_recommendations_items:
+            icm_asset_list.append(prices[item_id])
+
+        self.train_dataframe['item_price'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
+        print("Addition completed!")
+
+    def add_item_subclass(self):
+        # BUILDING ITEM SUBCLASS
+        print("Adding item subclass feature...")
+
+        icm_subclass_df = self.builder.build_icm_subclass_dataframe()
+
+        subclasses = []
+
+        j = 0
+        for i in range(0, self.icm.shape[0]):
+            if icm_subclass_df.iloc[j]['row'] == i:
+                subclasses.append(icm_subclass_df.iloc[j]['col'])
+                j += 1
+            else:
+                subclasses.append(0)
+
+        icm_asset_list = []
+
+        for item_id in self.user_recommendations_items:
+            icm_asset_list.append(subclasses[item_id])
+
+        self.train_dataframe['item_subclass'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
+        print("Addition completed!")
+
 
 if __name__ == "__main__":
     algorithms_choice = {
@@ -202,4 +300,5 @@ if __name__ == "__main__":
     is_test = True
 
     runner = XGBoost(**algorithms_choice)
+    #runner.add_item_subclass()
     runner.run(is_test)
