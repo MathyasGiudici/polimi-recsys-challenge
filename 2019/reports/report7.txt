@@ -579,3 +579,81 @@ TESTING
 --------------------------------------
 {'icfknn': 3, 'ucfknn': 1, 'cbfknn': 0.2, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
 {'precision': 0.00680609062557306, 'recall': 0.0680609062557329, 'MAP': 0.03429514898970055}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 17:18:23.922007
+
+Fixed parameters
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+ALS: {'alpha_val': 20, 'n_factors': 50, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005111239397841722, 'recall': 0.05111239397841823, 'MAP': 0.02318269863120875}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.00619335901669399, 'recall': 0.061933590166941846, 'MAP': 0.02925371200274895}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 18:05:26.629785
+
+Fixed parameters
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+ALS: {'alpha_val': 20, 'n_factors': 50, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005297748567875905, 'recall': 0.05297748567876016, 'MAP': 0.023729679417098894}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006233718583745905, 'recall': 0.062337185837461014, 'MAP': 0.02981790147723009}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 18:12:54.254002
+
+Fixed parameters
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+ALS: {'alpha_val': 20, 'n_factors': 50, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.0051156800923663455, 'recall': 0.05115680092366446, 'MAP': 0.02300015436700012}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.006006237387635113, 'recall': 0.060062373876352965, 'MAP': 0.028398065885682906}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 18:17:07.275518
+
+Fixed parameters
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+ALS: {'alpha_val': 20, 'n_factors': 50, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005293307873351282, 'recall': 0.052933078733513925, 'MAP': 0.023674153113737443}
+--------------------------------------
+TESTING
+--------------------------------------
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1}
+{'precision': 0.005987892129884242, 'recall': 0.05987892129884425, 'MAP': 0.028951452041710787}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 18:21:17.001534
+
+Fixed parameters
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+ALS: {'alpha_val': 20, 'n_factors': 50, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------

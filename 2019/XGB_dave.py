@@ -23,11 +23,13 @@ submission_counter = 2
 
 params = {
             'max_depth': 3,  # the maximum depth of each tree
+            'n_estimators': 300,
+            'learning_rate': 0.05,
             'eta': 0.3,  # step for each iteration
             'silent': 1,  # keep it quiet
-            'num_class' : 3,
+            'num_class': 3,
             'objective': 'multi:softprob',  # error evaluation for multiclass training
-            'eval_metric': 'merror'}  # evaluation metric
+            'eval_metric': 'map'}  # evaluation metric
 
 
 class XGBoost(object):
@@ -170,35 +172,40 @@ class XGBoost(object):
         ############################
 
         users = list(self.train_dataframe.iloc[:, 0].values)
-        train_train_df, val_df, train_users, val_users = train_test_split(self.train_dataframe, users, test_size=0.1, random_state=1)
 
-        train_dropped = train_train_df.drop(labels={'user_id', 'item_id'}, axis=1)
-        val_dropped = val_df.drop(labels={'user_id', 'item_id'}, axis=1)
+        train_dropped = self.train_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
 
-        print(train_users)
 
-        dtrain = xgb.DMatrix(train_dropped, label=train_users)
-        dvalidation = xgb.DMatrix(val_dropped, label=val_users)
+        X_train, X_test, y_train, y_test = train_test_split(train_dropped, users, test_size=0.1, random_state=1)
+
+        # train_dropped = X_train.drop(labels={'user_id', 'item_id'}, axis=1)
+        # val_dropped = X_test.drop(labels={'user_id', 'item_id'}, axis=1)
+
+        print(y_train)
+
+        dtrain = xgb.DMatrix(X_train, label=y_train)
+        dtest = xgb.DMatrix(X_test, label=y_test)
+
+
 
         num_round = 20  # the number of training iterations (number of trees)
 
-        dtrain.DMatrix.set_group(group_train)
+        xgb_regressor = xgb.XGBRegressor()
+        xgb_regressor.fit(X_train, y_train)
 
 
-        ranker = xgb.XGBRanker()
-        ranker.fit(dtrain, train_users)
 
 
-        model = xgb.train(params,
-                          dtrain,
-                          num_round,
-                          verbose_eval=2,
-                          evals=[(dtrain, 'train'), (dvalidation, 'validation')],
-                          early_stopping_rounds=20)
+        # model = xgb.train(params,
+        #                   dtrain,
+        #                   num_round,
+        #                   verbose_eval=2,
+        #                   evals=[(dtrain, 'train'), (dvalidation, 'validation')],
+        #                   early_stopping_rounds=20)
 
-        print(model.predict())
+        print(xgb_regressor.predict(X_test))
         print("user array:" + str(len(self.user_recommendations_user_id)))
-        print(" prediction array:" + str(len(model.predict())))
+        #print(" prediction array:" + str(len(model.predict())))
 
 
     def add_top_pop_items(self):
