@@ -10,6 +10,7 @@ from Utils.Base.NonPersonalizedRecommender import TopPop
 import random
 import Utils.Split.split_train_validation_leave_k_out as loo
 
+from sklearn.model_selection import train_test_split
 import xgboost as xgb
 import pandas as pd
 import numpy as np
@@ -19,6 +20,14 @@ Specify the report and the submission in which we will write the results
 """
 report_counter = 10
 submission_counter = 2
+
+params = {
+            'max_depth': 3,  # the maximum depth of each tree
+            'eta': 0.3,  # step for each iteration
+            'silent': 1,  # keep it quiet
+            'num_class' : 3,
+            'objective': 'multi:softprob',  # error evaluation for multiclass training
+            'eval_metric': 'merror'}  # evaluation metric
 
 
 class XGBoost(object):
@@ -74,6 +83,10 @@ class XGBoost(object):
         self.train_dataframe = None
 
         self.builder = Builder()
+        self.users = []
+
+        self.train_users = []
+        self.test_users = []
 
     def run(self, is_test):
         """
@@ -96,6 +109,8 @@ class XGBoost(object):
 
             # ONLY TRAIN AND TEST
             self.urm_train = self.urm_post_validation
+
+            ######################################################################
 
             # Splitting the post-validation matrix in train & validation
             # (Problem of merging train and validation again at the end => loo twice)
@@ -138,7 +153,7 @@ class XGBoost(object):
         ############################
 
         # BUILDING POPULARITY ITEMS
-        self.add_top_pop_items()
+        # self.add_top_pop_items()
 
         # BUILDING USER PROFILE LENGTH
         self.add_user_profile_length()
@@ -147,31 +162,42 @@ class XGBoost(object):
         self.add_item_asset()
 
         # BUILDING ITEM PRICE
-        # self.add_item_price()
+        self.add_item_price()
 
         # BUILDING ITEM SUBCLASS
-        # self.add_item_subclass()
+        self.add_item_subclass()
 
+        ############################
 
-        print(self.train_dataframe.head())
-        return
+        users = list(self.train_dataframe.iloc[:, 0].values)
+        train_train_df, val_df, train_users, val_users = train_test_split(self.train_dataframe, users, test_size=0.1, random_state=1)
 
-        params = {
-            'max_depth': 3,  # the maximum depth of each tree
-            'eta': 0.3,  # step for each iteration
-            'silent': 1,  # keep it quiet
-            'objective': 'multi:softprob',  # error evaluation for multiclass training
-            'num_class': 3,  # the number of classes
-            'eval_metric': 'merror'}  # evaluation metric
+        train_dropped = train_train_df.drop(labels={'user_id', 'item_id'}, axis=1)
+        val_dropped = val_df.drop(labels={'user_id', 'item_id'}, axis=1)
+
+        print(train_users)
+
+        dtrain = xgb.DMatrix(train_dropped, label=train_users)
+        dvalidation = xgb.DMatrix(val_dropped, label=val_users)
 
         num_round = 20  # the number of training iterations (number of trees)
 
+        dtrain.DMatrix.set_group(group_train)
+
+
+        ranker = xgb.XGBRanker()
+        ranker.fit(dtrain, train_users)
+
+
         model = xgb.train(params,
-                          self.train_dataframe,
-                          num_round)
+                          dtrain,
+                          num_round,
+                          verbose_eval=2,
+                          evals=[(dtrain, 'train'), (dvalidation, 'validation')],
+                          early_stopping_rounds=20)
 
         print(model.predict())
-        print("user array:" + str(len(user_recommendations_user_id)))
+        print("user array:" + str(len(self.user_recommendations_user_id)))
         print(" prediction array:" + str(len(model.predict())))
 
 
@@ -199,8 +225,9 @@ class XGBoost(object):
 
         user_profile_len_list = []
 
-        for user_id, item_id in zip(self.user_recommendations_user_id, self.user_recommendations_items):
+        for user_id in self.user_recommendations_user_id:
             user_profile_len_list.append(user_profile_len[user_id])
+
 
         self.train_dataframe['user_profile_len'] = pd.Series(user_profile_len_list, index=self.train_dataframe.index)
         print("Addition completed!")
@@ -235,12 +262,22 @@ class XGBoost(object):
 
         icm_price_df = self.builder.build_icm_price_dataframe()
 
-        icm_price_list = []
+        prices = []
+
+        j = 0
+        for i in range(0, self.icm.shape[0]):
+            if icm_price_df.iloc[j]['row'] == i:
+                prices.append(icm_price_df.iloc[j]['data'])
+                j += 1
+            else:
+                prices.append(0)
+
+        icm_asset_list = []
 
         for item_id in self.user_recommendations_items:
-            icm_price_list.extend(icm_price_df.loc[icm_price_df['row'] == item_id]['data'].values)
+            icm_asset_list.append(prices[item_id])
 
-        self.train_dataframe['item_price'] = pd.Series(icm_price_list, index=self.train_dataframe.index)
+        self.train_dataframe['item_price'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
         print("Addition completed!")
 
     def add_item_subclass(self):
@@ -249,12 +286,22 @@ class XGBoost(object):
 
         icm_subclass_df = self.builder.build_icm_subclass_dataframe()
 
-        icm_subclass_list = []
+        subclasses = []
+
+        j = 0
+        for i in range(0, self.icm.shape[0]):
+            if icm_subclass_df.iloc[j]['row'] == i:
+                subclasses.append(icm_subclass_df.iloc[j]['col'])
+                j += 1
+            else:
+                subclasses.append(0)
+
+        icm_asset_list = []
 
         for item_id in self.user_recommendations_items:
-            icm_subclass_list.extend(icm_subclass_df.loc[icm_subclass_df['row'] == item_id]['col'].values)
+            icm_asset_list.append(subclasses[item_id])
 
-        self.train_dataframe['item_subclass'] = pd.Series(icm_subclass_list, index=self.train_dataframe.index)
+        self.train_dataframe['item_subclass'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
         print("Addition completed!")
 
 

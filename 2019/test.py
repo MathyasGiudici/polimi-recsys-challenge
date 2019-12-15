@@ -34,6 +34,9 @@ if __name__ == '__main__':
     builder = Builder()
     ex = Extractor()
 
+    builder.get_urm_all_users()
+
+
     list = []
     icm_asset_df = builder.build_icm_asset_dataframe()
 

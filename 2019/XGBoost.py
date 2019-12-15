@@ -175,7 +175,7 @@ class XGBoost(object):
 
         evallist = [(dtest, 'eval'), (dtrain, 'train')]
 
-        model = xgb.train(params,dtrain,num_round,evallist)
+        model = xgb.train(params, dtrain, num_round, evallist)
 
         print(model.predict())
         #print("user array:" + str(len()))
