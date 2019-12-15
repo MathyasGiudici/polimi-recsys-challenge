@@ -38,7 +38,27 @@ class Extractor(object):
             return line_count - 1
 
     def get_urm_all(self):
-        return self._urm_extractor_code("data_train.csv")
+        # Composing the name
+        file_name = self.DATA_FILE_PATH + "data_train.csv"
+
+        with open(file_name) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            line_count = 0
+
+            users = []
+            items = []
+            for line in csv_reader:
+                if line_count != 0:
+                    users.append(int(line[0]))
+                    items.append(int(line[1]))
+                line_count += 1
+
+            print(f'Processed {line_count} interactions.')
+
+            ones_matrix = np.ones(line_count - 1)
+
+            return sps.coo_matrix((ones_matrix, (users, items))).tocsr()
+
 
     def get_single_urm(self, number: int):
         name = "urm" + str(number) + ".csv"
@@ -71,11 +91,6 @@ class Extractor(object):
                 rows.append(i)
                 cols.append(j)
 
-        if selected_one == 4:
-            values.append(1.0)
-            rows.append(30910)
-            cols.append(126)
-
         return sps.coo_matrix((values, (rows, cols))).tocsr()
 
     def _urm_extractor_code(self, name: str):
@@ -98,7 +113,8 @@ class Extractor(object):
 
             ones_matrix = np.ones(line_count - 1)
 
-            return sps.coo_matrix((ones_matrix, (users, items))).tocsr()
+
+            return sps.coo_matrix((ones_matrix, (users, items)), shape=self.get_urm_all().shape).tocsr()
 
     def get_icm_asset(self):
         # Composing the name

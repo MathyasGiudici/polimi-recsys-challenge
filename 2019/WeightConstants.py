@@ -1,15 +1,14 @@
 """
 Fixed parameters of each algorithm
 """
-ICFKNN = {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
-UCFKNN = {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
-CBFKNN = {'topK': 5, 'shrink': 0, 'similarity': 'jaccard', 'normalize': True, 'asymmetric_alpha': 2.0, 'tversky_alpha': 2.0, 'tversky_beta': 2.0}
+ICFKNN = {"topK": 10, "shrink": 10}
+UCFKNN = {"topK": 500, "shrink": 10}
+CBFKNN = {"topK": 100, "shrink": 200}
+SLIM_BPR = {"epochs": 200, "lambda_i": 0.01, "lambda_j": 0.01 }
+SLIM_BPR_ICM = {'topK': 200, 'epochs': 20, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 1e-4}
+PURE_SVD = {"num_factors": 1000, }
+ALS = {"alpha_val": 25, "n_factors": 300, "regularization": 0.5, "iterations": 50}
 
-SLIM_BPR = {'topK': 5, 'epochs': 20, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0016383008979062898}
-
-PURE_SVD = {'num_factors': 481}
-
-ALS = {"alpha_val": 20, "n_factors": 50, "regularization": 0.5, "iterations": 50}
 CFW = {"iteration_limit": 5000, "damp_coeff": 0.0, "topK": 100, "add_zeros_quota": 0.0}
 
 P3A = {'topK': 800, 'alpha': 0.0, 'normalize_similarity': True}
@@ -33,7 +32,17 @@ _SUBM_WEIGHTS = {
 """
 Weights used for the local testing
 """
-IS_TEST_WEIGHTS = [ {'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 1, 'rp3b': 1} ]
+IS_TEST_WEIGHTS = [{
+        "icfknn": 2.5,
+        "ucfknn": 0.2,
+        "cbfknn": 0.5,
+        "slimbpr": 0.1,
+        "puresvd": 2,
+        "als": 1,
+        "cfw": 3,
+    }]
+
+
 _IS_TEST_WEIGHTS = [
     {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3},
     {'icfknn': 2, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 1, 'puresvd': 1.5, 'als': 1, 'cfw': 3, 'p3a': 2, 'rp3b': 3.5},

@@ -11,7 +11,7 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 """
 Specify the report and the submission in which we will write the results
 """
-report_counter = 7
+report_counter = 777
 submission_counter = 2
 
 
@@ -71,16 +71,18 @@ class GenericRunner(object):
             self.p_rp3b = WeightConstants.RP3B
 
 
-    def run(self, is_test):
+    def run(self, is_test, is_SSLIM):
         """
         From here we start each algorithm.
         :param is_test: specifies if we want to write a report or a submission
         """
         self.is_test = is_test
+        self.is_SSLIM = is_SSLIM
 
         if self.is_test:
             extractor = Extractor()
             urm = extractor.get_urm_all()
+
             self.icm = extractor.get_icm_all()
 
             # Splitting into post-validation & testing in case of parameter tuning
@@ -96,7 +98,18 @@ class GenericRunner(object):
             self.urm_validation = matrices_for_validation[1]
 
             self.write_report()
-            self.evaluate()
+
+            if self.is_SSLIM:
+                from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
+
+                for topK in [10, 50, 100, 200, 500, 1000]:
+                    for epochs in [10, 20, 50, 100, 200, 500, 1000, 1500]:
+                        self.sslim_pars = {"topK":topK, "epochs": epochs}
+                        slim_bpr = SLIM_BPR_Cython(self.icm.copy())
+                        slim_bpr.fit(**self.sslim_pars)
+
+                        self.icm = slim_bpr.recs.copy().tocsr()
+                        self.evaluate()
 
         else:
             extractor = Extractor()
@@ -182,8 +195,10 @@ class GenericRunner(object):
             results.append(float(result_dict["MAP"]))
 
             self.writer.write_report(self.writer, str(weight), report_counter)
+            self.writer.write_report(self.writer, str(self.sslim_pars), report_counter)
             self.writer.write_report(self.writer, str(result_dict), report_counter)
 
+        return
         # Retriving correct weight
         # results.sort()
         weight = generated_weights[int(results.index(max(results)))]

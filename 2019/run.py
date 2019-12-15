@@ -6,18 +6,19 @@ from CrossValidationRunner import CrossValidationRunner
 if __name__ == '__main__':
 
     algorithms_choice = {
-        "icfknn": True,
+        "icfknn": False,
         "ucfknn": False,
-        "cbfknn": False,
+        "cbfknn": True,
         "slim_bpr": False,
         "pure_svd": False,
-        "als": True,
+        "als": False,
         "cfw": False,
         "p3a": False,
         "rp3b": False,
 }
 
     is_test = True
+    isSSLIM = True
 
 
     runner = GenericRunner(**algorithms_choice)
@@ -25,7 +26,7 @@ if __name__ == '__main__':
     # runner = UserFeaturesRunner(True, True, pure_svd_addition=False, slim_bpr_addition=False)
 
     # runner = CrossValidationRunner(**algorithms_choice)
-    for i in range(0, 4):
-        runner.run(is_test)
+    #for i in range(0, 4):
+    runner.run(is_test, isSSLIM)
 
 
