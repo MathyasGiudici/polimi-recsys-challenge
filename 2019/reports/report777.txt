@@ -1,0 +1,79 @@
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 21:52:48.874857
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 10, 'epochs': 10}
+{'precision': 0.0010124783516141948, 'recall': 0.010124783516141924, 'MAP': 0.004196280107732659}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 10, 'epochs': 20}
+{'precision': 0.0006572227896442988, 'recall': 0.006572227896443004, 'MAP': 0.002597260020991094}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 10, 'epochs': 50}
+{'precision': 0.0003907811181668806, 'recall': 0.003907811181668813, 'MAP': 0.001372033633679355}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 10, 'epochs': 100}
+{'precision': 0.00019539055908344066, 'recall': 0.0019539055908344067, 'MAP': 0.0005947358738335246}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 10, 'epochs': 200}
+{'precision': 0.0001865091700341934, 'recall': 0.0018650917003419335, 'MAP': 0.0004858155053545611}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 10, 'epochs': 500}
+{'precision': 0.00019094986455881702, 'recall': 0.00190949864558817, 'MAP': 0.0006602361180717235}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 10, 'epochs': 1000}
+{'precision': 0.00020427194813268793, 'recall': 0.0020427194813268795, 'MAP': 0.0006032472050057199}
+
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 22:37:33.424390
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 50, 'epochs': 10}
+{'precision': 0.001070207380434303, 'recall': 0.010702073804343, 'MAP': 0.004043252364669835}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 50, 'epochs': 20}
+{'precision': 0.0005417647320040842, 'recall': 0.005417647320040854, 'MAP': 0.0016320609686212074}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 50, 'epochs': 50}
+{'precision': 0.00022203472623118247, 'recall': 0.0022203472623118256, 'MAP': 0.0006558482889581074}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 50, 'epochs': 100}
+{'precision': 0.00012433944668946228, 'recall': 0.0012433944668946222, 'MAP': 0.0002011881324905882}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 23:11:59.479097
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 200, 'epochs': 200}
+{'precision': 0.0007904436253830091, 'recall': 0.007904436253830098, 'MAP': 0.003512836074228678}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 23:15:24.649175
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 50, 'epochs': 200}
+{'precision': 0.0009902748789910763, 'recall': 0.009902748789910742, 'MAP': 0.004162181917632871}
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'topK': 100, 'epochs': 200}
+{'precision': 0.0004618322305608588, 'recall': 0.004618322305608597, 'MAP': 0.002052147146289871}

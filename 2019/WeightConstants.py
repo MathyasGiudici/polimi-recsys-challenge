@@ -4,8 +4,8 @@ Fixed parameters of each algorithm
 ICFKNN = {"topK": 10, "shrink": 10}
 UCFKNN = {"topK": 500, "shrink": 10}
 CBFKNN = {"topK": 100, "shrink": 200}
-SLIM_BPR = {"epochs": 200, "lambda_i": 0.01, "lambda_j": 0.01 }
-SLIM_BPR_ICM = {'topK': 200, 'epochs': 20, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 1e-4}
+SLIM_BPR = {"epochs": 200, "lambda_i": 0.01, "lambda_j": 0.01}
+SLIM_BPR_ICM = {'topK': 200, 'epochs': 50, "lambda_i": 0.01, "lambda_j": 0.01}
 PURE_SVD = {"num_factors": 1000, }
 ALS = {"alpha_val": 25, "n_factors": 300, "regularization": 0.5, "iterations": 50}
 
@@ -17,7 +17,15 @@ RP3B = {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True}
 """
 Definitive weights kept for the submission
 """
-SUBM_WEIGHTS = {'icfknn': 2.5802194484369156, 'ucfknn': 0.0, 'cbfknn': 5.0, 'slimbpr': 2.7268466077091325, 'puresvd': 0.6702145369478825, 'p3a': 1.9862766182019822, 'rp3b': 5.0}
+SUBM_WEIGHTS = {
+        "icfknn": 2.5,
+        "ucfknn": 0.2,
+        "cbfknn": 0.5,
+        "slimbpr": 0.1,
+        "puresvd": 2,
+        "als": 1,
+        "cfw": 3,
+    }
 
 _SUBM_WEIGHTS = {
         "icfknn": 3,
@@ -36,6 +44,22 @@ IS_TEST_WEIGHTS = [{
         "icfknn": 2.5,
         "ucfknn": 0.2,
         "cbfknn": 0.5,
+        "slimbpr": 0.1,
+        "puresvd": 2,
+        "als": 1,
+        "cfw": 3,
+    }, {
+        "icfknn": 2.5,
+        "ucfknn": 0.2,
+        "cbfknn": 1,
+        "slimbpr": 0.1,
+        "puresvd": 2,
+        "als": 1,
+        "cfw": 3,
+    }, {
+        "icfknn": 2.5,
+        "ucfknn": 0.2,
+        "cbfknn": 1.5,
         "slimbpr": 0.1,
         "puresvd": 2,
         "als": 1,

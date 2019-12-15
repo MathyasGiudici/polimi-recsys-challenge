@@ -6,19 +6,19 @@ from CrossValidationRunner import CrossValidationRunner
 if __name__ == '__main__':
 
     algorithms_choice = {
-        "icfknn": False,
-        "ucfknn": False,
+        "icfknn": True,
+        "ucfknn": True,
         "cbfknn": True,
-        "slim_bpr": False,
-        "pure_svd": False,
-        "als": False,
+        "slim_bpr": True,
+        "pure_svd": True,
+        "als": True,
         "cfw": False,
         "p3a": False,
         "rp3b": False,
 }
 
-    is_test = True
-    isSSLIM = True
+    is_test = False
+    isSSLIM = False
 
 
     runner = GenericRunner(**algorithms_choice)

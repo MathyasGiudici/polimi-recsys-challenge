@@ -11,8 +11,8 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 """
 Specify the report and the submission in which we will write the results
 """
-report_counter = 777
-submission_counter = 2
+report_counter = 778
+submission_counter = 10
 
 
 class GenericRunner(object):
@@ -99,17 +99,23 @@ class GenericRunner(object):
 
             self.write_report()
 
+            from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
             if self.is_SSLIM:
-                from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
-
-                for topK in [10, 50, 100, 200, 500, 1000]:
-                    for epochs in [10, 20, 50, 100, 200, 500, 1000, 1500]:
+                for topK in [50, 100, 200]:
+                    for epochs in [10, 20, 50, 100, 200, 300]:
                         self.sslim_pars = {"topK":topK, "epochs": epochs}
                         slim_bpr = SLIM_BPR_Cython(self.icm.copy())
                         slim_bpr.fit(**self.sslim_pars)
 
                         self.icm = slim_bpr.recs.copy().tocsr()
                         self.evaluate()
+            else:
+                slim_bpr = SLIM_BPR_Cython(self.icm.copy())
+                slim_bpr.fit(**WeightConstants.SLIM_BPR_ICM)
+
+                self.icm = slim_bpr.recs.copy().tocsr()
+                self.evaluate()
+
 
         else:
             extractor = Extractor()
@@ -162,6 +168,12 @@ class GenericRunner(object):
         """
         self.writer.write_header(self.writer, sub_counter=submission_counter)
 
+        from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
+        slim_bpr = SLIM_BPR_Cython(self.icm)
+        slim_bpr.fit(**WeightConstants.SLIM_BPR)
+
+        self.icm = slim_bpr.recs.copy().tocsr()
+
         recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn, self.p_slimbpr,
                              self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b, WeightConstants.SUBM_WEIGHTS)
         recommender.fit()
@@ -195,10 +207,9 @@ class GenericRunner(object):
             results.append(float(result_dict["MAP"]))
 
             self.writer.write_report(self.writer, str(weight), report_counter)
-            self.writer.write_report(self.writer, str(self.sslim_pars), report_counter)
+            #self.writer.write_report(self.writer, str(self.sslim_pars), report_counter)
             self.writer.write_report(self.writer, str(result_dict), report_counter)
 
-        return
         # Retriving correct weight
         # results.sort()
         weight = generated_weights[int(results.index(max(results)))]

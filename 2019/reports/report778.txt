@@ -1,0 +1,30 @@
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 23:30:19.238433
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+SLIM_BPR: {'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}
+PURE_SVD: {'num_factors': 1000}
+ALS: {'alpha_val': 25, 'n_factors': 300, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------
+{'icfknn': 2.5, 'ucfknn': 0.2, 'cbfknn': 0.5, 'slimbpr': 0.1, 'puresvd': 2, 'als': 1, 'cfw': 3}
+{'precision': 0.006865313735067965, 'recall': 0.06865313735068165, 'MAP': 0.03300999085780831}
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-15 23:40:53.376503
+
+Fixed parameters
+CBFKNN: {'topK': 100, 'shrink': 200}
+ICFKNN: {'topK': 10, 'shrink': 10}
+UCFKNN: {'topK': 500, 'shrink': 10}
+SLIM_BPR: {'epochs': 200, 'lambda_i': 0.01, 'lambda_j': 0.01}
+PURE_SVD: {'num_factors': 1000}
+ALS: {'alpha_val': 25, 'n_factors': 300, 'regularization': 0.5, 'iterations': 50}
+VALIDATION
+--------------------------------------
