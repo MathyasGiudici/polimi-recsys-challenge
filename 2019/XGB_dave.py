@@ -28,7 +28,7 @@ params = {
             'eta': 0.3,  # step for each iteration
             'silent': 1,  # keep it quiet
             'num_class': 3,
-            'objective': 'multi:softprob',  # error evaluation for multiclass training
+            'objective': 'rank:pairwise',  # error evaluation for multiclass training
             'eval_metric': 'map'}  # evaluation metric
 
 
@@ -82,7 +82,7 @@ class XGBoost(object):
         self.user_recommendations_user_id = []
         self.user_recommendations_items = []
         self.cutoff = 20
-        self.train_dataframe = None
+        self.xgb_dataframe = None
 
         self.builder = Builder()
         self.users = []
@@ -148,7 +148,7 @@ class XGBoost(object):
             self.user_recommendations_items.extend(recommendations)
 
         # CREATING THE DATAFRAME FOR XGBOOST
-        self.train_dataframe = pd.DataFrame({"user_id": self.user_recommendations_user_id, "item_id": self.user_recommendations_items})
+        self.xgb_dataframe = pd.DataFrame({"user_id": self.user_recommendations_user_id, "item_id": self.user_recommendations_items})
 
         ############################
         ###### ADDING FEATURES #####
@@ -171,39 +171,68 @@ class XGBoost(object):
 
         ############################
 
-        users = list(self.train_dataframe.iloc[:, 0].values)
+        users = list(self.xgb_dataframe.iloc[:, 0].values)
+        users = np.sort(users)
 
-        train_dropped = self.train_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
+        # CREATION OF GROUPS FOR XGB_RANKER
+        y_train, y_test = train_test_split(list(set(users)), test_size=0.1, random_state=1)
+        y_train = np.sort(y_train)
+        y_test = np.sort(y_test)
+
+        # print(y_train)
+        # print(y_test)
+
+        train_dataframe = pd.DataFrame()
+        test_dataframe = pd.DataFrame()
+        train_group = []
+        test_group = []
+
+        for user_id in y_train:
+            to_append = self.xgb_dataframe.loc[self.xgb_dataframe['user_id'] == user_id].copy()
+            train_dataframe = train_dataframe.append(to_append)
+            train_group.append(20)
+
+        for user_id in y_test:
+            to_append = self.xgb_dataframe.loc[self.xgb_dataframe['user_id'] == user_id].copy()
+            test_dataframe = test_dataframe.append(to_append)
+            test_group.append(20)
+
+        X_train = train_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
+        X_test = test_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
+
+        # train_dropped = self.xgb_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
 
 
-        X_train, X_test, y_train, y_test = train_test_split(train_dropped, users, test_size=0.1, random_state=1)
+        # X_train, X_test, y_train, y_test = train_test_split(train_dropped, users, test_size=0.1, random_state=1)
 
         # train_dropped = X_train.drop(labels={'user_id', 'item_id'}, axis=1)
         # val_dropped = X_test.drop(labels={'user_id', 'item_id'}, axis=1)
 
-        print(y_train)
 
         dtrain = xgb.DMatrix(X_train, label=y_train)
         dtest = xgb.DMatrix(X_test, label=y_test)
 
-
+        dtrain.set_group(train_group)
+        dtest.set_group(test_group)
 
         num_round = 20  # the number of training iterations (number of trees)
 
-        xgb_regressor = xgb.XGBRegressor()
-        xgb_regressor.fit(X_train, y_train)
+        xbg_ranker = xgb.XGBRanker()
+        xbg_ranker.fit(dtrain, y_train, train_group)
 
 
-
+        # xgb_regressor = xgb.XGBRegressor()
+        # xgb_regressor.fit(X_train, y_train)
 
         # model = xgb.train(params,
         #                   dtrain,
         #                   num_round,
         #                   verbose_eval=2,
-        #                   evals=[(dtrain, 'train'), (dvalidation, 'validation')],
         #                   early_stopping_rounds=20)
 
-        print(xgb_regressor.predict(X_test))
+        # print(xgb_regressor.predict(X_test))
+
+        print(xbg_ranker.predict(dtest))
         print("user array:" + str(len(self.user_recommendations_user_id)))
         #print(" prediction array:" + str(len(model.predict())))
 
@@ -221,7 +250,7 @@ class XGBoost(object):
             topPop_score = topPop._compute_item_score([user_id])[0, item_id]
             topPop_score_list.append(topPop_score)
 
-        self.train_dataframe['item_popularity'] = pd.Series(topPop_score_list, index=self.train_dataframe.index)
+        self.xgb_dataframe['item_popularity'] = pd.Series(topPop_score_list, index=self.xgb_dataframe.index)
         print("Addition completed!")
 
     def add_user_profile_length(self):
@@ -236,7 +265,7 @@ class XGBoost(object):
             user_profile_len_list.append(user_profile_len[user_id])
 
 
-        self.train_dataframe['user_profile_len'] = pd.Series(user_profile_len_list, index=self.train_dataframe.index)
+        self.xgb_dataframe['user_profile_len'] = pd.Series(user_profile_len_list, index=self.xgb_dataframe.index)
         print("Addition completed!")
 
     def add_item_asset(self):
@@ -260,7 +289,7 @@ class XGBoost(object):
         for item_id in self.user_recommendations_items:
             icm_asset_list.append(assets[item_id])
 
-        self.train_dataframe['item_asset'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
+        self.xgb_dataframe['item_asset'] = pd.Series(icm_asset_list, index=self.xgb_dataframe.index)
         print("Addition completed!")
 
     def add_item_price(self):
@@ -284,7 +313,7 @@ class XGBoost(object):
         for item_id in self.user_recommendations_items:
             icm_asset_list.append(prices[item_id])
 
-        self.train_dataframe['item_price'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
+        self.xgb_dataframe['item_price'] = pd.Series(icm_asset_list, index=self.xgb_dataframe.index)
         print("Addition completed!")
 
     def add_item_subclass(self):
@@ -308,7 +337,7 @@ class XGBoost(object):
         for item_id in self.user_recommendations_items:
             icm_asset_list.append(subclasses[item_id])
 
-        self.train_dataframe['item_subclass'] = pd.Series(icm_asset_list, index=self.train_dataframe.index)
+        self.xgb_dataframe['item_subclass'] = pd.Series(icm_asset_list, index=self.xgb_dataframe.index)
         print("Addition completed!")
 
 

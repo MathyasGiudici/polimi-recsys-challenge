@@ -2,6 +2,7 @@ from OwnUtils.Extractor import Extractor
 import pandas as pd
 import numpy as np
 import scipy.sparse as sps
+import csv
 from sklearn.model_selection import train_test_split
 
 
@@ -137,6 +138,28 @@ class Builder(object):
         for age in self.ages:
             self.users_per_age_list.append(ucm_age.loc[ucm_age['col'] == age])
 
+
+    def build_icm_asset_dataframe(self):
+        icm_asset_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_asset.csv')
+        icm_asset = pd.DataFrame(icm_asset_pd)
+        icm_asset = pd.DataFrame.drop(icm_asset, labels="col", axis=1)
+        return icm_asset
+
+    def build_icm_price_dataframe(self):
+        icm_price_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_price.csv')
+        icm_price = pd.DataFrame(icm_price_pd)
+        icm_price = pd.DataFrame.drop(icm_price, labels="col", axis=1)
+        return icm_price
+
+    def build_icm_subclass_dataframe(self):
+        icm_subclass_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_sub_class.csv')
+        icm_subclass = pd.DataFrame(icm_subclass_pd)
+        icm_subclass = pd.DataFrame.drop(icm_subclass, labels="data", axis=1)
+        return icm_subclass
+
+########################################################################################################################
+########################################################################################################################
+
     """
     Used to slit the urm, don't use it!
     """
@@ -165,23 +188,21 @@ class Builder(object):
         # print(urm3)
         # print(urm4)
 
-    def build_icm_asset_dataframe(self):
-        icm_asset_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_asset.csv')
-        icm_asset = pd.DataFrame(icm_asset_pd)
-        icm_asset = pd.DataFrame.drop(icm_asset, labels="col", axis=1)
-        return icm_asset
+    def build_urms_target(self, targets: list):
+        urm_target = []
 
-    def build_icm_price_dataframe(self):
-        icm_price_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_price.csv')
-        icm_price = pd.DataFrame(icm_price_pd)
-        icm_price = pd.DataFrame.drop(icm_price, labels="col", axis=1)
-        return icm_price
+        for user_id in range(23183, 30911):
+            if user_id in targets:
+                urm_target.append(user_id)
 
-    def build_icm_subclass_dataframe(self):
-        icm_subclass_pd = pd.read_csv(self.DATA_FILE_PATH + 'data_ICM_sub_class.csv')
-        icm_subclass = pd.DataFrame(icm_subclass_pd)
-        icm_subclass = pd.DataFrame.drop(icm_subclass, labels="data", axis=1)
-        return icm_subclass
+
+        with open(self.DATA_FILE_PATH + "urm4_target_users_test.csv", 'w') as myfile:
+            for user_id in urm_target:
+                myfile.write(str(user_id))
+                myfile.write('\n')
+
+
+
 
 
 # if __name__ == '__main__':

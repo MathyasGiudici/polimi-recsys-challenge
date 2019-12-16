@@ -9,7 +9,7 @@ class Extractor(object):
 
     def get_target_users_of_recs(self):
         # Composing the name
-        file_name = self.DATA_FILE_PATH + "alg_sample_submission.csv"
+        file_name = self.DATA_FILE_PATH + "data_target_users_test.csv"
 
         with open(file_name) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -23,6 +23,24 @@ class Extractor(object):
 
             print(f'Processed {line_count} users to make recommendations.')
             return users
+
+    def get_target_users_of_specific_part(self, index: int):
+        # Composing the name
+        file_name = self.DATA_FILE_PATH + "urm" + str(index) + "_target_users_test.csv"
+
+        with open(file_name) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            line_count = 0
+
+            users = []
+            for line in csv_reader:
+                if line_count != 0:
+                    users.append(int(line[0]))
+                line_count += 1
+
+            # print(f'Processed {line_count} users to make recommendations.')
+            return users
+
 
     def get_interaction_rating(self):
         # Composing the name
@@ -91,7 +109,7 @@ class Extractor(object):
                 rows.append(i)
                 cols.append(j)
 
-        return sps.coo_matrix((values, (rows, cols))).tocsr()
+        return sps.coo_matrix((values, (rows, cols)), shape=self.get_urm_all().shape).tocsr()
 
     def _urm_extractor_code(self, name: str):
         # Composing the name

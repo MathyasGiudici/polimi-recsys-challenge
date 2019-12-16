@@ -1,0 +1,21 @@
+ICFKNN = [
+    {"topK": 750, "shrink": 500}, {"topK": 1000, "shrink": 500}, {"topK": 1500, "shrink": 500}, {"topK": 2000, "shrink": 500},
+    {"topK": 2500, "shrink": 500}, {"topK": 5000, "shrink": 500}, {"topK": 7500, "shrink": 500}, {"topK": 10000, "shrink": 500},
+    {"topK": 750, "shrink": 750}, {"topK": 1000, "shrink": 750}, {"topK": 1500, "shrink": 750}, {"topK": 2000, "shrink": 750},
+    {"topK": 2500, "shrink": 750}, {"topK": 5000, "shrink": 750}, {"topK": 7500, "shrink": 750}, {"topK": 10000, "shrink": 750},
+    {"topK": 750, "shrink": 1000}, {"topK": 1000, "shrink": 1000}, {"topK": 1500, "shrink": 1000}, {"topK": 2000, "shrink": 1000},
+    {"topK": 2500, "shrink": 1000}, {"topK": 5000, "shrink": 1000}, {"topK": 7500, "shrink": 1000}, {"topK": 10000, "shrink": 1000},
+    {"topK": 750, "shrink": 1500}, {"topK": 1000, "shrink": 1500}, {"topK": 1500, "shrink": 1500}, {"topK": 2000, "shrink": 1500},
+    {"topK": 2500, "shrink": 1500}, {"topK": 5000, "shrink": 1500}, {"topK": 7500, "shrink": 1500}, {"topK": 10000, "shrink": 1500},
+    {"topK": 750, "shrink": 2000}, {"topK": 1000, "shrink": 2000}, {"topK": 1500, "shrink": 2000}, {"topK": 2000, "shrink": 2000},
+    {"topK": 2500, "shrink": 2000}, {"topK": 5000, "shrink": 2000}, {"topK": 7500, "shrink": 2000}, {"topK": 10000, "shrink": 2000},
+    {"topK": 750, "shrink": 2500}, {"topK": 1000, "shrink": 2500}, {"topK": 1500, "shrink": 2500}, {"topK": 2000, "shrink": 2500},
+    {"topK": 2500, "shrink": 2500}, {"topK": 5000, "shrink": 2500}, {"topK": 7500, "shrink": 2500}, {"topK": 10000, "shrink": 2500},
+    {"topK": 750, "shrink": 5000}, {"topK": 1000, "shrink": 5000}, {"topK": 1500, "shrink": 5000}, {"topK": 2000, "shrink": 5000},
+    {"topK": 2500, "shrink": 5000}, {"topK": 5000, "shrink": 5000}, {"topK": 7500, "shrink": 5000}, {"topK": 10000, "shrink": 5000},
+    {"topK": 750, "shrink": 7500}, {"topK": 1000, "shrink": 7500}, {"topK": 1500, "shrink": 7500}, {"topK": 2000, "shrink": 7500},
+    {"topK": 2500, "shrink": 7500}, {"topK": 5000, "shrink": 7500}, {"topK": 7500, "shrink": 7500}, {"topK": 10000, "shrink": 7500},
+    {"topK": 750, "shrink": 10000}, {"topK": 1000, "shrink": 10000}, {"topK": 1500, "shrink": 10000}, {"topK": 2000, "shrink": 10000},
+    {"topK": 2500, "shrink": 10000}, {"topK": 5000, "shrink": 10000}, {"topK": 7500, "shrink": 10000}, {"topK": 10000, "shrink": 10000},
+
+]

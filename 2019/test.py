@@ -34,17 +34,3 @@ if __name__ == '__main__':
     builder = Builder()
     ex = Extractor()
 
-    builder.get_urm_all_users()
-
-
-    list = []
-    icm_asset_df = builder.build_icm_asset_dataframe()
-
-
-    list.extend(icm_asset_df.loc[icm_asset_df["row"] == 18494]["data"].values)
-    list.extend(icm_asset_df.loc[icm_asset_df["row"] == 0]["data"].values)
-    list.extend(icm_asset_df.loc[icm_asset_df["row"] == 1]["data"].values)
-
-    print(list)
-
-    #builder.split_4_urm()

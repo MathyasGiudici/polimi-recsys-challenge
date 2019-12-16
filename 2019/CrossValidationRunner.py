@@ -3,6 +3,7 @@ from OwnUtils.Extractor import Extractor
 from OwnUtils.Writer import Writer
 from datetime import datetime
 from Utils.evaluation_function import evaluate_algorithm, evaluate_algorithm_crossvalidation
+import ParametersTuning
 import WeightConstants
 
 import random
@@ -33,6 +34,7 @@ class CrossValidationRunner(object):
 
         self.is_test = None
         self.writer = Writer
+        self.extractor = Extractor()
         self.result_dict = None
 
         self.urm_train = None
@@ -49,6 +51,7 @@ class CrossValidationRunner(object):
         self.p_p3a = None
         self.p_rp3b = None
 
+        self.target_users = []
         self.results = []
 
         if self.cbfknn:
@@ -70,8 +73,7 @@ class CrossValidationRunner(object):
         if self.rp3b:
             self.p_rp3b = WeightConstants.RP3B
 
-        self.shape_row = 0
-        self.previous_shape_row = 0
+        self.MAPs = []
 
 
     def run(self, is_test):
@@ -80,29 +82,37 @@ class CrossValidationRunner(object):
         :param is_test: specifies if we want to write a report or a submission
         """
         self.is_test = is_test
-        self.write_report()
 
-        extractor = Extractor()
-        self.icm = extractor.get_icm_all()
+        self.icm = self.extractor.get_icm_all()
 
         if self.is_test:
 
-            for i in range(1, 5):
-                urm_to_predict = extractor.get_single_urm(i)
-                self.urm_train = extractor.get_others_urm_vstack(i)
+            for params in ParametersTuning.ICFKNN:
+                if self.icfknn:
+                    self.p_icfknn = params
+                    self.write_report()
 
-                # Splitting into post-validation & testing in case of parameter tuning
-                matrices = loo.split_train_leave_k_out_user_wise(urm_to_predict, 1, False, True)
+                # URM splitted in 4 smaller URMs for cross-validation
+                for i in range(1, 5):
+                    urm_to_predict = self.extractor.get_single_urm(i)
+                    self.urm_train = self.extractor.get_others_urm_vstack(i)
 
-                urm_unused = matrices[0]
-                self.urm_validation = urm_to_predict
+                    # Splitting into post-validation & testing in case of parameter tuning
+                    matrices = loo.split_train_leave_k_out_user_wise(urm_to_predict, 1, False, True)
 
-                self.evaluate(i)
+                    urm_unused = matrices[0]
+                    self.urm_validation = matrices[1]
+                    self.target_users = self.extractor.get_target_users_of_specific_part(i)
+
+                    self.evaluate(i)
+
                 self.output_average_MAP()
 
+            self.output_best_params()
+
         else:
-            users = extractor.get_target_users_of_recs()
-            self.urm_train = extractor.get_urm_all()
+            users = self.extractor.get_target_users_of_recs()
+            self.urm_train = self.extractor.get_urm_all()
 
             self.write_submission(users)
 
@@ -162,34 +172,28 @@ class CrossValidationRunner(object):
         print("Submission file written")
 
 
-    def evaluate(self,index: int):
+    def evaluate(self, index: int):
         """
         Method used for the validation and the calculation of the weights
         """
-
-        self.previous_shape_row = self.shape_row
-        self.shape_row = self.urm_validation.shape[0]
-
         generated_weights = []
 
         self.writer.write_report(self.writer, "VALIDATION " + str(index), report_counter)
-        self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
         for weight in self.get_test_weights(add_random=False):
 
             generated_weights.append(weight)
             print("--------------------------------------")
 
-            recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+            recommender = WeightedHybrid(self.urm_train, self.icm.copy(), self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                      self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b, weight)
             recommender.fit()
-            result_dict = evaluate_algorithm_crossvalidation(self.urm_validation, recommender, self.previous_shape_row,
-                                                             self.shape_row)
+            result_dict = evaluate_algorithm_crossvalidation(self.urm_validation, recommender, self.target_users)
             self.results.append(float(result_dict["MAP"]))
 
-            self.writer.write_report(self.writer, str(weight), report_counter)
+            # self.writer.write_report(self.writer, str(weight), report_counter)
             self.writer.write_report(self.writer, str(result_dict), report_counter)
-
+            self.writer.write_report(self.writer, "--------------------------------------", report_counter)
 
         # Retriving correct weight
         # results.sort()
@@ -198,7 +202,7 @@ class CrossValidationRunner(object):
 
     def get_test_weights(self, add_random=False):
         if not add_random:
-            return WeightConstants.IS_TEST_WEIGHTS
+            return WeightConstants.NO_WEIGHTS
         else:
             new_weights = []
             for weight in WeightConstants.IS_TEST_WEIGHTS:
@@ -226,7 +230,21 @@ class CrossValidationRunner(object):
 
         average_MAP /= len(self.results)
 
+        self.MAPs.append(average_MAP)
+
+        self.results.clear()
+
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
         self.writer.write_report(self.writer, "The average MAP is: " + str(average_MAP), report_counter)
+
+
+    def output_best_params(self):
+        best_MAP = max(self.MAPs)
+        index = self.MAPs.index(best_MAP)
+        best_params = ParametersTuning.ICFKNN[index]
+        self.writer.write_report(self.writer, "--------------------------------------", report_counter)
+        self.writer.write_report(self.writer, "With a MAP of " + str(best_MAP) + " the best parameters are: " +
+                                 str(best_params), report_counter)
+
 
 

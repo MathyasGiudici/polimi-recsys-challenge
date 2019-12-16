@@ -93,7 +93,7 @@ def evaluate_algorithm(URM_test, recommender_object, at=10):
     return result_dict
 
 
-def evaluate_algorithm_crossvalidation(URM_test, recommender_object, range_init, range_end, at=10):
+def evaluate_algorithm_crossvalidation(URM_test, recommender_object, target_users: list, at=10):
 
     cumulative_precision = 0.0
     cumulative_recall = 0.0
@@ -103,10 +103,10 @@ def evaluate_algorithm_crossvalidation(URM_test, recommender_object, range_init,
 
     URM_test = sps.csr_matrix(URM_test)
 
-    for user_id in range(range_init, range_end):
+    for user_id in target_users:
 
         if user_id % 10000 == 0:
-            print("Evaluated user {} of {}".format(user_id, range_end - range_init))
+            print("Evaluated user {} of {}".format(user_id, len(target_users)))
 
         start_pos = URM_test.indptr[user_id]
         end_pos = URM_test.indptr[user_id+1]

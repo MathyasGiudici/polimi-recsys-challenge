@@ -4,6 +4,7 @@ from OwnUtils.Writer import Writer
 from datetime import datetime
 from Utils.evaluation_function import evaluate_algorithm
 import WeightConstants
+from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
 
 import random
 import Utils.Split.split_train_validation_leave_k_out as loo
@@ -11,8 +12,9 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 """
 Specify the report and the submission in which we will write the results
 """
-report_counter = 778
-submission_counter = 10
+
+report_counter = 20
+submission_counter = 2
 
 
 class GenericRunner(object):
@@ -99,7 +101,7 @@ class GenericRunner(object):
 
             self.write_report()
 
-            from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
+
             if self.is_SSLIM:
                 for topK in [50, 100, 200]:
                     for epochs in [10, 20, 50, 100, 200, 300]:
@@ -109,11 +111,8 @@ class GenericRunner(object):
 
                         self.icm = slim_bpr.recs.copy().tocsr()
                         self.evaluate()
-            else:
-                slim_bpr = SLIM_BPR_Cython(self.icm.copy())
-                slim_bpr.fit(**WeightConstants.SLIM_BPR_ICM)
 
-                self.icm = slim_bpr.recs.copy().tocsr()
+            else:
                 self.evaluate()
 
 
@@ -207,7 +206,8 @@ class GenericRunner(object):
             results.append(float(result_dict["MAP"]))
 
             self.writer.write_report(self.writer, str(weight), report_counter)
-            #self.writer.write_report(self.writer, str(self.sslim_pars), report_counter)
+            if self.is_SSLIM:
+                self.writer.write_report(self.writer, str(self.sslim_pars), report_counter)
             self.writer.write_report(self.writer, str(result_dict), report_counter)
 
         # Retriving correct weight
