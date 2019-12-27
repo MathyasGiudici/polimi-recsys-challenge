@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import scipy.sparse as sps
+import pandas as pd
 from sklearn import preprocessing, feature_extraction
 
 
@@ -130,8 +131,6 @@ class Extractor(object):
             print(f'Processed {line_count} interactions.')
 
             ones_matrix = np.ones(line_count - 1)
-
-
             return sps.coo_matrix((ones_matrix, (users, items)), shape=self.get_urm_all().shape).tocsr()
 
     def get_icm_asset(self):
@@ -242,9 +241,7 @@ class Extractor(object):
         if no_tfidf:
             return icm_all
 
-        icm_tfidf = feature_extraction.text.TfidfTransformer().fit_transform(icm_all)
-        icm_tfidf = preprocessing.normalize(icm_tfidf, axis=0, norm='l2')
-
+        icm_tfidf = self.preprocess_csr_matrix(icm_all)
         return icm_tfidf
 
     def get_ucm_age(self):
@@ -318,7 +315,15 @@ class Extractor(object):
         if no_tfidf:
             return ucm_all
 
-        ucm_tfidf = feature_extraction.text.TfidfTransformer().fit_transform(ucm_all)
-        ucm_tfidf = preprocessing.normalize(ucm_tfidf, axis=0, norm='l2')
-
+        ucm_tfidf = self.preprocess_csr_matrix(ucm_all)
         return ucm_tfidf
+
+    # Preprocessing adjustments
+    def preprocess_csr_matrix(self, mat):
+        ucm_tfidf = feature_extraction.text.TfidfTransformer().fit_transform(mat)
+        return preprocessing.normalize(ucm_tfidf, axis=0, norm='l2')
+
+    def get_urm_as_dataframe(self) -> pd.DataFrame:
+        urm = pd.read_csv(self.DATA_FILE_PATH + 'data_train.csv')
+        urm_df = pd.DataFrame(urm)
+        return urm_df

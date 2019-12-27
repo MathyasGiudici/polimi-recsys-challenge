@@ -13,7 +13,7 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 Specify the report and the submission in which we will write the results
 """
 report_counter = 10
-submission_counter = 10
+submission_counter = 3
 
 class CrossValidationRunner(object):
 
@@ -82,35 +82,57 @@ class CrossValidationRunner(object):
         :param is_test: specifies if we want to write a report or a submission
         """
         self.is_test = is_test
-
         self.icm = self.extractor.get_icm_all()
 
         if self.is_test:
 
-            for params in ParametersTuning.ICFKNN:
-                if self.icfknn:
-                    self.p_icfknn = params
-                    self.write_report()
+            # CREATION OF THE VALIDATIONS FOR EACH PART OF THE TRAIN
+            vals = []
+            urms = []
+            target_profiles = []
+
+            for i in range(1, 5):
+                urm_to_predict = self.extractor.get_single_urm(i)
+
+                matrices = loo.split_train_leave_k_out_user_wise(urm_to_predict, 1, False, True)
+
+                target_users_profile = matrices[0]
+                target_profiles.append(target_users_profile)
+
+                val = matrices[1]
+                vals.append(val)
+
+                urm = self.extractor.get_others_urm_vstack(i)
+
+                urms.append(urm)
+
+            if self.icfknn:
+                self.p_icfknn = ParametersTuning.ICFKNN_BEST
+            if self.cbfknn:
+                self.p_cbfknn = ParametersTuning.CBFKNN_BEST
+
+            # TUNING WITH THE DIFFERENT PARAMS
+            for params in ParametersTuning.UCFKNN:
+                if self.ucfknn:
+                    self.p_ucfknn = params
+                self.write_report()
 
                 # URM splitted in 4 smaller URMs for cross-validation
-                for i in range(1, 5):
-                    urm_to_predict = self.extractor.get_single_urm(i)
-                    self.urm_train = self.extractor.get_others_urm_vstack(i)
+                for i in range(0, 4):
+                    self.urm_validation = vals[i].copy()
+                    self.urm_train = urms[i].copy()
+                    self.target_users = self.extractor.get_target_users_of_specific_part(i+1)
 
-                    # Splitting into post-validation & testing in case of parameter tuning
-                    matrices = loo.split_train_leave_k_out_user_wise(urm_to_predict, 1, False, True)
-
-                    urm_unused = matrices[0]
-                    self.urm_validation = matrices[1]
-                    self.target_users = self.extractor.get_target_users_of_specific_part(i)
-
-                    self.evaluate(i)
+                    self.evaluate(i+1, target_profiles[i])
 
                 self.output_average_MAP()
 
             self.output_best_params()
 
         else:
+            self.p_cbfknn = ParametersTuning.CBFKNN_BEST
+            self.p_icfknn = ParametersTuning.ICFKNN_BEST
+
             users = self.extractor.get_target_users_of_recs()
             self.urm_train = self.extractor.get_urm_all()
 
@@ -159,8 +181,9 @@ class CrossValidationRunner(object):
         """
         self.writer.write_header(self.writer, sub_counter=submission_counter)
 
-        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn, self.p_slimbpr,
-                             self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b, WeightConstants.SUBM_WEIGHTS)
+        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b,
+                                     WeightConstants.NO_WEIGHTS[0], seen_items=self.urm_train)
         recommender.fit()
 
         from tqdm import tqdm
@@ -172,7 +195,7 @@ class CrossValidationRunner(object):
         print("Submission file written")
 
 
-    def evaluate(self, index: int):
+    def evaluate(self, index: int, target_users_profile):
         """
         Method used for the validation and the calculation of the weights
         """
@@ -186,7 +209,8 @@ class CrossValidationRunner(object):
             print("--------------------------------------")
 
             recommender = WeightedHybrid(self.urm_train, self.icm.copy(), self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
-                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b, weight)
+                                         self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a,
+                                         self.p_rp3b, weight, seen_items=target_users_profile)
             recommender.fit()
             result_dict = evaluate_algorithm_crossvalidation(self.urm_validation, recommender, self.target_users)
             self.results.append(float(result_dict["MAP"]))
@@ -241,7 +265,7 @@ class CrossValidationRunner(object):
     def output_best_params(self):
         best_MAP = max(self.MAPs)
         index = self.MAPs.index(best_MAP)
-        best_params = ParametersTuning.ICFKNN[index]
+        best_params = ParametersTuning.UCFKNN[index]
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
         self.writer.write_report(self.writer, "With a MAP of " + str(best_MAP) + " the best parameters are: " +
                                  str(best_params), report_counter)

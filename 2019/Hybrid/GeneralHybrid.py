@@ -15,7 +15,7 @@ from Utils.Base.IR_feature_weighting import okapi_BM_25
 
 class GeneralHybrid(object):
 
-    def __init__(self,  urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b):
+    def __init__(self, train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b, seen_items=None):
 
         # Parameter saving
         self.p_icfknn = p_icfknn
@@ -29,35 +29,43 @@ class GeneralHybrid(object):
         self.p_rp3b = p_rp3b
 
         # Getting matrices
-        self.urm = urm.copy()
+        self.train = train.copy()
         self.icm = icm.copy()
 
         self.icm_bm25 = self.icm.copy().astype(np.float32)
         self.icm_bm25 = okapi_BM_25(self.icm_bm25)
         self.icm_bm25 = self.icm_bm25.tocsr()
 
+        # TARGET USERS PROFILE USED TO DELETE SEEN ITEMS
+        if seen_items is None:
+            self.seen_items = train.copy()
+        else:
+            self.seen_items = seen_items
+
         # Creating recommenders
         if self.p_icfknn is not None:
-            self.recommender_itemCFKNN = ItemCFKNNRecommender(self.urm.copy())
+            self.recommender_itemCFKNN = ItemCFKNNRecommender(self.train.copy(), self.seen_items)
         if self.p_ucfknn is not None:
-            self.recommender_userCFKNN = UserCFKNNRecommender(self.urm.copy())
+            self.recommender_userCFKNN = UserCFKNNRecommender(self.train.copy(), self.seen_items)
         if self.p_cbfknn is not None:
-            self.recommender_itemCBFKNN = ItemCBFKNNRecommender(self.urm.copy(), self.icm_bm25)
+            self.recommender_itemCBFKNN = ItemCBFKNNRecommender(self.seen_items, self.icm_bm25)
         if self.p_slimbpr is not None:
-            self.recommender_slim_bpr = SLIM_BPR_Cython(self.urm.copy())
+            self.recommender_slim_bpr = SLIM_BPR_Cython(self.train.copy())
         if self.p_puresvd is not None:
-            self.recommender_puresvd = PureSVDRecommender(self.urm.copy())
+            self.recommender_puresvd = PureSVDRecommender(self.train.copy())
         if self.p_als is not None:
-            self.recommender_als = AlternatingLeastSquare(self.urm.copy())
+            self.recommender_als = AlternatingLeastSquare(self.train.copy())
         if self.p_p3a is not None:
-            self.recommender_p3a = P3alphaRecommender(self.urm.copy())
+            self.recommender_p3a = P3alphaRecommender(self.train.copy())
         if self.p_rp3b is not None:
-            self.recommender_rp3b = RP3betaRecommender(self.urm.copy())
+            self.recommender_rp3b = RP3betaRecommender(self.train.copy())
+
+
+
 
     def fit(self):
         """
         Fit the different selected algorithms
-        TODO: write the method in a more beautiful way
         """
         if self.p_icfknn is not None:
             self.recommender_itemCFKNN.fit(**self.p_icfknn)
@@ -73,7 +81,7 @@ class GeneralHybrid(object):
             self.recommender_als.fit(**self.p_als)
 
         if self.p_cfw is not None:
-            self.recommender_cfw = CommonFeatureWeighting(self.urm.copy(), self.icm_bm25, self.recommender_itemCFKNN.get_W_sparse())
+            self.recommender_cfw = CommonFeatureWeighting(self.train.copy(), self.icm_bm25, self.recommender_itemCFKNN.get_W_sparse())
             self.recommender_cfw.fit(**self.p_cfw)
 
         if self.p_p3a is not None:

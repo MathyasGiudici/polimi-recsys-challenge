@@ -1,15 +1,18 @@
 import numpy as np
+from OwnUtils.Extractor import Extractor
 
 from Hybrid.GeneralHybrid import GeneralHybrid
 
 class WeightedHybrid(GeneralHybrid):
 
-    def __init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b, weights):
-        GeneralHybrid.__init__(self, urm, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b)
+    def __init__(self, train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b,
+                 weights, seen_items=None):
+        GeneralHybrid.__init__(self, train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw,
+                               p_p3a, p_rp3b, seen_items)
 
         self.weights = weights
 
-        n_user, n_items = urm.shape
+        n_user, n_items = train.shape
         self.n_items = n_items
 
         self.hybrid_ratings = None
@@ -56,7 +59,7 @@ class WeightedHybrid(GeneralHybrid):
         recommended_items = np.flip(np.argsort(self.hybrid_ratings), 0)
 
         # REMOVING SEEN
-        unseen_items_mask = np.in1d(recommended_items, self.urm[user].indices, assume_unique=True, invert=True)
+        unseen_items_mask = np.in1d(recommended_items, self.seen_items[user].indices, assume_unique=True, invert=True)
         recommended_items = recommended_items[unseen_items_mask]
 
         return recommended_items[0:at]

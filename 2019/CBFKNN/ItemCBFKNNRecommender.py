@@ -4,9 +4,9 @@ import numpy as np
 
 class ItemCBFKNNRecommender():
 
-    def __init__(self, URM, ICM):
+    def __init__(self, target_user_profile, ICM):
         #super(BaseItemSimilarityMatrixRecommender, self).__init__(URM)
-        self.URM = URM
+        self.URM = target_user_profile
         self.ICM = ICM
 
     def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine", asymmetric_alpha=0.5,

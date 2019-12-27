@@ -2,6 +2,7 @@ from lightfm import LightFM
 from lightfm.evaluation import precision_at_k, auc_score
 from OwnUtils.Extractor import Extractor
 from OwnUtils.Builder import Builder
+import numpy as np
 import pandas as pd
 import Utils.Split.split_train_validation_leave_k_out as loo
 
@@ -34,3 +35,5 @@ if __name__ == '__main__':
     builder = Builder()
     ex = Extractor()
 
+    list = [1,2,3,4,5,6]
+    print(np.amax(list))

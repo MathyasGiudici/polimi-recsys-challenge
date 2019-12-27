@@ -99,6 +99,8 @@ class GenericRunner(object):
             self.urm_train = matrices_for_validation[0]
             self.urm_validation = matrices_for_validation[1]
 
+            self.urm_train = extractor.preprocess_csr_matrix(self.urm_train)
+
             self.write_report()
 
 

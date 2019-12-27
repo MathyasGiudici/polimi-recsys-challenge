@@ -77,7 +77,7 @@ _IS_TEST_WEIGHTS = [
 
 
 NO_WEIGHTS = [
-{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1, 'als': 1, 'cfw': 1, 'p3a': 1, 'rp3b': 1},
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1, 'als': 1, 'cfw': 1, 'p3a': 1, 'rp3b': 1}
 ]
 
 

@@ -1,11 +1,15 @@
 from Utils.Base.Similarity.Compute_Similarity_Python import Compute_Similarity_Python
 from Utils.Base.BaseSimilarityMatrixRecommender import BaseItemSimilarityMatrixRecommender
+from OwnUtils.Extractor import Extractor
 import numpy as np
 
 class ItemCFKNNRecommender():
 
-    def __init__(self, URM):
-        self.URM = URM
+    def __init__(self, train, target_users_profile):
+        self.train = train
+
+        # IN CROSS VALIDATION THIS IS THE URM OF TARGET USERS WITHOUT THE TEST ITEMS
+        self.URM = target_users_profile
 
     def get_W_sparse(self):
         return self.W_sparse
@@ -13,7 +17,7 @@ class ItemCFKNNRecommender():
     def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine",  asymmetric_alpha=0.5,
                     tversky_alpha=1.0, tversky_beta=1.0, row_weights=None):
 
-        similarity_object = Compute_Similarity_Python(self.URM, shrink=shrink,
+        similarity_object = Compute_Similarity_Python(self.train, shrink=shrink,
                                                       topK=topK, normalize=normalize,
                                                       similarity=similarity, asymmetric_alpha=asymmetric_alpha,
                                                       tversky_alpha=tversky_alpha, tversky_beta=tversky_beta,
@@ -24,7 +28,7 @@ class ItemCFKNNRecommender():
 
     def recommend(self, user_id, at=None, exclude_seen=True):
         # compute the scores using the dot product
-        user_profile = self.URM[user_id]
+        user_profile = self.train[user_id]
         scores = user_profile.dot(self.W_sparse).toarray().ravel()
 
         if exclude_seen:

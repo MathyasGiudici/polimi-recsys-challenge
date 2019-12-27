@@ -5,13 +5,16 @@ import numpy as np
 
 class UserCFKNNRecommender():
 
-    def __init__(self, URM):
-        self.URM = URM
+    def __init__(self, train, target_users_profile):
+        self.train = train
+
+        # IN CROSS VALIDATION THIS IS THE URM OF TARGET USERS WITHOUT THE TEST ITEMS
+        self.URM = target_users_profile
 
     def fit(self, topK=50, shrink=100, normalize=True, similarity="cosine", asymmetric_alpha=0.5,
             tversky_alpha=1.0, tversky_beta=1.0, row_weights=None):
 
-        similarity_object = Compute_Similarity_Python(self.URM.T, shrink=shrink,
+        similarity_object = Compute_Similarity_Python(self.train.T, shrink=shrink,
                                                       topK=topK, normalize=normalize,
                                                       similarity=similarity, asymmetric_alpha=asymmetric_alpha,
                                                       tversky_alpha=tversky_alpha, tversky_beta=tversky_beta,
