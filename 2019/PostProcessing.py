@@ -4,6 +4,7 @@ from OwnUtils.Extractor import Extractor
 
 POPULARITY_THRESHOLD = 50
 USER_RATIO_THRESHOLD = 0.5
+LONGTAIL_WEIGHT = 0.7
 
 
 class PostProcessing(object):
@@ -16,7 +17,15 @@ class PostProcessing(object):
         self.short_head = []
         self.long_tail = []
 
+        self.user_short_head_ratio = 0
         self.build_item_popularity_list()
+
+    # GET USER PREFERENCE BETWEEN SHORT HEAD AND LONG TAIL
+    def get_user_category_pref(self):
+        if self.user_short_head_ratio > USER_RATIO_THRESHOLD:
+            return self.user_short_head_ratio
+        else:
+            return 1 - self.user_short_head_ratio
 
     def build_item_popularity_list(self):
         urm_coo = self.urm.tocoo()
@@ -48,15 +57,18 @@ class PostProcessing(object):
             if i in self.short_head:
                 count_pop += 1
 
-        user_short_head_ratio = count_pop / len(user_items)
+        self.user_short_head_ratio = count_pop / len(user_items)
 
-        if user_short_head_ratio > USER_RATIO_THRESHOLD:
-            return False
-        else:
-            return True
 
-    def rerank_scores(self, ):
-        # Todo
+    def rerank_scores(self, items_base_scores: list):
+
+        R_list = []
+
+        for base_score in items_base_scores:
+            weighted_base_score = (1 - LONGTAIL_WEIGHT) * base_score
+
+
+            # weighted_category_booster = LONGTAIL_WEIGHT * self.user_short_head_ratio * (1 - )
         return
 
 

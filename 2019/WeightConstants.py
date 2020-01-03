@@ -1,9 +1,9 @@
 """
 Fixed parameters of each algorithm
 """
-ICFKNN = {"topK": 10, "shrink": 10}
-UCFKNN = {"topK": 500, "shrink": 10}
-CBFKNN = {"topK": 100, "shrink": 200}
+ICFKNN = {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+UCFKNN = {"topK": 25, "shrink": 750}
+CBFKNN = {'topK': 650, 'shrink': 650}
 SLIM_BPR = {"epochs": 200, "lambda_i": 0.01, "lambda_j": 0.01}
 SLIM_BPR_ICM = {'topK': 200, 'epochs': 50, "lambda_i": 0.01, "lambda_j": 0.01}
 PURE_SVD = {"num_factors": 1000, }

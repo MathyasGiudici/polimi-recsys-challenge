@@ -38,23 +38,23 @@ class GeneralHybrid(object):
 
         # TARGET USERS PROFILE USED TO DELETE SEEN ITEMS
         if seen_items is None:
-            self.seen_items = train.copy()
+            self.seen_items = train
         else:
             self.seen_items = seen_items
 
         # Creating recommenders
         if self.p_icfknn is not None:
-            self.recommender_itemCFKNN = ItemCFKNNRecommender(self.train.copy(), self.seen_items)
+            self.recommender_itemCFKNN = ItemCFKNNRecommender(self.train.copy(), self.seen_items.copy())
         if self.p_ucfknn is not None:
-            self.recommender_userCFKNN = UserCFKNNRecommender(self.train.copy(), self.seen_items)
+            self.recommender_userCFKNN = UserCFKNNRecommender(self.train.copy(), self.seen_items.copy())
         if self.p_cbfknn is not None:
-            self.recommender_itemCBFKNN = ItemCBFKNNRecommender(self.seen_items, self.icm_bm25)
+            self.recommender_itemCBFKNN = ItemCBFKNNRecommender(self.seen_items.copy(), self.icm_bm25)
         if self.p_slimbpr is not None:
-            self.recommender_slim_bpr = SLIM_BPR_Cython(self.train.copy())
+            self.recommender_slim_bpr = SLIM_BPR_Cython(self.train.copy(), self.seen_items.copy())
         if self.p_puresvd is not None:
-            self.recommender_puresvd = PureSVDRecommender(self.train.copy())
+            self.recommender_puresvd = PureSVDRecommender(self.seen_items.copy())
         if self.p_als is not None:
-            self.recommender_als = AlternatingLeastSquare(self.train.copy())
+            self.recommender_als = AlternatingLeastSquare(self.seen_items.copy())
         if self.p_p3a is not None:
             self.recommender_p3a = P3alphaRecommender(self.train.copy())
         if self.p_rp3b is not None:

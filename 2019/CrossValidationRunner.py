@@ -13,7 +13,7 @@ import Utils.Split.split_train_validation_leave_k_out as loo
 Specify the report and the submission in which we will write the results
 """
 report_counter = 10
-submission_counter = 3
+submission_counter = 4
 
 class CrossValidationRunner(object):
 
@@ -112,9 +112,9 @@ class CrossValidationRunner(object):
                 self.p_cbfknn = ParametersTuning.CBFKNN_BEST
 
             # TUNING WITH THE DIFFERENT PARAMS
-            for params in ParametersTuning.UCFKNN:
-                if self.ucfknn:
-                    self.p_ucfknn = params
+            for params in ParametersTuning.ALS:
+                if self.als:
+                    self.p_als = params
                 self.write_report()
 
                 # URM splitted in 4 smaller URMs for cross-validation
@@ -135,6 +135,8 @@ class CrossValidationRunner(object):
 
             users = self.extractor.get_target_users_of_recs()
             self.urm_train = self.extractor.get_urm_all()
+
+            self.writer.write_header(self.writer, sub_counter=submission_counter)
 
             self.write_submission(users)
 
@@ -179,7 +181,6 @@ class CrossValidationRunner(object):
         This method is used to write the submission, selecting only chosen algorithms
         :return:
         """
-        self.writer.write_header(self.writer, sub_counter=submission_counter)
 
         recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                      self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b,
@@ -265,7 +266,7 @@ class CrossValidationRunner(object):
     def output_best_params(self):
         best_MAP = max(self.MAPs)
         index = self.MAPs.index(best_MAP)
-        best_params = ParametersTuning.UCFKNN[index]
+        best_params = ParametersTuning.ALS[index]
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
         self.writer.write_report(self.writer, "With a MAP of " + str(best_MAP) + " the best parameters are: " +
                                  str(best_params), report_counter)

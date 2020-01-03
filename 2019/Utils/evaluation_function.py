@@ -56,7 +56,7 @@ def evaluate_algorithm(URM_test, recommender_object, at=10):
 
     n_users = URM_test.shape[0]
 
-    for user_id in range(n_users):
+    for user_id in range(0, n_users):
 
         if user_id % 10000 == 0:
             print("Evaluated user {} of {}".format(user_id, n_users))
@@ -64,7 +64,7 @@ def evaluate_algorithm(URM_test, recommender_object, at=10):
         start_pos = URM_test.indptr[user_id]
         end_pos = URM_test.indptr[user_id+1]
 
-        if end_pos-start_pos>0:
+        if end_pos-start_pos > 0:
 
             relevant_items = URM_test.indices[start_pos:end_pos]
 

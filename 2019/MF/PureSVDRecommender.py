@@ -30,7 +30,7 @@ class PureSVDRecommender(BaseMatrixFactorizationRecommender):
         U, Sigma, VT = randomized_svd(self.URM_train,
                                       n_components=num_factors,
                                       #n_iter=5,
-                                      random_state = random_seed)
+                                      random_state=random_seed)
 
         s_Vt = sps.diags(Sigma)*VT
 

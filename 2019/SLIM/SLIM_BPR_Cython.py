@@ -53,7 +53,7 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
     RECOMMENDER_NAME = "SLIM_BPR_Recommender"
 
 
-    def __init__(self, URM_train,
+    def __init__(self, URM_train, target_users_profile,
                  free_mem_threshold = 0.5,
                  recompile_cython = False):
 
@@ -63,7 +63,7 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
         assert free_mem_threshold>=0.0 and free_mem_threshold<=1.0, "SLIM_BPR_Recommender: free_mem_threshold must be between 0.0 and 1.0, provided was '{}'".format(free_mem_threshold)
 
         self.n_users, self.n_items = self.URM_train.shape
-
+        self.target_users_profile = target_users_profile
         self.free_mem_threshold = free_mem_threshold
 
         if recompile_cython:
@@ -173,7 +173,7 @@ class SLIM_BPR_Cython(BaseSimilarityMatrixRecommender, Incremental_Training_Earl
 
         sys.stdout.flush()
 
-        self.recs = self.URM_train.dot(self.W_sparse)
+        self.recs = self.target_users_profile.dot(self.W_sparse)
 
 
     def _prepare_model_for_validation(self):

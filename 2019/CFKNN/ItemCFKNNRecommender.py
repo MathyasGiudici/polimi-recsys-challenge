@@ -28,7 +28,7 @@ class ItemCFKNNRecommender():
 
     def recommend(self, user_id, at=None, exclude_seen=True):
         # compute the scores using the dot product
-        user_profile = self.train[user_id]
+        user_profile = self.URM[user_id]
         scores = user_profile.dot(self.W_sparse).toarray().ravel()
 
         if exclude_seen:

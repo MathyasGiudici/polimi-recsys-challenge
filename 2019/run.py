@@ -7,11 +7,11 @@ if __name__ == '__main__':
 
     algorithms_choice = {
         "icfknn": True,
-        "ucfknn": True,
+        "ucfknn": False,
         "cbfknn": True,
         "slim_bpr": False,
         "pure_svd": False,
-        "als": False,
+        "als": True,
         "cfw": False,
         "p3a": False,
         "rp3b": False,

@@ -1,0 +1,770 @@
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 01:54:18.196293
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: [{'topK': 5, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 10, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 25, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 50, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 75, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 100, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 250, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 500, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 750, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 1000, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 2500, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 5000, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 7500, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 10000, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 5, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 10, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 25, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 50, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 75, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 100, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 250, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 500, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 750, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 1000, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 2500, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 5000, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 7500, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}, {'topK': 10000, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}]
+--------------------------------------
+
+VALIDATION 1
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 01:56:15.388883
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 5, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008286470393648767, 'recall': 0.08286470393648693, 'MAP': 0.04346347316079368}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00717137837406171, 'recall': 0.07171378374061652, 'MAP': 0.03534769282253708}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007491856677524492, 'recall': 0.0749185667752443, 'MAP': 0.03745307895145029}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007862735299017225, 'recall': 0.07862735299017158, 'MAP': 0.037136392121399596}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03835015926404516
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 01:59:23.811867
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 10, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008286470393648767, 'recall': 0.08286470393648693, 'MAP': 0.04335071331432559}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007155406484587185, 'recall': 0.07155406484587126, 'MAP': 0.03533862940906543}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007475570032573352, 'recall': 0.0747557003257329, 'MAP': 0.03743840804508556}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.00789605197401306, 'recall': 0.07896051974012994, 'MAP': 0.03716071858250767}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03832211733774606
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:02:28.223878
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 25, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008303010254713934, 'recall': 0.0830301025471386, 'MAP': 0.043415231899353604}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00717137837406171, 'recall': 0.07171378374061652, 'MAP': 0.03536347457047024}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007491856677524492, 'recall': 0.0749185667752443, 'MAP': 0.037448360994777934}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007912710311510978, 'recall': 0.07912710311510911, 'MAP': 0.03713414456792766}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03834030300813236
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:05:35.973335
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 50, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008303010254713934, 'recall': 0.0830301025471386, 'MAP': 0.04338077385546784}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007155406484587185, 'recall': 0.07155406484587126, 'MAP': 0.03535238298055738}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007508143322475633, 'recall': 0.0750814332247557, 'MAP': 0.037463290419316474}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007912710311510978, 'recall': 0.07912710311510911, 'MAP': 0.037153975922091846}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03833760579435839
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:08:42.535211
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 75, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008253390671518432, 'recall': 0.0825339067151836, 'MAP': 0.04336889403462342}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.03533311530436589}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007459283387622212, 'recall': 0.0745928338762215, 'MAP': 0.03744655136756114}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007929368649008896, 'recall': 0.07929368649008829, 'MAP': 0.037192977585281416}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.038335384572957966
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:11:51.863224
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 100, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008286470393648767, 'recall': 0.08286470393648693, 'MAP': 0.04342310802367036}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007155406484587185, 'recall': 0.07155406484587126, 'MAP': 0.03540727050549761}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007524429967426773, 'recall': 0.0752442996742671, 'MAP': 0.03749521741378419}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007912710311510978, 'recall': 0.07912710311510911, 'MAP': 0.03712700528042856}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03836315030584518
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:15:04.380173
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 250, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008269930532583599, 'recall': 0.08269930532583526, 'MAP': 0.04339987345693595}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.03532715753606983}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007442996742671072, 'recall': 0.0744299674267101, 'MAP': 0.03742166899333023}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007912710311510978, 'recall': 0.07912710311510911, 'MAP': 0.037206793428682466}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03833887335375462
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:18:32.959851
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 500, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008253390671518432, 'recall': 0.0825339067151836, 'MAP': 0.04331966825764375}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.035216621920023915}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007442996742671072, 'recall': 0.0744299674267101, 'MAP': 0.037429359909001605}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007946026986506814, 'recall': 0.07946026986506746, 'MAP': 0.03715338098146692}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.038279757767034045
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:22:34.218012
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 750, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008269930532583599, 'recall': 0.08269930532583526, 'MAP': 0.04332977595051691}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.03524038961269434}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007459283387622212, 'recall': 0.0745928338762215, 'MAP': 0.037443836926735946}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007946026986506814, 'recall': 0.07946026986506746, 'MAP': 0.037250752930413085}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03831618885509007
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:26:54.339313
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 1000, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008253390671518432, 'recall': 0.0825339067151836, 'MAP': 0.043317108517240806}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.03531181945173319}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007459283387622212, 'recall': 0.0745928338762215, 'MAP': 0.037422832325112454}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007912710311510978, 'recall': 0.07912710311510911, 'MAP': 0.037121254187720935}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03829325362045185
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:31:40.767161
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 2500, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008269930532583599, 'recall': 0.08269930532583526, 'MAP': 0.043293283241182645}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00717137837406171, 'recall': 0.07171378374061652, 'MAP': 0.035274551709625956}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007475570032573352, 'recall': 0.0747557003257329, 'MAP': 0.03745378987642831}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007929368649008896, 'recall': 0.07929368649008829, 'MAP': 0.03714154827348229}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.0382907932751798
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:38:55.951846
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 5000, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008253390671518432, 'recall': 0.0825339067151836, 'MAP': 0.04333988364339007}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00717137837406171, 'recall': 0.07171378374061652, 'MAP': 0.03526637562334733}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007475570032573352, 'recall': 0.0747557003257329, 'MAP': 0.03743795563828137}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007929368649008896, 'recall': 0.07929368649008829, 'MAP': 0.03714921639709244}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.038298357825527804
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:47:45.461605
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 7500, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008253390671518432, 'recall': 0.0825339067151836, 'MAP': 0.04335025387374045}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007187350263536236, 'recall': 0.07187350263536177, 'MAP': 0.03527169958650551}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007459283387622212, 'recall': 0.0745928338762215, 'MAP': 0.037444289333540146}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007929368649008896, 'recall': 0.07929368649008829, 'MAP': 0.03722999611305457}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03832405972671017
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 02:57:05.394468
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 10000, 'epochs': 200, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008253390671518432, 'recall': 0.0825339067151836, 'MAP': 0.04331185776769631}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00717137837406171, 'recall': 0.07171378374061652, 'MAP': 0.035266565764888694}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007459283387622212, 'recall': 0.0745928338762215, 'MAP': 0.03743666304741223}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007912710311510978, 'recall': 0.07912710311510911, 'MAP': 0.03722993000854069}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03831125414713448
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:06:39.433076
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 5, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008286470393648767, 'recall': 0.08286470393648693, 'MAP': 0.04342054828326741}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00717137837406171, 'recall': 0.07171378374061652, 'MAP': 0.035413608556876384}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007475570032573352, 'recall': 0.0747557003257329, 'MAP': 0.03757005842510727}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.03716329665854902}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03839187798095002
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:10:29.068517
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 10, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008269930532583599, 'recall': 0.08269930532583526, 'MAP': 0.043382677252177725}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.03537475630192447}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007508143322475633, 'recall': 0.0750814332247557, 'MAP': 0.037544788273615626}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.00789605197401306, 'recall': 0.07896051974012994, 'MAP': 0.03729867870297653}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03840022513267359
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:14:18.924391
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 25, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008269930532583599, 'recall': 0.08269930532583526, 'MAP': 0.04337716396515599}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007155406484587185, 'recall': 0.07155406484587126, 'MAP': 0.03541208742454548}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007491856677524492, 'recall': 0.0749185667752443, 'MAP': 0.03756682694793444}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007912710311510978, 'recall': 0.07912710311510911, 'MAP': 0.037285193382144886}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.0384103179299452
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:18:10.799333
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 50, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008303010254713934, 'recall': 0.0830301025471386, 'MAP': 0.043393835094959775}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007155406484587185, 'recall': 0.07155406484587126, 'MAP': 0.03537348869164871}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007491856677524492, 'recall': 0.0749185667752443, 'MAP': 0.03753910087379142}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007929368649008896, 'recall': 0.07929368649008829, 'MAP': 0.03732571544915372}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.038408035027388404
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:22:05.478983
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 75, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008269930532583599, 'recall': 0.08269930532583526, 'MAP': 0.04336534977868088}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.035341988576296175}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007459283387622212, 'recall': 0.0745928338762215, 'MAP': 0.03754162142598625}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.03728168984290922}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03838266240596813
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:26:02.360641
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 100, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008269930532583599, 'recall': 0.08269930532583526, 'MAP': 0.043373816612321384}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.035375263346034774}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007508143322475633, 'recall': 0.0750814332247557, 'MAP': 0.03750633369525877}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.03715681841618872}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03835305801745091
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:30:03.803540
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 250, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.00820377108832293, 'recall': 0.08203771088322859, 'MAP': 0.04333870222474256}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007155406484587185, 'recall': 0.07155406484587126, 'MAP': 0.03535865765142237}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007508143322475633, 'recall': 0.0750814332247557, 'MAP': 0.037519518122123986}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.03726298226548101}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03836996506594248
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:34:20.203187
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 500, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008236850810453264, 'recall': 0.08236850810453192, 'MAP': 0.04341405048070609}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00710749081616361, 'recall': 0.07107490816163552, 'MAP': 0.03529477009352427}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007459283387622212, 'recall': 0.0745928338762215, 'MAP': 0.037576779897626804}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.03720837993701561}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03837349510221819
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:39:06.229588
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 750, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008236850810453264, 'recall': 0.08236850810453192, 'MAP': 0.04331461441120717}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00713943459511266, 'recall': 0.07139434595112602, 'MAP': 0.03527385452397429}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.0074267100977199315, 'recall': 0.0742671009771987, 'MAP': 0.03751932423349361}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.00789605197401306, 'recall': 0.07896051974012994, 'MAP': 0.037240837253331}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.038337157605501514
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:44:21.040022
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 1000, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008236850810453264, 'recall': 0.08236850810453192, 'MAP': 0.04337342280610554}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007091518926689085, 'recall': 0.07091518926689028, 'MAP': 0.035250784016955534}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007410423452768791, 'recall': 0.0741042345276873, 'MAP': 0.03753244403081537}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.037322079700890284}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.038369682638691685
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:50:06.178034
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 2500, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008236850810453264, 'recall': 0.08236850810453192, 'MAP': 0.04329761510955686}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.00710749081616361, 'recall': 0.07107490816163552, 'MAP': 0.035298889826920476}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.00737785016286651, 'recall': 0.07377850162866449, 'MAP': 0.0374691070782276}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.03722371618423591}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03832233204973522
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 03:58:39.935747
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 5000, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008236850810453264, 'recall': 0.08236850810453192, 'MAP': 0.043294399025460846}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007123462705638135, 'recall': 0.07123462705638077, 'MAP': 0.03527562917836035}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.00737785016286651, 'recall': 0.07377850162866449, 'MAP': 0.03749082260482912}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.037349579178664626}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.038352607496828735
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 04:11:10.819784
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 7500, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008236850810453264, 'recall': 0.08236850810453192, 'MAP': 0.043264666656165136}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007091518926689085, 'recall': 0.07091518926689028, 'MAP': 0.035308016620905915}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.0074267100977199315, 'recall': 0.0742671009771987, 'MAP': 0.03752022904710201}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.00789605197401306, 'recall': 0.07896051974012994, 'MAP': 0.03736200682727418}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03836372978786182
+--------------------------------------
+--------------------------------------
+
+REPORT 2019-12-31 04:25:06.090986
+----- Cross-validation procedure -----
+
+Fixed parameters
+--------------------------------------
+CBFKNN: {'topK': 650, 'shrink': 650}
+ICFKNN: {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': True, 'asymmetric_alpha': 1.8835880841431558, 'tversky_alpha': 0.481142300165854, 'tversky_beta': 1.5213714818344097}
+SLIM_BPR: {'topK': 10000, 'epochs': 500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
+--------------------------------------
+
+VALIDATION 1
+{'precision': 0.008236850810453264, 'recall': 0.08236850810453192, 'MAP': 0.04333318893772082}
+--------------------------------------
+VALIDATION 2
+{'precision': 0.007091518926689085, 'recall': 0.07091518926689028, 'MAP': 0.035239819188070245}
+--------------------------------------
+VALIDATION 3
+{'precision': 0.007410423452768791, 'recall': 0.0741042345276873, 'MAP': 0.037508014063388655}
+--------------------------------------
+VALIDATION 4
+{'precision': 0.007879393636515143, 'recall': 0.07879393636515075, 'MAP': 0.03732941730193103}
+--------------------------------------
+--------------------------------------
+The average MAP is: 0.03835260987277769

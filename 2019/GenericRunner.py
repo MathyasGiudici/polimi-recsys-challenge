@@ -103,7 +103,6 @@ class GenericRunner(object):
 
             self.write_report()
 
-
             if self.is_SSLIM:
                 for topK in [50, 100, 200]:
                     for epochs in [10, 20, 50, 100, 200, 300]:
@@ -115,6 +114,7 @@ class GenericRunner(object):
                         self.evaluate()
 
             else:
+
                 self.evaluate()
 
 
