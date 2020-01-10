@@ -19,8 +19,9 @@ class RP3betaRecommender(BaseSimilarityMatrixRecommender):
 
     RECOMMENDER_NAME = "RP3betaRecommender"
 
-    def __init__(self, URM_train):
+    def __init__(self, URM_train, target_users_profile):
         super(RP3betaRecommender, self).__init__(URM_train)
+        self.target_users_profile = target_users_profile
 
     def __str__(self):
         return "RP3beta(alpha={}, beta={}, min_rating={}, topk={}, implicit={}, normalize_similarity={})".format(
@@ -143,7 +144,7 @@ class RP3betaRecommender(BaseSimilarityMatrixRecommender):
             self.W_sparse = similarityMatrixTopK(self.W_sparse, k=self.topK)
 
         self.W_sparse = check_matrix(self.W_sparse, format='csr')
-        self.recs = self.URM_train.dot(self.W_sparse)
+        self.recs = self.target_users_profile.dot(self.W_sparse)
 
     def get_expected_ratings(self, user_id):
         expected_ratings = self.recs[user_id].todense()

@@ -6,7 +6,7 @@ ICFKNN_BEST = {'topK': 6, 'shrink': 46, 'similarity': 'tversky', 'normalize': Tr
 CBFKNN_BEST = {'topK': 650, 'shrink': 650}
 UCFKNN_BEST = {"topK": 25, "shrink": 750}
 SLIM_BPR_BEST = {'topK': 10, 'epochs': 1500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
-
+ALS_BEST = {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 1}
 
 CBFKNN = [
     {"topK": 500, "shrink": 500}, {"topK": 550, "shrink": 550}, {"topK": 600, "shrink": 600}, {"topK": 650, "shrink": 650},
@@ -17,20 +17,65 @@ UCFKNN_SKOPT = {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': T
 SLIM_BPR_SKOPT = {'topK': 5, 'epochs': 1500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
 ALS_SKOPT = {'alpha_val': 1.5030839679715604, 'n_factors': 997, 'regularization': 9.392629191951134, 'iterations': 44}
 
+RP3B = [
+    # PARAMETRI SU CUI TUNARE (da modificare...)
+    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
+    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
+    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
+    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
+    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
+]
+
+
+SLIM_ELASTIC_NET = [
+    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 10},
+    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 50},
+    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 100},
+    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 250},
+    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 500},
+]
+
+
+
+
 ALS = [
-    {'alpha_val': 1.5030839679715604, 'n_factors': 10, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 25, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 50, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 75, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 100, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 150, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 250, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 500, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 750, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 1000, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 2500, 'regularization': 10, 'iterations': 44},
-    {'alpha_val': 1.5030839679715604, 'n_factors': 5000, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 10, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 25, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 50, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 75, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 100, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 150, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 250, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 500, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 750, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1000, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 0, 'iterations': 44},
+    {'alpha_val': 0.1, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 0.25, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 0.5, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 0.75, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 1, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 1.5, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 2, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 5, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 10, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    {'alpha_val': 20, 'n_factors': 1500, 'regularization': 10, 'iterations': 1},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 5},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 10},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 25},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 50},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 75},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 100},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 50, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 100, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 500, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 1000, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 5000, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10000, 'iterations': 44},
+    # {'alpha_val': 1.5030839679715604, 'n_factors': 5000, 'regularization': 10, 'iterations': 44},
 ]
 
 

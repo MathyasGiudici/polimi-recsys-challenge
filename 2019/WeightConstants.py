@@ -13,6 +13,7 @@ CFW = {"iteration_limit": 5000, "damp_coeff": 0.0, "topK": 100, "add_zeros_quota
 
 P3A = {'topK': 800, 'alpha': 0.0, 'normalize_similarity': True}
 RP3B = {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True}
+SLIM_ELASTIC_NET = {'l1_ratio': 0.1, 'alpha': 1.0, 'positive_only': True, 'topK': 100}
 
 """
 Definitive weights kept for the submission
@@ -77,7 +78,7 @@ _IS_TEST_WEIGHTS = [
 
 
 NO_WEIGHTS = [
-{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1, 'als': 1, 'cfw': 1, 'p3a': 1, 'rp3b': 1}
+{'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1, 'als': 1, 'cfw': 1, 'p3a': 1, 'rp3b': 1, 'slimen': 1}
 ]
 
 

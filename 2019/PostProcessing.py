@@ -9,10 +9,10 @@ LONGTAIL_WEIGHT = 0.7
 
 class PostProcessing(object):
 
-    def __init__(self):
+    def __init__(self, urm, icm):
         ex = Extractor()
-        self.urm = ex.get_urm_all()
-        self.icm = ex.get_icm_all()
+        self.urm = urm
+        self.icm = icm
 
         self.short_head = []
         self.long_tail = []
@@ -59,7 +59,11 @@ class PostProcessing(object):
 
         self.user_short_head_ratio = count_pop / len(user_items)
 
-
+    """
+    The function works in this way:
+        - takes the scores of the MAP@20 from the used algorithm
+        - 
+    """
     def rerank_scores(self, items_base_scores: list):
 
         R_list = []

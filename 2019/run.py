@@ -11,10 +11,11 @@ if __name__ == '__main__':
         "cbfknn": True,
         "slim_bpr": False,
         "pure_svd": False,
-        "als": True,
+        "als": False,
         "cfw": False,
         "p3a": False,
-        "rp3b": False,
+        "rp3b": True,
+        "slim_en": False,
 }
 
     is_test = True
@@ -25,8 +26,8 @@ if __name__ == '__main__':
     # runner = UserFeaturesRunner(True, True, pure_svd_addition=False, slim_bpr_addition=False)
 
     runner = CrossValidationRunner(**algorithms_choice)
-    # runner.run(is_test, isSSLIM)
 
+    # runner.run(is_test, isSSLIM)
     runner.run(is_test)
 
 

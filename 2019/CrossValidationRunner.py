@@ -18,7 +18,7 @@ submission_counter = 4
 class CrossValidationRunner(object):
 
     def __init__(self, cbfknn=True, icfknn=True, ucfknn=True, slim_bpr=True, pure_svd=True, als=True, cfw=True,
-                 p3a=True, rp3b=True):
+                 p3a=True, rp3b=True, slim_en=True):
         """
         Initialization of the generic runner in which we decide whether or not use an algorithm
         """
@@ -31,6 +31,7 @@ class CrossValidationRunner(object):
         self.cfw = cfw
         self.p3a = p3a
         self.rp3b = rp3b
+        self.slim_en = slim_en
 
         self.is_test = None
         self.writer = Writer
@@ -50,6 +51,7 @@ class CrossValidationRunner(object):
         self.p_cfw = None
         self.p_p3a = None
         self.p_rp3b = None
+        self.p_slimen = None
 
         self.target_users = []
         self.results = []
@@ -72,6 +74,9 @@ class CrossValidationRunner(object):
             self.p_p3a = WeightConstants.P3A
         if self.rp3b:
             self.p_rp3b = WeightConstants.RP3B
+        if self.slim_en:
+            self.p_slimen = WeightConstants.SLIM_ELASTIC_NET
+
 
         self.MAPs = []
 
@@ -112,9 +117,9 @@ class CrossValidationRunner(object):
                 self.p_cbfknn = ParametersTuning.CBFKNN_BEST
 
             # TUNING WITH THE DIFFERENT PARAMS
-            for params in ParametersTuning.ALS:
-                if self.als:
-                    self.p_als = params
+            for params in ParametersTuning.RP3B:
+                if self.rp3b:
+                    self.p_rp3b = params
                 self.write_report()
 
                 # URM splitted in 4 smaller URMs for cross-validation
@@ -132,6 +137,7 @@ class CrossValidationRunner(object):
         else:
             self.p_cbfknn = ParametersTuning.CBFKNN_BEST
             self.p_icfknn = ParametersTuning.ICFKNN_BEST
+            self.p_als = ParametersTuning.ALS_BEST
 
             users = self.extractor.get_target_users_of_recs()
             self.urm_train = self.extractor.get_urm_all()
@@ -172,7 +178,9 @@ class CrossValidationRunner(object):
         if self.p3a:
             self.writer.write_report(self.writer, "P3A: " + str(self.p_p3a), report_counter)
         if self.rp3b:
-            self.writer.write_report(self.writer, "P3A: " + str(self.p_rp3b), report_counter)
+            self.writer.write_report(self.writer, "RP3B: " + str(self.p_rp3b), report_counter)
+        if self.slim_en:
+            self.writer.write_report(self.writer, "SLIM_ELASTIC_NET: " + str(self.p_slimen), report_counter)
         self.writer.write_report(self.writer, "--------------------------------------\n", report_counter)
 
 
@@ -184,7 +192,7 @@ class CrossValidationRunner(object):
 
         recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                      self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b,
-                                     WeightConstants.NO_WEIGHTS[0], seen_items=self.urm_train)
+                                     self.p_slimen, WeightConstants.NO_WEIGHTS[0], seen_items=self.urm_train)
         recommender.fit()
 
         from tqdm import tqdm
@@ -211,7 +219,7 @@ class CrossValidationRunner(object):
 
             recommender = WeightedHybrid(self.urm_train, self.icm.copy(), self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                          self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a,
-                                         self.p_rp3b, weight, seen_items=target_users_profile)
+                                         self.p_rp3b, self.p_slimen, weight, seen_items=target_users_profile)
             recommender.fit()
             result_dict = evaluate_algorithm_crossvalidation(self.urm_validation, recommender, self.target_users)
             self.results.append(float(result_dict["MAP"]))
@@ -243,6 +251,7 @@ class CrossValidationRunner(object):
                     new_obj["cfw"] += round(random.uniform(- min(0.5, weight["cfw"]), 0.5), 2)
                     new_obj["p3a"] += round(random.uniform(- min(0.5, weight["p3a"]), 0.5), 2)
                     new_obj["rp3b"] += round(random.uniform(- min(0.5, weight["rp3b"]), 0.5), 2)
+                    new_obj["slimen"] += round(random.uniform(- min(0.5, weight["slimen"]), 0.5), 2)
                     new_weights.append(new_obj)
 
             return new_weights
@@ -266,7 +275,7 @@ class CrossValidationRunner(object):
     def output_best_params(self):
         best_MAP = max(self.MAPs)
         index = self.MAPs.index(best_MAP)
-        best_params = ParametersTuning.ALS[index]
+        best_params = ParametersTuning.RP3B[index]
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
         self.writer.write_report(self.writer, "With a MAP of " + str(best_MAP) + " the best parameters are: " +
                                  str(best_params), report_counter)

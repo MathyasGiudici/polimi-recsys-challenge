@@ -4,6 +4,7 @@ from OwnUtils.Writer import Writer
 from datetime import datetime
 from Utils.evaluation_function import evaluate_algorithm
 import WeightConstants
+import ParametersTuning
 from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
 
 import random
@@ -19,7 +20,8 @@ submission_counter = 2
 
 class GenericRunner(object):
 
-    def __init__(self, cbfknn=True, icfknn=True, ucfknn=True, slim_bpr=True, pure_svd=True, als=True, cfw=True, p3a=True, rp3b=True):
+    def __init__(self, cbfknn=True, icfknn=True, ucfknn=True, slim_bpr=True, pure_svd=True, als=True, cfw=True,
+                 p3a=True, rp3b=True, slim_en=True):
         """
         Initialization of the generic runner in which we decide whether or not use an algorithm
         """
@@ -32,6 +34,7 @@ class GenericRunner(object):
         self.cfw = cfw
         self.p3a = p3a
         self.rp3b = rp3b
+        self.slim_en = slim_en
 
         self.is_test = None
         self.writer = Writer
@@ -52,11 +55,12 @@ class GenericRunner(object):
         self.p_cfw = None
         self.p_p3a = None
         self.p_rp3b = None
+        self.p_slimen = None
 
         if self.cbfknn:
-            self.p_cbfknn = WeightConstants.CBFKNN
+            self.p_cbfknn = ParametersTuning.CBFKNN_BEST
         if self.icfknn:
-            self.p_icfknn = WeightConstants.ICFKNN
+            self.p_icfknn = ParametersTuning.ICFKNN_BEST
         if self.ucfknn:
             self.p_ucfknn = WeightConstants.UCFKNN
         if self.slim_bpr:
@@ -71,6 +75,8 @@ class GenericRunner(object):
             self.p_p3a = WeightConstants.P3A
         if self.rp3b:
             self.p_rp3b = WeightConstants.RP3B
+        if self.slim_en:
+            self.p_slimen = ParametersTuning.SLIM_ELASTIC_NET[0]
 
 
     def run(self, is_test, is_SSLIM):
@@ -104,19 +110,17 @@ class GenericRunner(object):
             self.write_report()
 
             if self.is_SSLIM:
-                for topK in [50, 100, 200]:
-                    for epochs in [10, 20, 50, 100, 200, 300]:
-                        self.sslim_pars = {"topK":topK, "epochs": epochs}
-                        slim_bpr = SLIM_BPR_Cython(self.icm.copy())
-                        slim_bpr.fit(**self.sslim_pars)
+                # for topK in [50, 100, 200]:
+                #     for epochs in [10, 20, 50, 100, 200, 300]:
+                self.sslim_pars = WeightConstants.SLIM_BPR_ICM
+                slim_bpr = SLIM_BPR_Cython(self.icm.copy())
+                slim_bpr.fit(**self.sslim_pars)
 
-                        self.icm = slim_bpr.recs.copy().tocsr()
-                        self.evaluate()
-
-            else:
-
+                self.icm = slim_bpr.recs.copy().tocsr()
                 self.evaluate()
 
+            else:
+                self.evaluate()
 
         else:
             extractor = Extractor()
@@ -157,6 +161,8 @@ class GenericRunner(object):
             self.writer.write_report(self.writer, "P3A: " + str(self.p_p3a), report_counter)
         if self.rp3b:
             self.writer.write_report(self.writer, "P3A: " + str(self.p_rp3b), report_counter)
+        if self.slim_en:
+            self.writer.write_report(self.writer, "SLIM_ELASTIC_NET: " + str(self.p_slimen), report_counter)
 
         self.writer.write_report(self.writer, "VALIDATION", report_counter)
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
@@ -175,8 +181,9 @@ class GenericRunner(object):
 
         self.icm = slim_bpr.recs.copy().tocsr()
 
-        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn, self.p_slimbpr,
-                             self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b, WeightConstants.SUBM_WEIGHTS)
+        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b,
+                                     self.p_slimen, WeightConstants.SUBM_WEIGHTS)
         recommender.fit()
 
         from tqdm import tqdm
@@ -202,7 +209,7 @@ class GenericRunner(object):
 
             recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                          self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a,
-                                         self.p_rp3b, weight)
+                                         self.p_rp3b, self.p_slimen, weight)
             recommender.fit()
             result_dict = evaluate_algorithm(self.urm_validation, recommender)
             results.append(float(result_dict["MAP"]))
@@ -222,7 +229,7 @@ class GenericRunner(object):
 
         recommender = WeightedHybrid(self.urm_post_validation, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                      self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a, self.p_rp3b,
-                                     weight)
+                                     self.p_slimen, weight)
         recommender.fit()
         result_dict = evaluate_algorithm(self.urm_test, recommender)
 
@@ -231,7 +238,7 @@ class GenericRunner(object):
 
     def get_test_weights(self, add_random=False):
         if not add_random:
-            return WeightConstants.IS_TEST_WEIGHTS
+            return WeightConstants.NO_WEIGHTS
         else:
             new_weights = []
             for weight in WeightConstants.IS_TEST_WEIGHTS:

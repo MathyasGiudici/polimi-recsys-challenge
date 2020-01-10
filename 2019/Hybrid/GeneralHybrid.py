@@ -4,6 +4,7 @@ from CFKNN.ItemCFKNNRecommender import ItemCFKNNRecommender
 from CFKNN.UserCFKNNRecommender import UserCFKNNRecommender
 from CBFKNN.ItemCBFKNNRecommender import ItemCBFKNNRecommender
 from SLIM.SLIM_BPR_Cython import SLIM_BPR_Cython
+from SLIM.SLIMElasticNetRecommender import SLIMElasticNetRecommender
 from MF.ALS import AlternatingLeastSquare
 from MF.PureSVDRecommender import PureSVDRecommender
 from Graph.P3A import P3alphaRecommender
@@ -15,7 +16,8 @@ from Utils.Base.IR_feature_weighting import okapi_BM_25
 
 class GeneralHybrid(object):
 
-    def __init__(self, train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b, seen_items=None):
+    def __init__(self, train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b,
+                 slim_en, seen_items=None):
 
         # Parameter saving
         self.p_icfknn = p_icfknn
@@ -27,6 +29,7 @@ class GeneralHybrid(object):
         self.p_cfw = p_cfw
         self.p_p3a = p_p3a
         self.p_rp3b = p_rp3b
+        self.p_slim_elastic_net = slim_en
 
         # Getting matrices
         self.train = train.copy()
@@ -58,9 +61,9 @@ class GeneralHybrid(object):
         if self.p_p3a is not None:
             self.recommender_p3a = P3alphaRecommender(self.train.copy())
         if self.p_rp3b is not None:
-            self.recommender_rp3b = RP3betaRecommender(self.train.copy())
-
-
+            self.recommender_rp3b = RP3betaRecommender(self.train.copy(), self.seen_items.copy())
+        if self.p_slim_elastic_net is not None:
+            self.recommender_slim_en = SLIMElasticNetRecommender(self.train.copy(), self.seen_items.copy())
 
 
     def fit(self):
@@ -88,6 +91,8 @@ class GeneralHybrid(object):
             self.recommender_p3a.fit(**self.p_p3a)
         if self.p_rp3b is not None:
             self.recommender_rp3b.fit(**self.p_rp3b)
+        if self.p_slim_elastic_net is not None:
+            self.recommender_slim_en.fit(**self.p_slim_elastic_net)
 
     def recommend(self, user, at=10):
 

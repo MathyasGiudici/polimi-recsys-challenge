@@ -6,9 +6,9 @@ from Hybrid.GeneralHybrid import GeneralHybrid
 class WeightedHybrid(GeneralHybrid):
 
     def __init__(self, train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw, p_p3a, p_rp3b,
-                 weights, seen_items=None):
+                 p_slim_en, weights, seen_items=None):
         GeneralHybrid.__init__(self, train, icm, p_icfknn, p_ucfknn, p_cbfknn, p_slimbpr, p_puresvd, p_als, p_cfw,
-                               p_p3a, p_rp3b, seen_items)
+                               p_p3a, p_rp3b, p_slim_en, seen_items)
 
         self.weights = weights
 
@@ -52,9 +52,10 @@ class WeightedHybrid(GeneralHybrid):
             self.hybrid_ratings += self.recommender_p3a.get_expected_ratings(user) * self.weights["p3a"]
         if self.p_rp3b is not None:
             self.hybrid_ratings += self.recommender_rp3b.get_expected_ratings(user) * self.weights["rp3b"]
-
         if self.p_cfw is not None:
             self.hybrid_ratings += self.recommender_cfw.get_expected_ratings(user) * self.weights["cfw"]
+        if self.p_slim_elastic_net is not None:
+            self.hybrid_ratings += self.recommender_slim_en.get_expected_ratings(user) * self.weights["slimen"]
 
         recommended_items = np.flip(np.argsort(self.hybrid_ratings), 0)
 
