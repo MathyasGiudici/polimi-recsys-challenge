@@ -1,7 +1,7 @@
 import numpy as np
 from OwnUtils.Extractor import Extractor
-
 from Hybrid.GeneralHybrid import GeneralHybrid
+
 
 class WeightedHybrid(GeneralHybrid):
 

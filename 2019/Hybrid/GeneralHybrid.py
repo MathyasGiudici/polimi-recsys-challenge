@@ -32,8 +32,8 @@ class GeneralHybrid(object):
         self.p_slim_elastic_net = slim_en
 
         # Getting matrices
-        self.train = train.copy()
-        self.icm = icm.copy()
+        self.train = train
+        self.icm = icm
 
         self.icm_bm25 = self.icm.copy().astype(np.float32)
         self.icm_bm25 = okapi_BM_25(self.icm_bm25)

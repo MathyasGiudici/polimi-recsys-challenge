@@ -7,32 +7,40 @@ CBFKNN_BEST = {'topK': 650, 'shrink': 650}
 UCFKNN_BEST = {"topK": 25, "shrink": 750}
 SLIM_BPR_BEST = {'topK': 10, 'epochs': 1500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
 ALS_BEST = {'alpha_val': 1.5030839679715604, 'n_factors': 1500, 'regularization': 10, 'iterations': 1}
+SLIM_ELASTIC_NET_BEST = {'l1_ratio': 0.01, 'alpha': 0.001, 'positive_only': True, 'topK': 500}
+RP3B_BEST = {'topK': 75, 'alpha': 0.5, 'beta': 0.0, 'normalize_similarity': True}
 
 CBFKNN = [
     {"topK": 500, "shrink": 500}, {"topK": 550, "shrink": 550}, {"topK": 600, "shrink": 600}, {"topK": 650, "shrink": 650},
     {"topK": 700, "shrink": 700}, {"topK": 750, "shrink": 750},
 ]
 
+UCFKNN = [
+    None, {"topK": 25, "shrink": 750}
+]
+
+
 UCFKNN_SKOPT = {'topK': 738, 'shrink': 7, 'similarity': 'cosine', 'normalize': True, 'asymmetric_alpha': 0.1281479786771185, 'tversky_alpha': 1.4260541895140952, 'tversky_beta': 0.23240544397295199}
 SLIM_BPR_SKOPT = {'topK': 5, 'epochs': 1500, 'symmetric': False, 'sgd_mode': 'adagrad', 'lambda_i': 1e-05, 'lambda_j': 0.01, 'learning_rate': 0.0001}
 ALS_SKOPT = {'alpha_val': 1.5030839679715604, 'n_factors': 997, 'regularization': 9.392629191951134, 'iterations': 44}
 
 RP3B = [
-    # PARAMETRI SU CUI TUNARE (da modificare...)
-    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
-    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
-    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
-    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
-    {'topK': 5, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
+    # PARAMETRI SU CUI TUNARE (da modificare...),
+
+    {'topK': 75, 'alpha': 0.0, 'beta': 0.0, 'normalize_similarity': True},
+    {'topK': 75, 'alpha': 0.5, 'beta': 0.0, 'normalize_similarity': True},
+    {'topK': 75, 'alpha': 0.7, 'beta': 0.0, 'normalize_similarity': True},
+    {'topK': 75, 'alpha': 0.7, 'beta': 0.1, 'normalize_similarity': True},
+
+
 ]
 
 
 SLIM_ELASTIC_NET = [
-    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 10},
-    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 50},
-    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 100},
-    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 250},
-    {'l1_ratio': 1e-4, 'alpha': 0.001, 'positive_only': True, 'topK': 500},
+    {'l1_ratio': 0.01, 'alpha': 0.001, 'positive_only': True, 'topK': 500},
+    {'l1_ratio': 0.01, 'alpha': 0.01, 'positive_only': True, 'topK': 500},
+    {'l1_ratio': 0.01, 'alpha': 0.1, 'positive_only': True, 'topK': 500},
+
 ]
 
 

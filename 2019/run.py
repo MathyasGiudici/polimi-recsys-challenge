@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
     algorithms_choice = {
         "icfknn": True,
-        "ucfknn": False,
+        "ucfknn": True,
         "cbfknn": True,
         "slim_bpr": False,
         "pure_svd": False,
@@ -15,7 +15,7 @@ if __name__ == '__main__':
         "cfw": False,
         "p3a": False,
         "rp3b": True,
-        "slim_en": False,
+        "slim_en": True,
 }
 
     is_test = True

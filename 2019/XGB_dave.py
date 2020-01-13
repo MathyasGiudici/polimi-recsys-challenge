@@ -2,6 +2,8 @@ from Hybrid.WeightedHybrid import WeightedHybrid
 from OwnUtils.Extractor import Extractor
 from OwnUtils.Builder import Builder
 from OwnUtils.Writer import Writer
+import ParametersTuning
+from XGBoostDataframe import XGBoostDataframe
 from datetime import datetime
 from Utils.evaluation_function import evaluate_algorithm
 import WeightConstants
@@ -11,6 +13,7 @@ import random
 import Utils.Split.split_train_validation_leave_k_out as loo
 
 from sklearn.model_selection import train_test_split
+import lightgbm as lgb
 import xgboost as xgb
 import pandas as pd
 import numpy as np
@@ -34,10 +37,12 @@ params = {
 
 class XGBoost(object):
 
-    def __init__(self, cbfknn=True, icfknn=True, ucfknn=True, slim_bpr=True, pure_svd=True, als=True, cfw=True):
+    def __init__(self, cutoff, cbfknn=False, icfknn=False, ucfknn=False, slim_bpr=False, pure_svd=False, als=False,
+                 cfw=False, p3a=False, rp3b=False, slim_en=False):
         """
         Initialization of the generic runner in which we decide whether or not use an algorithm
         """
+        self.cutoff = cutoff
         self.cbfknn = cbfknn
         self.icfknn = icfknn
         self.ucfknn = ucfknn
@@ -45,16 +50,18 @@ class XGBoost(object):
         self.pure_svd = pure_svd
         self.als = als
         self.cfw = cfw
+        self.p3a = p3a
+        self.rp3b = rp3b
+        self.slim_en = slim_en
 
-        self.is_test = None
         self.writer = Writer
+        self.extractor = Extractor()
+        self.df_builder = XGBoostDataframe(self.cutoff)
         self.result_dict = None
 
         self.urm_train = None
         self.urm_validation = None
-        self.urm_test = None
-        self.urm_post_validation = None
-        self.icm = None
+        self.icm = self.extractor.get_icm_all()
 
         self.p_cbfknn = None
         self.p_icfknn = None
@@ -63,167 +70,146 @@ class XGBoost(object):
         self.p_puresvd = None
         self.p_als = None
         self.p_cfw = None
+        self.p_p3a = None
+        self.p_rp3b = None
+        self.p_slimen = None
 
-        if self.cbfknn:
-            self.p_cbfknn = WeightConstants.CBFKNN
-        if self.icfknn:
-            self.p_icfknn = WeightConstants.ICFKNN
-        if self.ucfknn:
-            self.p_ucfknn = WeightConstants.UCFKNN
-        if self.slim_bpr:
-            self.p_slimbpr = WeightConstants.SLIM_BPR
-        if self.pure_svd:
-            self.p_puresvd = WeightConstants.PURE_SVD
-        if self.als:
-            self.p_als = WeightConstants.ALS
-        if self.cfw:
-            self.p_cfw = WeightConstants.CFW
+        self.target_users = []
+        self.results = []
 
-        self.user_recommendations_user_id = []
-        self.user_recommendations_items = []
-        self.cutoff = 20
-        self.xgb_dataframe = None
+        self.df_user_id_col = []
+        self.df_item_id_col = []
 
-        self.builder = Builder()
-        self.users = []
-
-        self.train_users = []
-        self.test_users = []
+        self.df_train = pd.DataFrame
+        self.df_test = pd.DataFrame
 
     def run(self, is_test):
         """
         From here we start each algorithm.
         :param is_test: specifies if we want to write a report or a submission
         """
-        self.is_test = is_test
+        if is_test:
 
-        if self.is_test:
-            extractor = Extractor()
-            urm = extractor.get_urm_all()
-            self.icm = extractor.get_icm_all()
-            # self.icm_dirty = extractor.get_icm_price_dirty()
+            # CREATION OF THE VALIDATIONS FOR EACH PART OF THE TRAIN
+            vals = []
+            urms = []
+            target_profiles = []
 
-            # Splitting into post-validation & testing in case of parameter tuning
-            matrices = loo.split_train_leave_k_out_user_wise(urm, 1, False, True)
+            for i in range(1, 5):
+                urm_to_predict = self.extractor.get_single_urm(i)
 
-            self.urm_post_validation = matrices[0]
-            self.urm_test = matrices[1]
+                matrices = loo.split_train_leave_k_out_user_wise(urm_to_predict, 1, False, True)
 
-            # ONLY TRAIN AND TEST
-            self.urm_train = self.urm_post_validation
+                target_users_profile = matrices[0]
+                target_profiles.append(target_users_profile)
 
-            ######################################################################
+                val = matrices[1]
+                vals.append(val)
 
-            # Splitting the post-validation matrix in train & validation
-            # (Problem of merging train and validation again at the end => loo twice)
-            # matrices_for_validation = loo.split_train_leave_k_out_user_wise(self.urm_post_validation, 1, False, True)
-            # self.urm_train = matrices_for_validation[0]
-            # self.urm_validation = matrices_for_validation[1]
+                urm = self.extractor.get_others_urm_vstack(i)
 
-            self.evaluate()
+                urms.append(urm)
 
-        else:
-            extractor = Extractor()
-            users = extractor.get_target_users_of_recs()
-            self.urm_train = extractor.get_urm_all()
-            #self.icm = extractor.get_icm_all()
+            if self.icfknn:
+                self.p_icfknn = ParametersTuning.ICFKNN_BEST
+            if self.cbfknn:
+                self.p_cbfknn = ParametersTuning.CBFKNN_BEST
+            if self.rp3b:
+                self.p_rp3b = ParametersTuning.RP3B_BEST
+            if self.slim_en:
+                self.p_slimen = ParametersTuning.SLIM_ELASTIC_NET_BEST
 
-            self.write_submission(users)
+            # URM splitted in 4 smaller URMs for cross-validation
+            for i in range(0, 4):
+                self.urm_validation = vals[i].copy()
+                self.urm_train = urms[i].copy()
+                self.target_users = self.extractor.get_target_users_of_specific_part(i + 1)
+
+                # GETTING THE RECOMMENDATIONS FOR THE TRAIN DATAFRAME
+                user_ids, item_ids = self.evaluate(i + 1, target_profiles[i])
+                self.df_user_id_col.extend(user_ids)
+                self.df_item_id_col.extend(item_ids)
+
+            # print(self.df_user_id_col[0:100])
+            # print(self.df_item_id_col[0:100])
+            # print(len(self.df_user_id_col))
+            # print(len(self.df_item_id_col))
+
+            self.score_ranking()
 
     def write_submission(self, users):
         pass
 
-    def evaluate(self):
-        weight = {"icfknn": 1}
+    # RE-RANKING AND EVALUATION
+    def evaluate(self, index: int, target_users_profile):
+        """
+        This method capture the predictions of the CrossValidation running the Hybrid
+        :param index: number of iteration (from 1 to 4) depending on the current sub-URM
+        :param target_users_profile: profile of the users wanted to predict
+        :return:
+        """
+        weight = {'icfknn': 1, 'ucfknn': 1, 'cbfknn': 1, 'slimbpr': 1, 'puresvd': 1, 'als': 1, 'cfw': 1, 'p3a': 1,
+                  'rp3b': 1, 'slimen': 1}
 
-        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, None, None,
-                                        None, None, None, None, None, None, weight)
+        recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+                                     self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a,
+                                     self.p_rp3b, self.p_slimen, weight, seen_items=target_users_profile)
         recommender.fit()
 
-        # SELECTING BEST 20 RECOMMENDATION
-        for n_user in range(0, self.urm_test.shape[0]):
+        user_ids = []
+        item_ids = []
+
+        # SELECTING THE BEST RECOMMENDATIONS
+        for n_user in self.target_users:
             recommendations = recommender.recommend(n_user, at=self.cutoff)
+            user_ids.extend([n_user] * len(recommendations))
+            item_ids.extend(recommendations)
 
-            self.user_recommendations_user_id.extend([n_user] * len(recommendations))
-            self.user_recommendations_items.extend(recommendations)
+        return user_ids, item_ids
 
-        # CREATING THE DATAFRAME FOR XGBOOST
-        self.xgb_dataframe = pd.DataFrame({"user_id": self.user_recommendations_user_id, "item_id": self.user_recommendations_items})
 
-        ############################
-        ###### ADDING FEATURES #####
-        ############################
+    # RE-RANKING OF THE SCORES WITH XGBOOST
+    def score_ranking(self):
+        """
+        Preparation of dataframes and use of XGBoost
+        :return:
+        """
+        # CREATING DATAFRAMES FOR XGBOOST
+        print(">>> Preparing the two DataFrames...")
+        # Train dataframe
+        self.df_train = self.df_builder.build_base_dataframe(users=self.df_user_id_col, items=self.df_item_id_col)
+        self.df_builder.build_whole_dataframe(self.df_train)
 
-        # BUILDING POPULARITY ITEMS
-        # self.add_top_pop_items()
+        # Test dataframe
+        self.df_test = self.df_builder.retrieve_test_dataframe()
 
-        # BUILDING USER PROFILE LENGTH
-        self.add_user_profile_length()
-
-        # BUILDING ITEM ASSETS
-        self.add_item_asset()
-
-        # BUILDING ITEM PRICE
-        self.add_item_price()
-
-        # BUILDING ITEM SUBCLASS
-        self.add_item_subclass()
-
-        ############################
-
-        users = list(self.xgb_dataframe.iloc[:, 0].values)
-        users = np.sort(users)
-
-        # CREATION OF GROUPS FOR XGB_RANKER
-        y_train, y_test = train_test_split(list(set(users)), test_size=0.1, random_state=1)
-        y_train = np.sort(y_train)
-        y_test = np.sort(y_test)
-
-        # print(y_train)
-        # print(y_test)
-
-        train_dataframe = pd.DataFrame()
-        test_dataframe = pd.DataFrame()
+        # BUILD TRAIN AND TEST GROUPS
         train_group = []
         test_group = []
 
-        for user_id in y_train:
-            to_append = self.xgb_dataframe.loc[self.xgb_dataframe['user_id'] == user_id].copy()
-            train_dataframe = train_dataframe.append(to_append)
-            train_group.append(20)
+        train_user_ids = list(self.df_train.loc[:, 'user_id'].values)
+        test_user_ids = list(self.df_test.loc[:, 'user_id'].values)
 
-        for user_id in y_test:
-            to_append = self.xgb_dataframe.loc[self.xgb_dataframe['user_id'] == user_id].copy()
-            test_dataframe = test_dataframe.append(to_append)
-            test_group.append(20)
+        train_group.extend([self.cutoff] * len(set(train_user_ids)))
+        test_group.extend([self.cutoff] * len(set(test_user_ids)))
 
-        X_train = train_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
-        X_test = test_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
+        # DROP USELESS COLUMNS OF DF_TRAIN AND DF_TEST
+        train_dropped = self.df_train.drop(labels={'user_id', 'item_id'}, axis=1)
+        test_dropped = self.df_test.drop(labels={'user_id', 'item_id'}, axis=1)
 
-        # train_dropped = self.xgb_dataframe.drop(labels={'user_id', 'item_id'}, axis=1)
+        print(">>> DataFrames well formed and ready to be used!")
 
+        # LGBM TO TRAIN FASTER ON GPU
+        # lgbm_group = self.xgb_dataframe.groupby('user_id').size().values
 
-        # X_train, X_test, y_train, y_test = train_test_split(train_dropped, users, test_size=0.1, random_state=1)
+        # lightGBM_ranker = lgb.LGBMRanker(device='gpu')
+        # lightGBM_ranker.fit(train_dropped, users, lgbm_group)
 
-        # train_dropped = X_train.drop(labels={'user_id', 'item_id'}, axis=1)
-        # val_dropped = X_test.drop(labels={'user_id', 'item_id'}, axis=1)
-
-
-        dtrain = xgb.DMatrix(X_train, label=y_train)
-        dtest = xgb.DMatrix(X_test, label=y_test)
-
-        dtrain.set_group(train_group)
-        dtest.set_group(test_group)
-
-        num_round = 20  # the number of training iterations (number of trees)
-
+        # XGB RANKER AT WORK
+        print(">>> Fitting of the XGB model...")
         xbg_ranker = xgb.XGBRanker()
-        xbg_ranker.fit(dtrain, y_train, train_group)
-
-
-        # xgb_regressor = xgb.XGBRegressor()
-        # xgb_regressor.fit(X_train, y_train)
-
+        xbg_ranker.fit(train_dropped, train_user_ids, train_group)
+        print(">>> Fitting completed!")
         # model = xgb.train(params,
         #                   dtrain,
         #                   num_round,
@@ -232,9 +218,13 @@ class XGBoost(object):
 
         # print(xgb_regressor.predict(X_test))
 
-        print(xbg_ranker.predict(dtest))
-        print("user array:" + str(len(self.user_recommendations_user_id)))
-        #print(" prediction array:" + str(len(model.predict())))
+        print(">>> Predicting the scores...")
+        predictions = xbg_ranker.predict(test_dropped)
+        print(">>> DONE")
+
+        print(predictions[0:100])
+        # print("user array:" + str(len(self.user_recommendations_user_id)))
+        # print(" prediction array:" + str(len(model.predict())))
 
 
     def add_top_pop_items(self):
@@ -253,6 +243,7 @@ class XGBoost(object):
         self.xgb_dataframe['item_popularity'] = pd.Series(topPop_score_list, index=self.xgb_dataframe.index)
         print("Addition completed!")
 
+
     def add_user_profile_length(self):
         # BUILDING USER PROFILE LENGTH
         print("Adding user profile length feature...")
@@ -263,7 +254,6 @@ class XGBoost(object):
 
         for user_id in self.user_recommendations_user_id:
             user_profile_len_list.append(user_profile_len[user_id])
-
 
         self.xgb_dataframe['user_profile_len'] = pd.Series(user_profile_len_list, index=self.xgb_dataframe.index)
         print("Addition completed!")
@@ -350,9 +340,13 @@ if __name__ == "__main__":
         "pure_svd": False,
         "als": False,
         "cfw": False,
+        "p3a": False,
+        "rp3b": False,
+        "slim_en": False,
     }
 
     is_test = True
+    at = 20
 
-    runner = XGBoost(**algorithms_choice)
+    runner = XGBoost(at, **algorithms_choice)
     runner.run(is_test)

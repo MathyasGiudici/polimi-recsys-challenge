@@ -115,11 +115,15 @@ class CrossValidationRunner(object):
                 self.p_icfknn = ParametersTuning.ICFKNN_BEST
             if self.cbfknn:
                 self.p_cbfknn = ParametersTuning.CBFKNN_BEST
+            if self.rp3b:
+                self.p_rp3b = ParametersTuning.RP3B_BEST
+            if self.slim_en:
+                self.p_slimen = ParametersTuning.SLIM_ELASTIC_NET_BEST
 
             # TUNING WITH THE DIFFERENT PARAMS
-            for params in ParametersTuning.RP3B:
-                if self.rp3b:
-                    self.p_rp3b = params
+            for params in ParametersTuning.UCFKNN:
+                if self.ucfknn:
+                    self.p_ucfknn = params
                 self.write_report()
 
                 # URM splitted in 4 smaller URMs for cross-validation
@@ -137,7 +141,8 @@ class CrossValidationRunner(object):
         else:
             self.p_cbfknn = ParametersTuning.CBFKNN_BEST
             self.p_icfknn = ParametersTuning.ICFKNN_BEST
-            self.p_als = ParametersTuning.ALS_BEST
+            self.p_slimen = ParametersTuning.SLIM_ELASTIC_NET_BEST
+            self.p_rp3b = ParametersTuning.RP3B_BEST
 
             users = self.extractor.get_target_users_of_recs()
             self.urm_train = self.extractor.get_urm_all()
@@ -198,7 +203,7 @@ class CrossValidationRunner(object):
         from tqdm import tqdm
 
         for user_id in tqdm(users):
-            recs = recommender.recommend(user_id, at=10)
+            recs = recommender.recommend(user_id, at=20)
             self.writer.write(self.writer, user_id, recs, sub_counter=submission_counter)
 
         print("Submission file written")
@@ -217,12 +222,14 @@ class CrossValidationRunner(object):
             generated_weights.append(weight)
             print("--------------------------------------")
 
-            recommender = WeightedHybrid(self.urm_train, self.icm.copy(), self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
+            recommender = WeightedHybrid(self.urm_train, self.icm, self.p_icfknn, self.p_ucfknn, self.p_cbfknn,
                                          self.p_slimbpr, self.p_puresvd, self.p_als, self.p_cfw, self.p_p3a,
                                          self.p_rp3b, self.p_slimen, weight, seen_items=target_users_profile)
             recommender.fit()
             result_dict = evaluate_algorithm_crossvalidation(self.urm_validation, recommender, self.target_users)
             self.results.append(float(result_dict["MAP"]))
+
+            del recommender
 
             # self.writer.write_report(self.writer, str(weight), report_counter)
             self.writer.write_report(self.writer, str(result_dict), report_counter)
@@ -275,7 +282,8 @@ class CrossValidationRunner(object):
     def output_best_params(self):
         best_MAP = max(self.MAPs)
         index = self.MAPs.index(best_MAP)
-        best_params = ParametersTuning.RP3B[index]
+        best_params = ParametersTuning.UCFKNN[index]
+        # best_params = ParametersTuning.RP3B[index]
         self.writer.write_report(self.writer, "--------------------------------------", report_counter)
         self.writer.write_report(self.writer, "With a MAP of " + str(best_MAP) + " the best parameters are: " +
                                  str(best_params), report_counter)

@@ -1,5 +1,5 @@
 import csv, os
-
+import pandas as pd
 
 
 class Writer(object):
@@ -9,7 +9,7 @@ class Writer(object):
 
     def write(self, user, rec_list, sub_counter=0):
         file_name = self.SUBM_FILE_PATH + 'subm' + str(sub_counter) + '.csv'
-        with open(file_name, mode='a') as csv_file2:
+        with open(file_name, mode='a', newline='') as csv_file2:
             writer = csv.writer(csv_file2, delimiter=',', quoting=csv.QUOTE_MINIMAL)
 
             rec_string = ''
@@ -21,7 +21,7 @@ class Writer(object):
 
     def write_header(self, sub_counter=0, field_names=['user_id', 'item_list']):
         file_name = self.SUBM_FILE_PATH + 'subm' + str(sub_counter) + '.csv'
-        with open(file_name, mode='w+') as csv_file2:
+        with open(file_name, mode='w+', newline='') as csv_file2:
             writer = csv.writer(csv_file2, delimiter=',', quoting=csv.QUOTE_MINIMAL)
 
             writer.writerow(field_names)
@@ -38,3 +38,7 @@ class Writer(object):
         f = open(file_path,"a+")
         f.write(to_write)
         f.close()
+
+    def save_dataframe(self, dataframe : pd.DataFrame, at : int):
+        file_name = self.DATA_FILE_PATH + "xgb_df_test@" + str(at) + ".csv"
+        dataframe.to_csv(file_name, index=None)
